@@ -221,7 +221,7 @@ public class VoxelInteractionOne : MonoBehaviour
 				{
 					// The distance test prevents new terrain from bumping into the character.
 					// This value may need adjusting.
-					if (digMode || (hitInfo.distance > terrain._scale * 1.5f))
+					if (digMode || (hitInfo.distance > terrain._scale * .01f))
 					{
 						float vrp = _voxrayPower + 2f;
 
