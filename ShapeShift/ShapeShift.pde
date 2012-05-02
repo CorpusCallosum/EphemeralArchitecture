@@ -105,9 +105,9 @@ void draw() {
   opencv.contrast( c );
 
   modifiedImg = opencv.image();
-  modifiedImg.alpha(10);
+  //modifiedImg.alpha(10);
  // modifiedImg.tint(255,255,255,10);
-  blendedImg.blend(img, 0, 0, img.width, img.height, 67, 0, img.width, img.height, BLEND);
+ // blendedImg.blend(img, 0, 0, img.width, img.height, 67, 0, img.width, img.height, BLEND);
 
   println("c: "+c);
   println("b: "+b);
