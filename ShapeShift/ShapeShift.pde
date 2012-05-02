@@ -30,6 +30,8 @@ Terrain terrain; // Terrain object
 PImage img;
 PImage modifiedImg;
 PImage blendedImg;
+PImage alphaImg;
+
 
 
 import org.openkinect.*;
@@ -43,6 +45,8 @@ boolean ir = false;
 float deg = 15; // Start at 15 degrees
 
 boolean drawKinect = false;
+int counter = 0;
+
 
 void setup() {
   size(1280, 800, OPENGL);
@@ -67,9 +71,15 @@ void setup() {
   opencv = new OpenCV( this );
 
   img = kinect.getDepthImage();
- // blendedImage = img;
+  alphaImg = createImage(img.width, img.height, RGB);;
+  blendedImg = createImage(img.width, img.height, RGB);
 
   opencv.allocate( img.width, img.height );
+  for(int x=0;x<alphaImg.width;x++){
+     for(int y=0;y<alphaImg.height;y++){
+       alphaImg.set(x,y,5); 
+     }
+  }
 }
 
 void draw() {
@@ -105,9 +115,12 @@ void draw() {
   opencv.contrast( c );
 
   modifiedImg = opencv.image();
-  //modifiedImg.alpha(10);
+  modifiedImg.mask(alphaImg);
  // modifiedImg.tint(255,255,255,10);
- // blendedImg.blend(img, 0, 0, img.width, img.height, 67, 0, img.width, img.height, BLEND);
+// if(counter >= 10){
+  blendedImg.blend(modifiedImg, 0, 0, img.width, img.height, 0, 0, img.width, img.height, ADD);
+ // counter = 0;
+ //}
 
   println("c: "+c);
   println("b: "+b);
@@ -116,9 +129,12 @@ void draw() {
   if (drawKinect) {
     image(img, width-310, 0, 320, 240);
     image(modifiedImg, width-310, 240, 320, 240);
+    image(blendedImg, width-310, 240*2, 320, 240);
   }
-  img = modifiedImg;
+  img = blendedImg;
   generateMesh(); // initialize mesh surface, see "Terrain"
+  
+  counter++;
 }
 
 // initializes 3D mesh
