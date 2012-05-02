@@ -24,11 +24,12 @@ class Terrain {
   void draw() {
     // check which drawing style to use
     if(toggleSolid) {
-      fill(0,100,200);
+      fill(255);
       noStroke();
     }
     else {
-      noFill();
+    //  noFill();
+      fill(0);
       stroke(255);
     }
     model.draw(parent);

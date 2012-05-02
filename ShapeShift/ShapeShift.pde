@@ -77,9 +77,11 @@ void setup() {
   opencv.allocate( img.width, img.height );
   for(int x=0;x<alphaImg.width;x++){
      for(int y=0;y<alphaImg.height;y++){
-       alphaImg.set(x,y,5); 
+       alphaImg.set(x,y,10); 
      }
   }
+  
+ // lights();
 }
 
 void draw() {
@@ -118,7 +120,7 @@ void draw() {
   modifiedImg.mask(alphaImg);
  // modifiedImg.tint(255,255,255,10);
 // if(counter >= 10){
-  blendedImg.blend(modifiedImg, 0, 0, img.width, img.height, 0, 0, img.width, img.height, ADD);
+  blendedImg.blend(modifiedImg, 0, 0, img.width, img.height, 0, 0, img.width, img.height, BLEND);
  // counter = 0;
  //}
 
