@@ -19,10 +19,12 @@ import java.awt.event.*;
 
 ControlP5 controlP5; // instance of the controlP5 library
 
-int slGridResolution; // slider value for grid resolution
+//SLIDER VRS
+int slGridResolution, _brightness, _contrast; // slider value for grid resolution
 float Z; // controls the height difference in the terrain
 float noiseXD, noiseYD; // modifiers for X,Y noise
-boolean toggleSolid=true; // controls rendering style
+
+boolean toggleSolid=false; // controls rendering style
 
 MouseNav3D nav; // camera controller
 Terrain terrain; // Terrain object
@@ -71,13 +73,14 @@ void setup() {
   opencv = new OpenCV( this );
 
   img = kinect.getDepthImage();
-  alphaImg = createImage(img.width, img.height, RGB);;
+  alphaImg = createImage(img.width, img.height, RGB);
   blendedImg = createImage(img.width, img.height, RGB);
+  
 
   opencv.allocate( img.width, img.height );
   for(int x=0;x<alphaImg.width;x++){
      for(int y=0;y<alphaImg.height;y++){
-       alphaImg.set(x,y,10); 
+       alphaImg.set(x,y,50); 
      }
   }
   
@@ -111,26 +114,25 @@ void draw() {
   opencv.copy( img); 
   //  int c = (int) map(mouseX, 0, width, -128, 128);
   //   int b = (int) map(mouseY, 0, height, -128, 128);
-  int b = -10;
-  int c = 102;
-  opencv.brightness( b );
-  opencv.contrast( c );
+ // int b = -10;
+ // int c = 102;
+  opencv.brightness( _brightness );
+  opencv.contrast( _contrast );
+  opencv.flip(OpenCV.FLIP_HORIZONTAL);
 
   modifiedImg = opencv.image();
   modifiedImg.mask(alphaImg);
- // modifiedImg.tint(255,255,255,10);
 // if(counter >= 10){
-  blendedImg.blend(modifiedImg, 0, 0, img.width, img.height, 0, 0, img.width, img.height, BLEND);
+  blendedImg.blend(modifiedImg, 0, 0, img.width, img.height, 0, 0, img.width, img.height, DIFFERENCE);
  // counter = 0;
  //}
 
-  println("c: "+c);
-  println("b: "+b);
+
 
   fill(255);
   if (drawKinect) {
-    image(img, width-310, 0, 320, 240);
-    image(modifiedImg, width-310, 240, 320, 240);
+  //  image(img, width-310, 0, 320, 240);
+   // image(modifiedImg, width-310, 240, 320, 240);
     image(blendedImg, width-310, 240*2, 320, 240);
   }
   img = blendedImg;

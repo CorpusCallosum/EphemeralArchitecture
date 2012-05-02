@@ -13,6 +13,7 @@ void initControllers() {
   controlP5 = new ControlP5(this);
   controlP5.setColorLabel(color(0,0,0));
   
+  //GRID RESOUTION
   slGridResolution=50;
   controlP5.addSlider("slGridResolution", // name, must match variable name
     5,img.width, // min and max values
@@ -21,11 +22,28 @@ void initControllers() {
     100,13) // width and height of slider
     .setId(1); 
 
-  Z=100;
+//Z SHIFT
+  Z=500;
   controlP5.addSlider("Z", // name, must match variable name
-    5,400, // min and max values
+    5,1000, // min and max values
     Z, // the default value
     20,40, // X,Y position of slider
+    100,13); // width and height of slider
+    
+    //BRIGHTNESS
+  _brightness=-10;
+  controlP5.addSlider("_brightness", // name, must match variable name
+    -200,200, // min and max values
+    _brightness, // the default value
+    20,60, // X,Y position of slider
+    100,13); // width and height of slider
+    
+    //CONTRAST
+  _contrast=102;
+  controlP5.addSlider("_contrast", // name, must match variable name
+    -200,200, // min and max values
+    _contrast, // the default value
+    20,80, // X,Y position of slider
     100,13); // width and height of slider
  
   // add a "bang" input, a button that triggers a custom function.
