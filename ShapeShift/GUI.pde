@@ -5,7 +5,7 @@
 // tab.)
 
 void initControllers() {
-  nav=new MouseNav3D(this); 
+  nav=new UNav3D(this); 
   nav.trans.set(width/2,height/2,0);
   nav.rot.set(PI/6,PI/6,0);
   
@@ -56,6 +56,8 @@ void initControllers() {
   controlP5.addToggle("toggleSolid",
     300,20, // X,Y position
     20,20); // width and height
+    
+   controlP5.setAutoDraw(false); 
 }
 
 // catch ControlP5 events to force rebuilding the mesh
@@ -64,8 +66,8 @@ void controlEvent(ControlEvent theEvent) {
 }
 
 void saveSTL() {
-  terrain.model.writeSTL(this, 
-    IO.getIncrementalFilename("Terrain ###.stl", sketchPath));
+  /*terrain.model.writeSTL(this, 
+    IO.getIncrementalFilename("Terrain ###.stl", sketchPath));*/
 }
   
 // pass mouse and key events to our Nav3D instance
@@ -87,6 +89,10 @@ void keyPressed() {
   else if(key == 'k'){
    //draw the kinect image
   drawKinect = !drawKinect; 
+  }
+  else if(key == 'd'){
+   //draw the kinect image
+  _debug = !_debug; 
   }
 }
 

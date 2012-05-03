@@ -26,7 +26,7 @@ float noiseXD, noiseYD; // modifiers for X,Y noise
 
 boolean toggleSolid=false; // controls rendering style
 
-MouseNav3D nav; // camera controller
+UNav3D nav; // camera controller
 Terrain terrain; // Terrain object
 
 PImage img;
@@ -40,15 +40,8 @@ import org.openkinect.*;
 import org.openkinect.processing.*;
 
 Kinect kinect;
-boolean depth = true;
-boolean rgb = false;
-boolean ir = false;
-
-float deg = 15; // Start at 15 degrees
-
 boolean drawKinect = false;
-int counter = 0;
-
+boolean _debug = false;
 
 void setup() {
   size(1280, 800, OPENGL);
@@ -65,7 +58,7 @@ void setup() {
 
   kinect = new Kinect(this);
   kinect.start();
-  kinect.enableDepth(depth);
+  kinect.enableDepth(true);
 
   // kinect.enableRGB(rgb);
   //kinect.enableIR(ir);
@@ -138,7 +131,9 @@ void draw() {
   img = blendedImg;
   generateMesh(); // initialize mesh surface, see "Terrain"
   
-  counter++;
+  if(_debug)
+    controlP5.draw();
+  
 }
 
 // initializes 3D mesh
