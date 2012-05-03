@@ -24,16 +24,20 @@ class Terrain {
   void draw() {
     // check which drawing style to use
     if(toggleSolid) {
-      fill(255);
+      fill(37, 109, 154);
      //       stroke(0);
 
-      noStroke();
+      colorMode(HSB);
+      stroke(_counter, 255, 255);
+//noFill();
+fill(0);
+     // noStroke();
     }
     else {
-    //  noFill();
-      fill(0, 0, 0, 10);
-      stroke(255);
-    //  noStroke();
+      noFill();
+      fill(0, 0, 0, 128);
+      stroke(9, 133, 255 );
+      //noStroke();
     }
     model.draw(parent);
 
@@ -70,13 +74,14 @@ class Terrain {
     for(int i=0; i<gridRes-1; i++) {
       model.beginShape(QUAD_STRIP);
       for(int j=0; j<gridRes; j++) {
-        colorMode(HSB);
-        fill(pt[i+1][j].z, 255, 255);
+       // colorMode(HSB);
+       // fill(round(pt[i+1][j].z*5), i, pt[i+1][j].y);
+      //  println(pt[i+1][j].z);
         
-        setColorZ(pt[i+1][j].z);
+      //  setColorZ(pt[i+1][j].z);
         model.vertex(pt[i+1][j].x,pt[i+1][j].y,pt[i+1][j].z);
         
-        setColorZ(pt[i][j].z);
+       // setColorZ(pt[i][j].z);
         model.vertex(pt[i][j].x,pt[i][j].y,pt[i][j].z);
         
       }

@@ -24,7 +24,7 @@ int slGridResolution, _brightness, _contrast; // slider value for grid resolutio
 float Z; // controls the height difference in the terrain
 float noiseXD, noiseYD; // modifiers for X,Y noise
 
-boolean toggleSolid=false; // controls rendering style
+boolean toggleSolid=true; // controls rendering style
 
 UNav3D nav; // camera controller
 Terrain terrain; // Terrain object
@@ -42,9 +42,13 @@ import org.openkinect.processing.*;
 Kinect kinect;
 boolean drawKinect = false;
 boolean _debug = false;
+boolean _blendMode = true;
+
+float _counter = 110;
 
 void setup() {
-  size(1280, 800, OPENGL);
+  size(1440, 900, OPENGL);
+
 
   // input image must be square or have a greater height than width.
 
@@ -116,7 +120,16 @@ void draw() {
   modifiedImg = opencv.image();
   modifiedImg.mask(alphaImg);
 // if(counter >= 10){
-  blendedImg.blend(modifiedImg, 0, 0, img.width, img.height, 0, 0, img.width, img.height, DIFFERENCE);
+  int mode;
+  if(_blendMode){
+     mode = DIFFERENCE;
+}
+else{
+       mode = BLEND;
+
+}
+  blendedImg.blend(modifiedImg, 0, 0, img.width, img.height, 0, 0, img.width, img.height, mode);
+  
  // counter = 0;
  //}
 
@@ -134,6 +147,9 @@ void draw() {
   if(_debug)
     controlP5.draw();
   
+  _counter+=.01;
+  if(_counter >= 255)
+   _counter = 0;
 }
 
 // initializes 3D mesh
