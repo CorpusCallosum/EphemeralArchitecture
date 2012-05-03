@@ -30,8 +30,8 @@ class Terrain {
       noStroke();
     }
     else {
-      noFill();
-    //  fill(0);
+    //  noFill();
+      fill(0, 0, 0, 10);
       stroke(255);
     //  noStroke();
     }
@@ -49,6 +49,7 @@ class Terrain {
       for(int j=0; j<gridRes; j++) {
         vertex(pt[i][j].x,pt[i][j].y,pt[i][j].z);
       }
+      
       endShape();
     }
   }
@@ -59,7 +60,6 @@ class Terrain {
     float colFract;
     
     gridRes=slGridResolution;
-//    pt=generateNoisePoints(gridRes);
     pt=generateImagePoints(gridRes);
     
     bottomZ=-Z*0.5;
@@ -70,6 +70,9 @@ class Terrain {
     for(int i=0; i<gridRes-1; i++) {
       model.beginShape(QUAD_STRIP);
       for(int j=0; j<gridRes; j++) {
+        colorMode(HSB);
+        fill(pt[i+1][j].z, 255, 255);
+        
         setColorZ(pt[i+1][j].z);
         model.vertex(pt[i+1][j].x,pt[i+1][j].y,pt[i+1][j].z);
         
@@ -82,8 +85,8 @@ class Terrain {
     
     // draw edges of the mesh
     
-    fill(#e56000);
-    stroke(255);
+ //   fill(#e56000);
+  //  stroke(255);
     
     // left edge
     model.beginShape(QUAD_STRIP);

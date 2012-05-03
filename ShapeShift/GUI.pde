@@ -23,7 +23,7 @@ void initControllers() {
     .setId(1); 
 
 //Z SHIFT
-  Z=500;
+  Z=721;
   controlP5.addSlider("Z", // name, must match variable name
     5,1000, // min and max values
     Z, // the default value
@@ -31,7 +31,7 @@ void initControllers() {
     100,13); // width and height of slider
     
     //BRIGHTNESS
-  _brightness=-8;
+  _brightness=-12;
   controlP5.addSlider("_brightness", // name, must match variable name
     -200,200, // min and max values
     _brightness, // the default value
@@ -39,7 +39,7 @@ void initControllers() {
     100,13); // width and height of slider
     
     //CONTRAST
-  _contrast=92;
+  _contrast=96;
   controlP5.addSlider("_contrast", // name, must match variable name
     -200,200, // min and max values
     _contrast, // the default value

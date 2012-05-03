@@ -80,7 +80,7 @@ void setup() {
   opencv.allocate( img.width, img.height );
   for(int x=0;x<alphaImg.width;x++){
      for(int y=0;y<alphaImg.height;y++){
-       alphaImg.set(x,y,50); 
+       alphaImg.set(x,y,10); 
      }
   }
   
