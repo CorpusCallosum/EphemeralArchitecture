@@ -3,6 +3,8 @@ import unlekker.modelbuilder.*;
 import ec.util.*;
 
 import hypermedia.video.*;
+import toxi.geom.*;
+import toxi.geom.mesh.*;
 
 
 OpenCV opencv;

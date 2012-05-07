@@ -80,6 +80,7 @@ fill(0);
         
       //  setColorZ(pt[i+1][j].z);
         model.vertex(pt[i+1][j].x,pt[i+1][j].y,pt[i+1][j].z);
+              model.fill(pt[i+1][j].x,pt[i+1][j].y,pt[i+1][j].z);
         
        // setColorZ(pt[i][j].z);
         model.vertex(pt[i][j].x,pt[i][j].y,pt[i][j].z);
