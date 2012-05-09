@@ -46,9 +46,6 @@ float SIZE = 100;
 
 float AMP = SIZE*4;
 
-
-
-
 TriangleMesh mesh = new TriangleMesh();
 
 boolean isWireFrame;
@@ -56,11 +53,11 @@ boolean showNormals;
 boolean doSave;
 
 
-Matrix4x4 normalMap = new Matrix4x4().translateSelf(128,128,128).scaleSelf(127);
+Matrix4x4 normalMap = new Matrix4x4().translateSelf(128, 128, 128).scaleSelf(127);
 
 void setup() {
-  size(1024,576, OPENGL);
- // randomizeMesh();
+  size(1024, 576, OPENGL);
+  // randomizeMesh();
 }
 
 void draw() {
@@ -70,7 +67,7 @@ void draw() {
   rotateY(mouseX * 0.01f);
   lights();
   shininess(16);
-  directionalLight(255,255,255,0,-1,1);
+  directionalLight(255, 255, 255, 0, -1, 1);
   specular(255);
   drawAxes(400);
   if (isWireFrame) {
@@ -81,14 +78,13 @@ void draw() {
     fill(255);
     noStroke();
   }
-    updateMesh();
+  updateMesh();
 
   drawMesh(g, mesh, !isWireFrame, showNormals);
   if (doSave) {
     saveFrame("sh-"+(System.currentTimeMillis()/1000)+".png");
     doSave=false;
   }
-  
 }
 
 void drawAxes(float l) {
@@ -109,17 +105,31 @@ void drawMesh(PGraphics gfx, TriangleMesh mesh, boolean vertexNormals, boolean s
     for (Iterator i=mesh.faces.iterator(); i.hasNext();) {
       Face f=(Face)i.next();
       Vec3D n = normalMap.applyTo(f.a.normal);
-     // gfx.fill(n.x, n.y, n.z);
-      gfx.fill(n.x, n.y, n.z);
-
+      // gfx.fill(n.x, n.y, n.z);
+      if (f.a.z <0) {
+        gfx.fill(0, 0, 0, 0);
+      }
+      else {
+        gfx.fill(n.x, n.y, n.z);
+      }      
       gfx.normal(f.a.normal.x, f.a.normal.y, f.a.normal.z);
       gfx.vertex(f.a.x, f.a.y, f.a.z);
       n = normalMap.applyTo(f.b.normal);
-      gfx.fill(n.x, n.y, n.z);
+      if (f.b.z <0) {
+        gfx.fill(0, 0, 0, 0);
+      }
+      else {
+        gfx.fill(n.x, n.y, n.z);
+      }
       gfx.normal(f.b.normal.x, f.b.normal.y, f.b.normal.z);
       gfx.vertex(f.b.x, f.b.y, f.b.z);
       n = normalMap.applyTo(f.c.normal);
-      gfx.fill(n.x, n.y, n.z);
+      if (f.c.z <0) {
+        gfx.fill(0, 0, 0, 0);
+      }
+      else {
+        gfx.fill(n.x, n.y, n.z);
+      }      
       gfx.normal(f.c.normal.x, f.c.normal.y, f.c.normal.z);
       gfx.vertex(f.c.x, f.c.y, f.c.z);
     }
@@ -128,11 +138,11 @@ void drawMesh(PGraphics gfx, TriangleMesh mesh, boolean vertexNormals, boolean s
     for (Iterator i=mesh.faces.iterator(); i.hasNext();) {
       Face f=(Face)i.next();
       gfx.normal(f.normal.x, f.normal.y, f.normal.z);
-       gfx.stroke(255,0,0);
+      gfx.stroke(255, 0, 0);
       gfx.vertex(f.a.x, f.a.y, f.a.z);
-             gfx.stroke(0,255,0);
+      gfx.stroke(0, 255, 0);
       gfx.vertex(f.b.x, f.b.y, f.b.z);
-             gfx.stroke(0,0,255);
+      gfx.stroke(0, 0, 255);
 
       gfx.vertex(f.c.x, f.c.y, f.c.z);
     }
@@ -163,7 +173,7 @@ void drawMesh(PGraphics gfx, TriangleMesh mesh, boolean vertexNormals, boolean s
 
 void keyPressed() {
   if (key == 'r') {
-  //  randomizeMesh();
+    //  randomizeMesh();
   }
   if (key == 'w') {
     isWireFrame = !isWireFrame;
@@ -180,24 +190,25 @@ void keyPressed() {
 }
 
 void updateMesh() {
- /* float[] m=new float[8];
-  for(int i=0; i<8; i++) {
-    m[i]=(int)random(9);
-  }
-  SurfaceMeshBuilder b = new SurfaceMeshBuilder(new SphericalHarmonics(m));
-  mesh = (TriangleMesh)b.createMesh(null,80, 60);*/
-  
-   float phase=frameCount*NS*0.1;
+  /* float[] m=new float[8];
+   for(int i=0; i<8; i++) {
+   m[i]=(int)random(9);
+   }
+   SurfaceMeshBuilder b = new SurfaceMeshBuilder(new SphericalHarmonics(m));
+   mesh = (TriangleMesh)b.createMesh(null,80, 60);*/
+
+  float phase=frameCount*NS*0.1;
   BezierPatch patch = new BezierPatch();
   for (int y = 0; y < 4; y++) {
     for (int x = 0; x < 4; x++) {
       float xx = x * SIZE * 2;
       float yy = y * SIZE;
-      float zz = (float) (SimplexNoise.noise(xx * NS, yy * NS,phase) * AMP);
-    
+      float zz = (float) (SimplexNoise.noise(xx * NS, yy * NS, phase) * AMP);
+
       patch.set(x, y, new Vec3D(xx, yy, zz));
     }
   }
   mesh=(TriangleMesh)patch.toMesh(!mousePressed ? 32 : 4);
   mesh.center(null);
 }
+

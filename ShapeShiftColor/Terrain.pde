@@ -37,7 +37,7 @@ Matrix4x4 normalMap = new Matrix4x4().translateSelf(128, 128, 128).scaleSelf(127
   
   Terrain(PApplet _parent) {    
     parent=_parent;
-    buildModel();  
+  //  buildModel();  
   }
   
   
