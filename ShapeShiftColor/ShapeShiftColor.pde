@@ -156,7 +156,7 @@ else{
 
 // initializes 3D mesh
 void generateMesh() {
-/*  if (terrain==null) terrain=new Terrain(this);
-  terrain.buildModel();*/
+  if (terrain==null) terrain=new Terrain(this);
+  //terrain.buildModel();
 }
 

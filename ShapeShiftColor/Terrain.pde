@@ -62,7 +62,7 @@ fill(0);
     model.draw(parent);*/
     
     background(0);
-  translate(width / 2, height / 2, 0);
+ // translate(width / 2, height / 2, 0);
   rotateX(mouseY * 0.01f);
   rotateY(mouseX * 0.01f);
   lights();
@@ -187,8 +187,10 @@ void updateMesh() {
     for (int x = 0; x < 4; x++) {
       float xx = x * SIZE * 2;
       float yy = y * SIZE;
-      float zz = (float) (SimplexNoise.noise(xx * NS, yy * NS, phase) * AMP);
+     // float zz = (float) (SimplexNoise.noise(xx * NS, yy * NS, phase) * AMP);
 
+      float zz = (brightness(img.get(x,y))/255.0)*Z;
+      
       patch.set(x, y, new Vec3D(xx, yy, zz));
     }
   }
