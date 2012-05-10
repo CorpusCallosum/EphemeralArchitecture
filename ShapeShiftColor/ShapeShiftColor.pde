@@ -29,12 +29,12 @@ float noiseXD, noiseYD; // modifiers for X,Y noise
 boolean toggleSolid=true; // controls rendering style
 
 UNav3D nav; // camera controller
-Terrain terrain; // Terrain object
+Mesh mesh; // Terrain object
 
 PImage img;
 PImage modifiedImg;
 PImage blendedImg;
-PImage alphaImg;
+PImage alphaImg, scaledImg;
 
 
 
@@ -57,8 +57,6 @@ void setup() {
   // this image is borrowed from the excellent contour map tutorial
   // by OnFormative:
   // http://onformative.com/lab/creating-contour-maps/
-  img=loadImage("heightmap.png");
-
   initControllers(); // initialize interface, see "GUI" tab
   generateMesh(); // initialize mesh surface, see "Terrain"
 
@@ -75,6 +73,9 @@ void setup() {
   alphaImg = createImage(img.width, img.height, RGB);
   blendedImg = createImage(img.width, img.height, RGB);
   
+  float _scale = .1;
+  scaledImg = createImage(round(img.width*_scale), round(img.height*_scale), RGB);
+  
 
   opencv.allocate( img.width, img.height );
   for(int x=0;x<alphaImg.width;x++){
@@ -83,7 +84,6 @@ void setup() {
      }
   }
   
- // lights();
 }
 
 void draw() {
@@ -99,7 +99,7 @@ void draw() {
   lights();
 
   nav.doTransforms(); // transformations using Nav3D
-  terrain.draw();
+  mesh.draw();
 
   popMatrix();
 
@@ -131,11 +131,6 @@ else{
 
 }
   blendedImg.blend(modifiedImg, 0, 0, img.width, img.height, 0, 0, img.width, img.height, mode);
-  
- // counter = 0;
- //}
-
-
 
   fill(255);
   if (drawKinect) {
@@ -144,6 +139,11 @@ else{
     image(blendedImg, width-310, 240*2, 320, 240);
   }
   img = blendedImg;
+  
+  float s = .1;
+  
+  scaledImg.copy(img, 0, 0, img.width,  img.height, 0, 0, round(img.width*s), round(img.height*s));
+  
   generateMesh(); // initialize mesh surface, see "Terrain"
   
   if(_debug)
@@ -156,7 +156,7 @@ else{
 
 // initializes 3D mesh
 void generateMesh() {
-  if (terrain==null) terrain=new Terrain(this);
+  if (mesh==null) mesh=new Mesh(this);
   //terrain.buildModel();
 }
 

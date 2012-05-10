@@ -19,14 +19,14 @@ void initControllers() {
   controlP5.setColorLabel(color(0, 0, 0));
 
   //GRID RESOUTION
-  slGridResolution=50;
+/*  slGridResolution=50;
   controlP5.addSlider("slGridResolution", // name, must match variable name
-  5, img.width, // min and max values
+  5, scaledImg.width, // min and max values
   slGridResolution, // the default value
   20, 20, // X,Y position of slider
   100, 13) // width and height of slider
     .setId(1); 
-
+*/
   //Z SHIFT
   Z=721;
   controlP5.addSlider("Z", // name, must match variable name
