@@ -99,7 +99,7 @@ void keyPressed() {
     println("y : " +nav.rot.y);
     println("z : " +nav.rot.z);
   }
-  else if (key == 'r') {
+  else if (key == 'w') {
    toggleSolid = !toggleSolid;
   }
   else if (key == 'm') {
