@@ -10,6 +10,7 @@ import toxi.processing.*;
 import controlP5.*;
 import processing.opengl.*;
 import java.awt.event.*;
+import java.awt.Color;
 
 import org.openkinect.*;
 import org.openkinect.processing.*;
@@ -38,6 +39,9 @@ PImage img;
 PImage modifiedImg;
 PImage blendedImg;
 PImage alphaImg, scaledImg;
+PImage colorSnapshot; //save color information every hour
+PImage colorInit; //initialize with color from most recent snapshot
+int startHue = 110;
 
 Kinect kinect;
 boolean drawKinect = false;
@@ -51,7 +55,8 @@ long startTime;
 long currentTime;
 long lastTime = 0;
 int runTime = 120000; //4 days = 345600000 milliseconds
-int everyHour = 3600; //1 hour = 3600 seconds
+int everyHour = 30;//3600; //1 hour = 3600 seconds
+
 
 
 
@@ -99,12 +104,20 @@ void setup() {
   }
   
   //initialize color grid to starting color
+  
+  colorInit = loadImage("colorInitialize.jpg");
   for (int i = 0; i < scaledImg.width; i++ ) {
     for ( int j = 0; j < scaledImg.height; j++ ) {
-      colorGrid[i][j] = 110 * runTime / 255; //vertexHue -> 110
+      colorMode( HSB, 255 );
+      int initialHue = round( hue(colorInit.get( i, j )) );
+      colorGrid[i][j] = initialHue - startHue;
+      //colorGrid[i][j] = currentTime * 255 / runTime; 
       brightnessGrid[i][j] = 0;
     }
   }
+  
+  //create image to save color to
+  colorSnapshot = createImage( scaledImg.width, scaledImg.height, HSB );
   
   //startTime = round(today.getTime()/1000); //unix time - seconds
   startTime = System.currentTimeMillis();
@@ -202,7 +215,25 @@ void generateMesh() {
 
 //save mesh to stl
 void saveSTL() {
-  mesh.getMeshReference().saveAsSTL(sketchPath("LANscape"+(System.currentTimeMillis()/1000)+".stl"));
+  
+  long saveTime = System.currentTimeMillis()/1000;
+  mesh.getMeshReference().saveAsSTL(sketchPath("data/LANscape"+saveTime+".stl"));
+  
+  for ( int i = 0; i < scaledImg.width; i++ ) {
+    for ( int j = 0; j < scaledImg.height; j++ ) {
+      
+      colorMode( HSB, 255 );
+      color c = color( round( startHue + colorGrid[i][j] ), 255, 255 );
+      
+      //println("colorGridValue: " + colorGrid[i][j] + ", red: " + red(c) + ", green: " + green(c) + ", blue: " + blue(c));
+      //println(colorGrid[i][j]);
+      colorSnapshot.set( i, j, c );
+      colorSnapshot.save( sketchPath("data/colorSnapshot"+saveTime+".jpg") );
+      colorSnapshot.save( sketchPath("data/colorInitialize.jpg") );
+      
+    }
+  }
+      
 }
 
 

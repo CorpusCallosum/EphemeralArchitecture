@@ -117,12 +117,9 @@ class Mesh {
         colorMode(HSB);
         
         Vec3D n = normalMap.applyTo(f.a.normal);
-        /*println("f.a.x: " + floor(f.a.x) + ", f.a.z: " + floor(f.a.z));
-        println("f.b.x: " + floor(f.b.x) + ", f.b.z: " + floor(f.b.z));
-        println("f.c.x: " + floor(f.c.x) + ", f.c.z: " + floor(f.c.z));*/
         
         //println("vertexHueA: " + colorGrid[floor(map((f.a.x), -1575, 1575, 0, scaledImg.width-1))][floor(map((f.a.z), -1175, 1175, 0, scaledImg.height-1))]);
-        vertexHueA = 110 + colorGrid[floor(map((f.a.x), -1575, 1575, 0, scaledImg.width-1))][floor(map((f.a.z), -1175, 1175, 0, scaledImg.height-1))]; //mapping based on 4 day cycle in seconds
+        vertexHueA = startHue + colorGrid[floor(map((f.a.x), -1575, 1575, 0, scaledImg.width-1))][floor(map((f.a.z), -1175, 1175, 0, scaledImg.height-1))]; //mapping based on 4 day cycle in seconds
         while ( vertexHueA > 255 ) {
           vertexHueA -= 255;
         }
@@ -132,7 +129,7 @@ class Mesh {
         gfx.vertex(f.a.x, f.a.y, f.a.z);
         
         n = normalMap.applyTo(f.b.normal);
-        vertexHueB = 110 +colorGrid[floor(map((f.b.x), -1575, 1575, 0, scaledImg.width-1))][floor(map((f.b.z), -1175, 1175, 0, scaledImg.height-1))]; //mapping based on 4 day cycle in seconds
+        vertexHueB = startHue +colorGrid[floor(map((f.b.x), -1575, 1575, 0, scaledImg.width-1))][floor(map((f.b.z), -1175, 1175, 0, scaledImg.height-1))]; //mapping based on 4 day cycle in seconds
         if ( vertexHueB > 255 ) {
           vertexHueB -= 255;
         }
@@ -143,7 +140,7 @@ class Mesh {
         gfx.vertex(f.b.x, f.b.y, f.b.z);
         
         n = normalMap.applyTo(f.c.normal);
-        vertexHueC = 110 + colorGrid[floor(map((f.c.x), -1575, 1575, 0, scaledImg.width-1))][floor(map((f.c.z), -1175, 1175, 0, scaledImg.height-1))]; //mapping based on 4 day cycle in seconds
+        vertexHueC = startHue + colorGrid[floor(map((f.c.x), -1575, 1575, 0, scaledImg.width-1))][floor(map((f.c.z), -1175, 1175, 0, scaledImg.height-1))]; //mapping based on 4 day cycle in seconds
         if ( vertexHueC > 255 ) {
           vertexHueC -= 255;
         }
