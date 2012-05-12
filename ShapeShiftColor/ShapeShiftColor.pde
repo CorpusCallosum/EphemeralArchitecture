@@ -85,7 +85,7 @@ void setup() {
 
   img = kinect.getDepthImage();
   //load the latest depth map here
-  blendedImg = loadImage("data/depth.jpg");
+  blendedImg = loadImage("data/lastDepth.jpg");
   alphaImg = createImage(img.width, img.height, RGB);
  // blendedImg = createImage(img.width, img.height, RGB);
   
@@ -101,17 +101,7 @@ void setup() {
      }
   }
   
-  //initialize color grid to starting color
   
-  colorInit = loadImage("colorInitialize.jpg");
-  for (int i = 0; i < scaledImg.width; i++ ) {
-    for ( int j = 0; j < scaledImg.height; j++ ) {
-      colorMode( HSB, 255 );
-      int initialHue = round( hue(colorInit.get( i, j )) );
-      colorGrid[i][j] = initialHue - startHue;
-      //colorGrid[i][j] = currentTime * 255 / runTime; 
-    }
-  }
   
   //create image to save color to
   colorSnapshot = createImage( scaledImg.width, scaledImg.height, HSB );
@@ -121,6 +111,9 @@ void setup() {
  
  _saveDepthMapTimer = new Timer(60);//one minute
   _saveDepthMapTimer.start();
+  
+  draw();
+  loadColor();
 }
 
 
@@ -211,6 +204,7 @@ void draw() {
    }
    
     lastTime = currentTime;
+    
 }
 
 // initializes 3D mesh
@@ -235,16 +229,31 @@ void saveSTL() {
       //println("colorGridValue: " + colorGrid[i][j] + ", red: " + red(c) + ", green: " + green(c) + ", blue: " + blue(c));
       //println(colorGrid[i][j]);
       colorSnapshot.set( i, j, c );
-     
-    
+   
       
     }
   }
-      colorSnapshot.save( sketchPath("data/colorInitialize.png") );
-      //colorSnapshot.save( sketchPath("data/colorSnapshot"+saveTime+".jpg") );
+  
+     colorSnapshot.save( sketchPath("data/colorSnapshot"+saveTime+".jpg") );
+      colorSnapshot.save( sketchPath("data/colorInitialize.jpg") );
+      
 }
 
 //save every minute
 void saveDepthMap(){
-  img.save("data/depth.png");
+  long saveTime = System.currentTimeMillis()/1000;
+  img.save("data/lastDepth.jpg");
+  img.save("data/depth/depth"+saveTime+".jpg");
+}
+
+void loadColor(){
+   //initialize color grid to starting color
+  colorInit = loadImage("colorInitialize.jpg");
+  for (int i = 0; i < scaledImg.width; i++ ) {
+    for ( int j = 0; j < scaledImg.height; j++ ) {
+      colorMode( HSB, 255 );
+      int initialHue = round( hue(colorInit.get( i, j )) );
+      colorGrid[i][j] = initialHue - startHue;
+    }
+  } 
 }

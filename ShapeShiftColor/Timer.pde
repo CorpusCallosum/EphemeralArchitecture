@@ -28,6 +28,7 @@ class Timer {
   }
 
   boolean isExpired() {
+    update();
     return _expired;
   }
 

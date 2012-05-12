@@ -110,5 +110,8 @@ void keyPressed() {
     saveSTL();
     saveDepthMap();
    }
+    else if (key == 'l') {
+    loadColor();
+   }
   
 }
