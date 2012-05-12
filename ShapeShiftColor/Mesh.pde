@@ -25,12 +25,19 @@ class Mesh {
   float SIZE = 100;
 
   float AMP = SIZE*4;
-
+  
   TriangleMesh mesh = new TriangleMesh();
 
   boolean isWireFrame;
   boolean showNormals;
   boolean doSave;
+  
+  float vertexHueA;
+  color vertexColorA;
+  float vertexHueB;
+  color vertexColorB;
+  float vertexHueC;
+  color vertexColorC;
 
   Terrain terrain;
 
@@ -42,10 +49,14 @@ class Mesh {
     //  buildModel();
   }
 
+  TriangleMesh getMeshReference() {
+     return mesh; 
+  }
 
   void draw() {
+    
     // check which drawing style to use
-    /*   if(toggleSolid) {
+     /*if(toggleSolid) {
      fill(37, 109, 154);
      //       stroke(0);
      
@@ -64,79 +75,85 @@ class Mesh {
      model.draw(parent);*/
 
     background(0);
-    // translate(width / 2, height / 2, 0);
-    rotateX(mouseY * 0.01f);
-    rotateY(mouseX * 0.01f);
     lights();
     shininess(16);
     directionalLight(255, 255, 255, 0, -1, 1);
     specular(255);
-    drawAxes(400);
-    if (isWireFrame) {
+    //drawAxes(400);
+    
+    if ( isWireFrame ) {
       noFill();
-      stroke(255);
+      stroke( 255 );
     } 
     else {
-      fill(255);
+      fill( 255 );
       noStroke();
     }
     updateMesh();
 
-    drawMesh(g, mesh, !isWireFrame, showNormals);
-    if (doSave) {
-      saveFrame("sh-"+(System.currentTimeMillis()/1000)+".png");
+    drawMesh( g, mesh, !isWireFrame, showNormals );
+   //drawLines();
+    
+    if ( doSave ) {
+      saveFrame( "sh-"+(System.currentTimeMillis()/1000)+".png" );
       doSave=false;
     }
   }
 
 
-  void drawAxes(float l) {
-    stroke(255, 0, 0);
-    line(0, 0, 0, l, 0, 0);
-    stroke(0, 255, 0);
-    line(0, 0, 0, 0, l, 0);
-    stroke(0, 0, 255);
-    line(0, 0, 0, 0, 0, l);
-  }
+ 
 
-  void drawMesh(PGraphics gfx, TriangleMesh mesh, boolean vertexNormals, boolean showNormals) {
-    gfx.beginShape(PConstants.TRIANGLES);
-    AABB bounds=mesh.getBoundingBox();
-    Vec3D min=bounds.getMin();
-    Vec3D max=bounds.getMax();
-    if (vertexNormals) {
-      for (Iterator i=mesh.faces.iterator(); i.hasNext();) {
-        Face f=(Face)i.next();
+ void drawMesh( PGraphics gfx, TriangleMesh mesh, boolean vertexNormals, boolean showNormals ) {
+    gfx.beginShape( PConstants.TRIANGLES );
+    AABB bounds = mesh.getBoundingBox();
+    Vec3D min = bounds.getMin();
+    Vec3D max = bounds.getMax();
+   // println("boundsMin: " + bounds.getMin() + ", boundsMax: " + bounds.getMax());
+    
+    if ( vertexNormals ) {
+      for ( Iterator i = mesh.faces.iterator(); i.hasNext(); ) {
+        
+        Face f = (Face)i.next();
+        colorMode(HSB);
+        
         Vec3D n = normalMap.applyTo(f.a.normal);
-        // gfx.fill(n.x, n.y, n.z);
-        if (f.a.z <0) {
-          gfx.fill(0, 0, 0, 0);
+        /*println("f.a.x: " + floor(f.a.x) + ", f.a.z: " + floor(f.a.z));
+        println("f.b.x: " + floor(f.b.x) + ", f.b.z: " + floor(f.b.z));
+        println("f.c.x: " + floor(f.c.x) + ", f.c.z: " + floor(f.c.z));*/
+        
+        //println("vertexHueA: " + colorGrid[floor(map((f.a.x), -1575, 1575, 0, scaledImg.width-1))][floor(map((f.a.z), -1175, 1175, 0, scaledImg.height-1))]);
+        vertexHueA = 110 + colorGrid[floor(map((f.a.x), -1575, 1575, 0, scaledImg.width-1))][floor(map((f.a.z), -1175, 1175, 0, scaledImg.height-1))]; //mapping based on 4 day cycle in seconds
+        while ( vertexHueA > 255 ) {
+          vertexHueA -= 255;
         }
-        else {
-          gfx.fill(n.x, n.y, n.z);
-        }      
-        gfx.normal(f.a.normal.x, f.a.normal.y, f.a.normal.z);
+        vertexColorA = color(vertexHueA, 255, 255 );
+        gfx.fill( vertexColorA );    
+        gfx.normal( f.a.normal.x, f.a.normal.y, f.a.normal.z );
         gfx.vertex(f.a.x, f.a.y, f.a.z);
+        
         n = normalMap.applyTo(f.b.normal);
-        if (f.b.z <0) {
-          gfx.fill(0, 0, 0, 0);
+        vertexHueB = 110 +colorGrid[floor(map((f.b.x), -1575, 1575, 0, scaledImg.width-1))][floor(map((f.b.z), -1175, 1175, 0, scaledImg.height-1))]; //mapping based on 4 day cycle in seconds
+        if ( vertexHueB > 255 ) {
+          vertexHueB -= 255;
         }
-        else {
-          gfx.fill(n.x, n.y, n.z);
-        }
+       // println( vertexHueB );
+        vertexColorB = color( round(vertexHueB), 255, 255 );
+        gfx.fill( vertexColorB );
         gfx.normal(f.b.normal.x, f.b.normal.y, f.b.normal.z);
         gfx.vertex(f.b.x, f.b.y, f.b.z);
+        
         n = normalMap.applyTo(f.c.normal);
-        if (f.c.z <0) {
-          gfx.fill(0, 0, 0, 0);
+        vertexHueC = 110 + colorGrid[floor(map((f.c.x), -1575, 1575, 0, scaledImg.width-1))][floor(map((f.c.z), -1175, 1175, 0, scaledImg.height-1))]; //mapping based on 4 day cycle in seconds
+        if ( vertexHueC > 255 ) {
+          vertexHueC -= 255;
         }
-        else {
-          gfx.fill(n.x, n.y, n.z);
-        }      
+        vertexColorC = color( round(vertexHueC), 255, 255 );
+        gfx.fill( vertexColorC );      
         gfx.normal(f.c.normal.x, f.c.normal.y, f.c.normal.z);
         gfx.vertex(f.c.x, f.c.y, f.c.z);
       }
     } 
+    
     else {
       for (Iterator i=mesh.faces.iterator(); i.hasNext();) {
         Face f=(Face)i.next();
@@ -146,11 +163,11 @@ class Mesh {
         gfx.stroke(0, 255, 0);
         gfx.vertex(f.b.x, f.b.y, f.b.z);
         gfx.stroke(0, 0, 255);
-
         gfx.vertex(f.c.x, f.c.y, f.c.z);
       }
     }
     gfx.endShape();
+    
     if (showNormals) {
       if (vertexNormals) {
         for (Iterator i=mesh.vertices.values().iterator(); i.hasNext();) {
@@ -161,6 +178,7 @@ class Mesh {
           gfx.line(v.x, v.y, v.z, w.x, w.y, w.z);
         }
       } 
+      
       else {
         for (Iterator i=mesh.faces.iterator(); i.hasNext();) {
           Face f=(Face)i.next();
@@ -174,66 +192,35 @@ class Mesh {
     }
   }
 
+
   void updateMesh() {
-
-    // create terrain & generate elevation data
-    // float res = .5;
-
-    //   PImage scaledImg = img;
-    //  scaledImg.resize(round(img.width*res), round(img.height*res));
-
-    // img.resize(round(img.width*res), round(img.height*res));
 
     terrain = new Terrain(round(scaledImg.width), round(scaledImg.height), round(50));
     float[] el = new float[scaledImg.width*scaledImg.height];
 
     for (int z = 0, i = 0; z < scaledImg.height; z++) {
       for (int x = 0; x < scaledImg.width; x++) {
-        el[i++] = brightness(scaledImg.get(x, z))/255.0 * 4000;
+ 
+        el[i] = brightness(scaledImg.get(x, z))/255.0 * 4000;
+        
+        if ( el[i] - brightnessGrid[x][z] > 20 ) {
+          colorGrid[x][z] = round( currentTime * 255 / runTime ); //convert from time since start to int between 0-255
+          //println("colorgridValue: " + colorGrid[x][z]);
+        }
+        brightnessGrid[x][z] = el[i];
+        
+        i++;
       }
     }
     terrain.setElevation(el);
 
     // create mesh
     mesh = (TriangleMesh)terrain.toMesh();
-    // attach drawing utils
-    //  gfx = new ToxiclibsSupport(this);
-
-    /* float[] m=new float[8];
-     for(int i=0; i<8; i++) {
-     m[i]=(int)random(9);
-     }
-     SurfaceMeshBuilder b = new SurfaceMeshBuilder(new SphericalHarmonics(m));
-     mesh = (TriangleMesh)b.createMesh(null,80, 60);*/
-
-    /* float phase=frameCount*NS*0.1;
-     BezierPatch patch = new BezierPatch();
-     for (int y = 0; y < 4; y++) {
-     for (int x = 0; x < 4; x++) {
-     float xx = x * SIZE * 2;
-     float yy = y * SIZE;
-     // float zz = (float) (SimplexNoise.noise(xx * NS, yy * NS, phase) * AMP);
-     
-     //  float zz = (brightness(img.get(x,y))/255.0)*Z;
-     
-     float zz = 0;
-     
-     patch.set(x, y, new Vec3D(xx, yy, zz));
-     }
-     }
-     
-     for ( y = 0; y < img.width; y+=slGridResolution) {
-     for ( x = 0; x < img.height; x+=slGridResolution) {
-     // computePointAt
-     }
-     }*/
-
-    //  mesh=(TriangleMesh)patch.toMesh(!mousePressed ? 32 : 4);
     mesh.center(null);
   }
 
   // draw mesh as horizontal lines
-  /*  void drawLines() {
+   /*void drawLines() {
    stroke(0);
    
    for(int i=0; i<gridRes; i++) {
@@ -334,5 +321,14 @@ class Mesh {
    50+75*colFract,
    80+175*colFract);
    } */
+   
+    /*void drawAxes(float l) {
+    stroke(255, 0, 0);
+    line(0, 0, 0, l, 0, 0);
+    stroke(0, 255, 0);
+    line(0, 0, 0, 0, l, 0);
+    stroke(0, 0, 255);
+    line(0, 0, 0, 0, 0, l);
+  }*/
+  
 }
-

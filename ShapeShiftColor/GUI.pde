@@ -8,29 +8,29 @@ int _x, _y, _z;
 
 void initControllers() {
   _x = width/2;
-  _y = height/2;
-  _z = -100;
-  nav=new UNav3D(this); 
+  _y = 500;//height/2;
+  _z = -3000;
+  nav = new UNav3D(this); 
   nav.trans.set(_x, _y, _z);
-  nav.rot.set(1.04, -18.88, -PI/12);
+  nav.rot.set(10*PI/12, 0, 0);
 
   // create a listener for mouse wheel events
   controlP5 = new ControlP5(this);
   controlP5.setColorLabel(color(0, 0, 0));
 
   //GRID RESOUTION
-/*  slGridResolution=50;
+  /*slGridResolution=50;
   controlP5.addSlider("slGridResolution", // name, must match variable name
   5, scaledImg.width, // min and max values
   slGridResolution, // the default value
   20, 20, // X,Y position of slider
   100, 13) // width and height of slider
-    .setId(1); 
-*/
+    .setId(1); */
+
   //Z SHIFT
-  Z=721;
-  controlP5.addSlider("Z", // name, must match variable name
-  5, 1000, // min and max values
+  Z = 721;
+  controlP5.addSlider("Z", // name, must match variable name 
+  5, 1000, // min and max values 
   Z, // the default value
   20, 40, // X,Y position of slider
   100, 13); // width and height of slider
@@ -55,14 +55,13 @@ void initControllers() {
   // we'll use it to regenerate the mesh
   //  controlP5.addBang("generateMesh",20,20,20,20);
 
-  controlP5.addBang("saveSTL", 220, 20, 20, 20);
+  //controlP5.addBang("saveSTL", 220, 20, 20, 20);
 
   // add toggle switch
-  controlP5.addToggle("toggleSolid", 
-  300, 20, // X,Y position
+  controlP5.addToggle("toggleSolid", 300, 20, // X,Y position 
   20, 20); // width and height
-
   controlP5.setAutoDraw(false);
+  
 }
 
 // catch ControlP5 events to force rebuilding the mesh
@@ -70,10 +69,6 @@ void controlEvent(ControlEvent theEvent) {
   generateMesh();
 }
 
-void saveSTL() {
-  /*terrain.model.writeSTL(this, 
-   IO.getIncrementalFilename("Terrain ###.stl", sketchPath));*/
-}
 
 // pass mouse and key events to our Nav3D instance
 void mouseDragged() {
@@ -102,7 +97,6 @@ void keyPressed() {
   else if (key == 'o') {
     println("x : " +nav.rot.x);
     println("y : " +nav.rot.y);
-
     println("z : " +nav.rot.z);
   }
   else if (key == 'r') {
@@ -113,4 +107,3 @@ void keyPressed() {
   }
   
 }
-
