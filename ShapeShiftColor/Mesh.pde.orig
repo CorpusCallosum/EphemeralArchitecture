@@ -25,7 +25,7 @@ class Mesh {
   float SIZE = 100;
 
   float AMP = SIZE*4;
-  
+
   TriangleMesh mesh = new TriangleMesh();
 
   boolean isWireFrame;
@@ -110,7 +110,7 @@ class Mesh {
     AABB bounds = mesh.getBoundingBox();
     Vec3D min = bounds.getMin();
     Vec3D max = bounds.getMax();
-    //int sat = 200;
+    int sat = 100;
     // println("boundsMin: " + bounds.getMin() + ", boundsMax: " + bounds.getMax());
 
     if ( vertexNormals ) {
@@ -120,7 +120,14 @@ class Mesh {
         colorMode(HSB);
 
         Vec3D n = normalMap.applyTo(f.a.normal);
+<<<<<<< HEAD
         
+=======
+        /*println("f.a.x: " + floor(f.a.x) + ", f.a.z: " + floor(f.a.z));
+         println("f.b.x: " + floor(f.b.x) + ", f.b.z: " + floor(f.b.z));
+         println("f.c.x: " + floor(f.c.x) + ", f.c.z: " + floor(f.c.z));*/
+
+>>>>>>> 8bbacdc63f70a3bf1fd2068df8d36a2702e3c349
         //println("vertexHueA: " + colorGrid[floor(map((f.a.x), -1575, 1575, 0, scaledImg.width-1))][floor(map((f.a.z), -1175, 1175, 0, scaledImg.height-1))]);
         vertexHueA = startHue + colorGrid[floor(map((f.a.x), -1575, 1575, 0, scaledImg.width-1))][floor(map((f.a.z), -1175, 1175, 0, scaledImg.height-1))]; //mapping based on 4 day cycle in seconds
         while ( vertexHueA > 255 ) {
@@ -218,8 +225,7 @@ class Mesh {
         el[i] = brightness(scaledImg.get(x, z))/255.0 * 4000;
 
         if ( el[i] - brightnessGrid[x][z] > 20 ) {
-          
-          colorGrid[x][z] = round( colorTime * 255 / runTime ); //convert from time since start to int between 0-255
+          colorGrid[x][z] = round( currentTime * 255 / runTime ); //convert from time since start to int between 0-255
           //println("colorgridValue: " + colorGrid[x][z]);
         }
         brightnessGrid[x][z] = el[i];
