@@ -55,10 +55,8 @@ long startTime;
 long currentTime;
 long lastTime = 0;
 int runTime = 120000; //4 days = 345600000 milliseconds
-int everyHour = 30;//3600; //1 hour = 3600 seconds
-
-
-
+int everyHour = 3600; //1 hour = 3600 seconds
+Timer _saveDepthMapTimer;
 
 
 //==============================================
@@ -79,17 +77,14 @@ void setup() {
   kinect = new Kinect(this);
   kinect.start();
   kinect.enableDepth(true);
-
-  // kinect.enableRGB(rgb);
-  //kinect.enableIR(ir);
-  //kinect.tilt(deg);
-  
   
   opencv = new OpenCV( this );
 
   img = kinect.getDepthImage();
+  //load the latest depth map here
+  blendedImg = loadImage("data/depth.jpg");
   alphaImg = createImage(img.width, img.height, RGB);
-  blendedImg = createImage(img.width, img.height, RGB);
+ // blendedImg = createImage(img.width, img.height, RGB);
   
   float _scale = .1;
   scaledImg = createImage(round(img.width*_scale), round(img.height*_scale), RGB);
@@ -122,7 +117,8 @@ void setup() {
   //startTime = round(today.getTime()/1000); //unix time - seconds
   startTime = System.currentTimeMillis();
  
-  
+ _saveDepthMapTimer = new Timer(60);//one minute
+  _saveDepthMapTimer.start();
 }
 
 
@@ -155,10 +151,6 @@ void draw() {
 
   //use opencv for brightness and contrast
   opencv.copy( img); 
-  //  int c = (int) map(mouseX, 0, width, -128, 128);
-  //   int b = (int) map(mouseY, 0, height, -128, 128);
- // int b = -10;
- // int c = 102;
   opencv.brightness( _brightness );
   opencv.contrast( _contrast );
   opencv.flip(OpenCV.FLIP_HORIZONTAL);
@@ -201,14 +193,19 @@ void draw() {
      saveSTL();
      //println("saved");
    }
+   _saveDepthMapTimer.update();
+   if ( _saveDepthMapTimer.isExpired()) {
+     saveDepthMap();
+     _saveDepthMapTimer.reset();
+     _saveDepthMapTimer.start();
+   }
    
     lastTime = currentTime;
 }
 
-
-
 // initializes 3D mesh
 void generateMesh() {
+ 
   if (mesh == null) mesh = new Mesh(this);
   //terrain.buildModel();
 }
@@ -236,6 +233,7 @@ void saveSTL() {
       
 }
 
-
-
-
+//save every minute
+void saveDepthMap(){
+  img.save("data/depth.jpg");
+}
