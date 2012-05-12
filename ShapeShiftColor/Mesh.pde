@@ -79,8 +79,8 @@ class Mesh {
     background(0);
     lights();
     shininess(16);
-    directionalLight(255, 255, 255, 0, -1, 1);
-    specular(255);
+    directionalLight(255, 255, 255, 100, 25 , 0);
+    pointLight(255,255,255, 0,0, 300);    specular(255);
     //drawAxes(400);
 
     if ( isWireFrame ) {
@@ -232,5 +232,6 @@ class Mesh {
     mesh = (TriangleMesh)terrain.toMesh();
     mesh.center(null);
   }
+  
 }
 
