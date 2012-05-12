@@ -105,5 +105,10 @@ void keyPressed() {
   else if (key == 'm') {
    _blendMode = !_blendMode;
   }
+   else if (key == 's') {
+    //save stl
+    saveSTL();
+    saveDepthMap();
+   }
   
 }
