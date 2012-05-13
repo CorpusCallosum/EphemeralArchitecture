@@ -108,7 +108,7 @@ noCursor();
   //startTime = round(today.getTime()/1000); //unix time - seconds
   startTime = System.currentTimeMillis();
  
- _saveDepthMapTimer = new Timer(60);//one minute
+ _saveDepthMapTimer = new Timer(60*60);//one hour
   _saveDepthMapTimer.start();
   
   draw();
