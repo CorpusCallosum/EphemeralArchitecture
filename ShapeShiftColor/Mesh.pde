@@ -206,7 +206,7 @@ class Mesh {
     }
     
     if(_drawLines){
-      color lineColor = color(hue(c), 255, brightness(c));
+      color lineColor = color(hue(c), 150, brightness(c));
       gfx.stroke( lineColor );
     }
     else{
