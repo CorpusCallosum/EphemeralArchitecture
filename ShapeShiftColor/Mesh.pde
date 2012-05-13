@@ -199,6 +199,11 @@ class Mesh {
     gfx.strokeWeight(3);
     if (toggleSolid) {
       gfx.fill( c );
+      /*int strokeColor = c + 20;
+      if ( strokeColor > 255 ) {
+        strokeColor -= 255;
+      gfx.stroke( strokeColor );*/
+      gfx.stroke(150);
     } 
     else {
       gfx.fill( 0 );  
@@ -206,7 +211,7 @@ class Mesh {
     }
     
     if(_drawLines){
-      color lineColor = color(hue(c), 255, brightness(c));
+      color lineColor = color(hue(c), 150, brightness(c));
       gfx.stroke( lineColor );
     }
     else{
@@ -226,8 +231,8 @@ class Mesh {
 
         el[i] = brightness(scaledImg.get(x, z))/255.0 * Z;
 
-        if ( el[i] - brightnessGrid[x][z] > 20 ) {
-          colorGrid[x][z] = round( currentTime * 255 / runTime ); //convert from time since start to int between 0-255
+        if ( abs(el[i] - brightnessGrid[x][z]) > 20 ) {
+          colorGrid[x][z] = round( colorTime * 255 / runTime ); //convert from time since start to int between 0-255
           //println("colorgridValue: " + colorGrid[x][z]);
         }
         brightnessGrid[x][z] = el[i];

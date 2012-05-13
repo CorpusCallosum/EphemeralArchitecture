@@ -42,6 +42,7 @@ PImage alphaImg, scaledImg;
 PImage colorSnapshot; //save color information every hour
 PImage colorInit; //initialize with color from most recent snapshot
 int startHue = 110;
+int sat = 200;
 
 Kinect kinect;
 boolean drawKinect = false;
@@ -53,17 +54,12 @@ float _counter = 110;
 //Date today = new Date();
 long startTime; 
 long currentTime;
+long colorTime = 0;
 long lastTime = 0;
 int runTime = 120000; //4 days = 345600000 milliseconds
-<<<<<<< HEAD
-int everyHour = 30;//3600; //1 hour = 3600 seconds
-
-
-
-=======
 int everyHour = 3600; //1 hour = 3600 seconds
+int cycles = 1;
 Timer _saveDepthMapTimer;
->>>>>>> 8bbacdc63f70a3bf1fd2068df8d36a2702e3c349
 
 
 //==============================================
@@ -89,7 +85,7 @@ void setup() {
 
   img = kinect.getDepthImage();
   //load the latest depth map here
-  blendedImg = loadImage("data/depth.jpg");
+  blendedImg = loadImage("data/lastDepth.jpg");
   alphaImg = createImage(img.width, img.height, RGB);
  // blendedImg = createImage(img.width, img.height, RGB);
   
@@ -105,8 +101,8 @@ void setup() {
      }
   }
   
-  //initialize color grid to starting color
   
+<<<<<<< HEAD
   colorInit = loadImage("colorInitialize.jpg");
   for (int i = 0; i < scaledImg.width; i++ ) {
     for ( int j = 0; j < scaledImg.height; j++ ) {
@@ -114,9 +110,10 @@ void setup() {
       int initialHue = round( hue(colorInit.get( i, j )) );
       colorGrid[i][j] = initialHue - startHue;
       //colorGrid[i][j] = currentTime * 255 / runTime; 
-      brightnessGrid[i][j] = 0;
     }
   }
+=======
+>>>>>>> 6ea0bc754088c8fe82ddb15f56b2587a25938224
   
   //create image to save color to
   colorSnapshot = createImage( scaledImg.width, scaledImg.height, HSB );
@@ -126,6 +123,9 @@ void setup() {
  
  _saveDepthMapTimer = new Timer(60);//one minute
   _saveDepthMapTimer.start();
+  
+  draw();
+  loadColor();
 }
 
 
@@ -137,7 +137,15 @@ void draw() {
   
   //currentTime = round( today.getTime()/1000 ) - startTime;// how long the sketch has been running in seconds
   currentTime = System.currentTimeMillis() - startTime;
-  //println("startTime: " + startTime + ", currentTime: " + currentTime);
+  if ( colorTime >= runTime ) {
+    cycles++;
+  }
+  if ( cycles > 1 ) {
+    colorTime = currentTime - ( (cycles - 1 ) * runTime );
+  }
+  else {
+    colorTime = currentTime;
+  }
 
   // because we want controlP5 to be drawn on top of everything
   // we need to disable OpenGL's depth testing at the end
@@ -208,6 +216,7 @@ void draw() {
    }
    
     lastTime = currentTime;
+    
 }
 
 // initializes 3D mesh
@@ -219,7 +228,6 @@ void generateMesh() {
 
 //save mesh to stl
 void saveSTL() {
-<<<<<<< HEAD
   
   long saveTime = System.currentTimeMillis()/1000;
   mesh.getMeshReference().saveAsSTL(sketchPath("data/LANscape"+saveTime+".stl"));
@@ -228,23 +236,50 @@ void saveSTL() {
     for ( int j = 0; j < scaledImg.height; j++ ) {
       
       colorMode( HSB, 255 );
-      color c = color( round( startHue + colorGrid[i][j] ), 255, 255 );
+      color c = color( round( startHue + colorGrid[i][j] ), sat, 255 );
       
       //println("colorGridValue: " + colorGrid[i][j] + ", red: " + red(c) + ", green: " + green(c) + ", blue: " + blue(c));
       //println(colorGrid[i][j]);
       colorSnapshot.set( i, j, c );
-      colorSnapshot.save( sketchPath("data/colorSnapshot"+saveTime+".jpg") );
-      colorSnapshot.save( sketchPath("data/colorInitialize.jpg") );
+<<<<<<< HEAD
+     
+    
       
     }
   }
-      
+      colorSnapshot.save( sketchPath("data/colorInitialize.png") );
+      //colorSnapshot.save( sketchPath("data/colorSnapshot"+saveTime+".jpg") );
 =======
-  mesh.getMeshReference().saveAsSTL(sketchPath("stl/LANscape"+(System.currentTimeMillis()/1000)+".stl"));
->>>>>>> 8bbacdc63f70a3bf1fd2068df8d36a2702e3c349
+   
+      
+    }
+  }
+  
+     colorSnapshot.save( sketchPath("data/colorSnapshot"+saveTime+".jpg") );
+      colorSnapshot.save( sketchPath("data/colorInitialize.jpg") );
+      
+>>>>>>> 6ea0bc754088c8fe82ddb15f56b2587a25938224
 }
 
 //save every minute
 void saveDepthMap(){
-  img.save("data/depth.jpg");
+<<<<<<< HEAD
+  img.save("data/depth.png");
+=======
+  long saveTime = System.currentTimeMillis()/1000;
+  img.save("data/lastDepth.jpg");
+  img.save("data/depth/depth"+saveTime+".jpg");
+}
+
+void loadColor(){
+   //initialize color grid to starting color
+  colorInit = loadImage("colorInitialize.jpg");
+  for (int i = 0; i < scaledImg.width; i++ ) {
+    for ( int j = 0; j < scaledImg.height; j++ ) {
+      colorMode( HSB, 255 );
+      int initialHue = round( hue(colorInit.get( i, j )) );
+      colorGrid[i][j] = initialHue - startHue;
+    }
+  } 
+>>>>>>> 6ea0bc754088c8fe82ddb15f56b2587a25938224
 }

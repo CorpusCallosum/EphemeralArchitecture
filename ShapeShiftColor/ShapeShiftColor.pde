@@ -42,14 +42,14 @@ PImage alphaImg, scaledImg;
 PImage colorSnapshot; //save color information every hour
 PImage colorInit; //initialize with color from most recent snapshot
 int startHue = 110;
+int cycles = 1;
 
 Kinect kinect;
 boolean drawKinect = false;
 boolean _debug = false;
 boolean _blendMode = true;
-boolean _drawLines = true;
+boolean _drawLines = false;
 boolean _transparent = false;
-boolean _firstRun = true;
 
 float _counter = 110;
 
@@ -57,6 +57,7 @@ float _counter = 110;
 long startTime; 
 long currentTime;
 long lastTime = 0;
+long colorTime = 0;
 int runTime = 120000; //4 days = 345600000 milliseconds
 int everyHour = 3600; //1 hour = 3600 seconds
 Timer _saveDepthMapTimer;
@@ -65,7 +66,8 @@ Timer _loadColorTimer;
 
 //==============================================
 void setup() {
-  size(1440, 900, OPENGL);
+  size(1024, 768, OPENGL);
+noCursor();
 
 
   // input image must be square or have a greater height than width.
@@ -86,10 +88,18 @@ void setup() {
 
   img = kinect.getDepthImage();
   //load the latest depth map here
-  blendedImg = loadImage("data/lastDepth.jpg");
+  try{
+    blendedImg = loadImage("data/lastDepth.jpg");
+  }
+  catch (Exception e){
+    blendedImg = createImage(img.width, img.height, RGB);
+  }
+  if(blendedImg == null){
+    blendedImg = createImage(img.width, img.height, RGB);
+  }
   alphaImg = createImage(img.width, img.height, RGB);
-  // blendedImg = createImage(img.width, img.height, RGB);
-
+ // 
+  
   float _scale = .1;
   scaledImg = createImage(round(img.width*_scale), round(img.height*_scale), RGB);
   colorGrid = new float[scaledImg.width][scaledImg.height];
@@ -129,6 +139,16 @@ void draw() {
 
   //currentTime = round( today.getTime()/1000 ) - startTime;// how long the sketch has been running in seconds
   currentTime = System.currentTimeMillis() - startTime;
+  if ( colorTime >= runTime ) {
+    cycles++;
+  }
+  if ( cycles > 1 ) {
+    colorTime = currentTime - ( (cycles - 1 ) * runTime );
+  }
+  else {
+    colorTime = currentTime;
+  }
+
   //println("startTime: " + startTime + ", currentTime: " + currentTime);
 
   // because we want controlP5 to be drawn on top of everything
