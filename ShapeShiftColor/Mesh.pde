@@ -110,7 +110,7 @@ class Mesh {
     AABB bounds = mesh.getBoundingBox();
     Vec3D min = bounds.getMin();
     Vec3D max = bounds.getMax();
-    //int sat = 200;
+   // int sat = 100;
     // println("boundsMin: " + bounds.getMin() + ", boundsMax: " + bounds.getMax());
 
     if ( vertexNormals ) {
@@ -126,11 +126,9 @@ class Mesh {
         while ( vertexHueA > 255 ) {
           vertexHueA -= 255;
         }
-        vertexColorA = color(vertexHueA, sat, 255 );
-
+        vertexColorA = color(vertexHueA, _sat, 255 );
         setVertexColor(gfx, vertexColorA);
         
-
         gfx.normal( f.a.normal.x, f.a.normal.y, f.a.normal.z );
         gfx.vertex(f.a.x, f.a.y, f.a.z);
 
@@ -140,7 +138,7 @@ class Mesh {
           vertexHueB -= 255;
         }
         // println( vertexHueB );
-        vertexColorB = color( round(vertexHueB), sat, 255 );
+        vertexColorB = color( round(vertexHueB), _sat, 255 );
         setVertexColor(gfx, vertexColorB);
 
         gfx.normal(f.b.normal.x, f.b.normal.y, f.b.normal.z);
@@ -151,7 +149,7 @@ class Mesh {
         if ( vertexHueC > 255 ) {
           vertexHueC -= 255;
         }
-        vertexColorC = color( round(vertexHueC), sat, 255 );
+        vertexColorC = color( round(vertexHueC), _sat, 255 );
         setVertexColor(gfx, vertexColorC);
  
         gfx.normal(f.c.normal.x, f.c.normal.y, f.c.normal.z);
@@ -198,6 +196,7 @@ class Mesh {
   }
 
   void setVertexColor(PGraphics gfx, int c) {
+    gfx.strokeWeight(3);
     if (toggleSolid) {
       gfx.fill( c );
       /*int strokeColor = c + 20;
@@ -210,21 +209,30 @@ class Mesh {
       gfx.fill( 0 );  
       gfx.stroke( c );
     }
+    
+    if(_drawLines){
+      color lineColor = color(hue(c), 255, brightness(c));
+      gfx.stroke( lineColor );
+    }
+    else{
+      gfx.noStroke();
+    }
+    if(_transparent){
+      gfx.noFill();
+    }
   }
 
   void updateMesh() {
-
     terrain = new Terrain(round(scaledImg.width), round(scaledImg.height), round(50));
     float[] el = new float[scaledImg.width*scaledImg.height];
 
     for (int z = 0, i = 0; z < scaledImg.height; z++) {
       for (int x = 0; x < scaledImg.width; x++) {
 
-        el[i] = brightness(scaledImg.get(x, z))/255.0 * 4000;
+        el[i] = brightness(scaledImg.get(x, z))/255.0 * Z;
 
         if ( el[i] - brightnessGrid[x][z] > 20 ) {
-          
-          colorGrid[x][z] = round( colorTime * 255 / runTime ); //convert from time since start to int between 0-255
+          colorGrid[x][z] = round( currentTime * 255 / runTime ); //convert from time since start to int between 0-255
           //println("colorgridValue: " + colorGrid[x][z]);
         }
         brightnessGrid[x][z] = el[i];

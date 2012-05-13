@@ -21,7 +21,7 @@ import org.openkinect.processing.*;
 ControlP5 controlP5; // instance of the controlP5 library
 
 //SLIDER VRS
-int slGridResolution, _brightness, _contrast; // slider value for grid resolution
+int slGridResolution, _brightness, _contrast, _sat; // slider value for grid resolution
 float Z; // controls the height difference in the terrain
 float noiseXD, noiseYD; // modifiers for X,Y noise
 
@@ -42,30 +42,29 @@ PImage alphaImg, scaledImg;
 PImage colorSnapshot; //save color information every hour
 PImage colorInit; //initialize with color from most recent snapshot
 int startHue = 110;
-int sat = 200;
 
 Kinect kinect;
 boolean drawKinect = false;
 boolean _debug = false;
 boolean _blendMode = true;
+boolean _drawLines = true;
+boolean _transparent = false;
 
 float _counter = 110;
 
 //Date today = new Date();
 long startTime; 
 long currentTime;
-long colorTime = 0;
 long lastTime = 0;
 int runTime = 120000; //4 days = 345600000 milliseconds
 int everyHour = 3600; //1 hour = 3600 seconds
-int cycles = 1;
 Timer _saveDepthMapTimer;
 
 
 //==============================================
 void setup() {
-  size(1440, 900, OPENGL);
-
+  size(1024, 768, OPENGL);
+noCursor();
 
   // input image must be square or have a greater height than width.
 
@@ -109,7 +108,7 @@ void setup() {
   //startTime = round(today.getTime()/1000); //unix time - seconds
   startTime = System.currentTimeMillis();
  
- _saveDepthMapTimer = new Timer(60);//one minute
+ _saveDepthMapTimer = new Timer(60*60);//one hour
   _saveDepthMapTimer.start();
   
   draw();
@@ -125,15 +124,7 @@ void draw() {
   
   //currentTime = round( today.getTime()/1000 ) - startTime;// how long the sketch has been running in seconds
   currentTime = System.currentTimeMillis() - startTime;
-  if ( colorTime >= runTime ) {
-    cycles++;
-  }
-  if ( cycles > 1 ) {
-    colorTime = currentTime - ( (cycles - 1 ) * runTime );
-  }
-  else {
-    colorTime = currentTime;
-  }
+  //println("startTime: " + startTime + ", currentTime: " + currentTime);
 
   // because we want controlP5 to be drawn on top of everything
   // we need to disable OpenGL's depth testing at the end
@@ -224,13 +215,11 @@ void saveSTL() {
     for ( int j = 0; j < scaledImg.height; j++ ) {
       
       colorMode( HSB, 255 );
-      color c = color( round( startHue + colorGrid[i][j] ), sat, 255 );
+      color c = color( round( startHue + colorGrid[i][j] ), 255, 255 );
       
       //println("colorGridValue: " + colorGrid[i][j] + ", red: " + red(c) + ", green: " + green(c) + ", blue: " + blue(c));
       //println(colorGrid[i][j]);
       colorSnapshot.set( i, j, c );
-   
-      
     }
   }
   
