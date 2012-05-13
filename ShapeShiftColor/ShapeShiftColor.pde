@@ -107,6 +107,7 @@ noCursor();
   
   float _scale = .1;
   scaledImg = createImage(round(img.width*_scale), round(img.height*_scale), RGB);
+ 
   colorGrid = new float[scaledImg.width][scaledImg.height];
   brightnessGrid = new float[scaledImg.width][scaledImg.height];
 
@@ -187,12 +188,18 @@ void draw() {
 
   //contrast
   img = kinect.getDepthImage();
+  
+  img.copy(img, 0,0,img.width,img.height,0,0, img.width+10, img.height+10);
 
   //use opencv for brightness and contrast
+//  img = flipH(img);
+  
   opencv.copy( img); 
+  opencv.flip(OpenCV.FLIP_HORIZONTAL); //THIS IS CAUSING THE BLACK STRIPE
+  
+
   opencv.brightness( _brightness );
   opencv.contrast( _contrast );
-  opencv.flip(OpenCV.FLIP_HORIZONTAL);
 
   modifiedImg = opencv.image();
   modifiedImg.mask(alphaImg);
@@ -208,9 +215,9 @@ void draw() {
 
   fill(255);
   if (drawKinect) {
-    image(img, width-310, 0, 320, 240);
-    image(modifiedImg, width-310, 240, 320, 240);
-    image(blendedImg, width-310, 240*2, 320, 240);
+    image(img, width-350, 0, 320, 240);
+    image(modifiedImg, width-350, 240, 320, 240);
+    image(blendedImg, width-350, 240*2, 320, 240);
   }
   img = blendedImg;
 
@@ -222,10 +229,6 @@ void draw() {
 
   if (_debug)
     controlP5.draw();
-
-  /*_counter+=.01;
-   if(_counter >= 255)
-   _counter = 0;*/
 
   if ( round(currentTime/1000) % everyHour == 0 && round(lastTime/1000) % everyHour !=0) {
     saveSTL();
@@ -313,4 +316,15 @@ void loadColor() {
 void stop() {
   kinect.quit();
   super.stop();
+}
+
+PImage flipH(PImage si){
+  PImage fi;
+  fi = createImage(si.width, si.height, RGB);
+  for (int x=0;x<si.width;x++){
+      for (int y=0;y<si.width;y++){
+        fi.set(si.width-x-10, y, si.get(x,y));
+      }    
+  }
+  return fi;
 }
