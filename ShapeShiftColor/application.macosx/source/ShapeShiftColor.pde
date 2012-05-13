@@ -21,7 +21,7 @@ import org.openkinect.processing.*;
 ControlP5 controlP5; // instance of the controlP5 library
 
 //SLIDER VRS
-int slGridResolution, _brightness, _contrast, _sat; // slider value for grid resolution
+int slGridResolution, _brightness, _contrast; // slider value for grid resolution
 float Z; // controls the height difference in the terrain
 float noiseXD, noiseYD; // modifiers for X,Y noise
 
@@ -64,7 +64,7 @@ Timer _saveDepthMapTimer;
 //==============================================
 void setup() {
   size(1024, 768, OPENGL);
-noCursor();
+
 
   // input image must be square or have a greater height than width.
 
@@ -108,7 +108,7 @@ noCursor();
   //startTime = round(today.getTime()/1000); //unix time - seconds
   startTime = System.currentTimeMillis();
  
- _saveDepthMapTimer = new Timer(60*60);//one hour
+ _saveDepthMapTimer = new Timer(60);//one minute
   _saveDepthMapTimer.start();
   
   draw();
