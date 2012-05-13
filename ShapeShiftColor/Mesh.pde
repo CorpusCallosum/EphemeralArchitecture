@@ -200,6 +200,11 @@ class Mesh {
   void setVertexColor(PGraphics gfx, int c) {
     if (toggleSolid) {
       gfx.fill( c );
+      /*int strokeColor = c + 20;
+      if ( strokeColor > 255 ) {
+        strokeColor -= 255;
+      gfx.stroke( strokeColor );*/
+      gfx.stroke(150);
     } 
     else {
       gfx.fill( 0 );  
