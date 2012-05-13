@@ -232,7 +232,7 @@ class Mesh {
         el[i] = brightness(scaledImg.get(x, z))/255.0 * Z;
 
         if ( el[i] - brightnessGrid[x][z] > 20 ) {
-          colorGrid[x][z] = round( currentTime * 255 / runTime ); //convert from time since start to int between 0-255
+          colorGrid[x][z] = round( colorTime * 255 / runTime ); //convert from time since start to int between 0-255
           //println("colorgridValue: " + colorGrid[x][z]);
         }
         brightnessGrid[x][z] = el[i];

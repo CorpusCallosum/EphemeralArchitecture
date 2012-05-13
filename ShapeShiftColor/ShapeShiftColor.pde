@@ -56,6 +56,7 @@ float _counter = 110;
 long startTime; 
 long currentTime;
 long lastTime = 0;
+long colorTime = 0;
 int runTime = 120000; //4 days = 345600000 milliseconds
 int everyHour = 3600; //1 hour = 3600 seconds
 Timer _saveDepthMapTimer;
@@ -124,6 +125,16 @@ void draw() {
   
   //currentTime = round( today.getTime()/1000 ) - startTime;// how long the sketch has been running in seconds
   currentTime = System.currentTimeMillis() - startTime;
+  if ( colorTime >= runTime ) {
+    cycles++;
+  }
+  if ( cycles > 1 ) {
+    colorTime = currentTime - ( (cycles - 1 ) * runTime );
+  }
+  else {
+    colorTime = currentTime;
+  }
+
   //println("startTime: " + startTime + ", currentTime: " + currentTime);
 
   // because we want controlP5 to be drawn on top of everything
