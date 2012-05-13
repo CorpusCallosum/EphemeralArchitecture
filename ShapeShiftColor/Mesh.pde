@@ -224,7 +224,7 @@ class Mesh {
     for (int z = 0, i = 0; z < scaledImg.height; z++) {
       for (int x = 0; x < scaledImg.width; x++) {
 
-        el[i] = brightness(scaledImg.get(x, z))/255.0 * 4000;
+        el[i] = brightness(scaledImg.get(x, z))/255.0 * Z;
 
         if ( el[i] - brightnessGrid[x][z] > 20 ) {
           colorGrid[x][z] = round( currentTime * 255 / runTime ); //convert from time since start to int between 0-255

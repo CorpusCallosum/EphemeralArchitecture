@@ -28,9 +28,9 @@ void initControllers() {
     .setId(1); */
 
   //Z SHIFT
-  Z = 721;
+  Z = 3000;
   controlP5.addSlider("Z", // name, must match variable name 
-  5, 1000, // min and max values 
+  5, 4000, // min and max values 
   Z, // the default value
   20, 40, // X,Y position of slider
   100, 13); // width and height of slider
