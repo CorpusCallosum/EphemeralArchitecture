@@ -7,25 +7,17 @@
 int _x, _y, _z;
 
 void initControllers() {
-  _x = width/2;
-  _y = 500;//height/2;
-  _z = -3000;
-  nav = new UNav3D(this); 
-  nav.trans.set(_x, _y, _z);
-  nav.rot.set(10*PI/12, 0, 0);
+  //_x = width/2;
+  //_y = 500;//height/2;
+  //_z = -3000;
+  //nav = new UNav3D(this); 
+  //nav.trans.set(_x, _y, _z);
+  //nav.rot.set(10*PI/12, 0, 0);
 
   // create a listener for mouse wheel events
   controlP5 = new ControlP5(this);
   controlP5.setColorLabel(color(0, 0, 0));
 
-  //GRID RESOUTION
-  /*slGridResolution=50;
-  controlP5.addSlider("slGridResolution", // name, must match variable name
-  5, scaledImg.width, // min and max values
-  slGridResolution, // the default value
-  20, 20, // X,Y position of slider
-  100, 13) // width and height of slider
-    .setId(1); */
 
   //Z SHIFT
   Z = 3000;
@@ -83,11 +75,12 @@ void mouseDragged() {
   // ignore mouse event if cursor is over controlP5 GUI elements
   if (controlP5.window(this).isMouseOver()) return;
 
-  nav.mouseDragged();
+  //nav.mouseDragged();
 }
 
 void keyPressed() {
-  nav.keyPressed();
+  
+  //nav.keyPressed();
 
   if (key == ' ') {
     //load image as mesh
@@ -109,9 +102,8 @@ void keyPressed() {
     }
   }
   else if (key == 'o') {
-    println("x : " +nav.rot.x);
-    println("y : " +nav.rot.y);
-    println("z : " +nav.rot.z);
+   println("transX: " + transX + ", transY: " + transY + ", transZ: " + transZ);
+   println("rotX: " + rotX + ", rotY: " + rotY + ", rotZ: " + rotZ);
   }
   else if (key == 'w') {
    toggleSolid = !toggleSolid;
@@ -133,31 +125,58 @@ void keyPressed() {
     else if (key == 'c') {
     loadColor();
    }
+   
+   //translate
     else if (key == '=') {
       //zoom in
-      _z += 50;
-     nav.trans.set(_x, _y, _z);
+      transZ +=50;
    }
    else if (key == '-') {
       //zoom out
-     _z -=50;
-     nav.trans.set(_x, _y, _z);
+      transZ -= 50;
    }
+    else if (key == '7') {
+      //down
+      transY += 50;
+    }
     else if (key == '8') {
       //up
-      trans(_x, _y-50, _z);
+      transY -= 50;
    }
-   else if (key == '6') {
-      //right
-       trans(_x+50, _y, _z);
-   }
-   else if (key == '4') {
+   else if (key == '9') {
       //left
-       trans(_x-50, _y, _z);
+      transX -= 50;
+   }
+   else if (key == '0') {
+      //right
+      transX += 50;
+   }
+   
+   
+   //rotation
+       else if (key == '1') {
+      //zoom in
+      rotZ -= PI / 12;
    }
    else if (key == '2') {
+      //zoom out
+     rotZ += PI / 12;
+   }
+    else if (key == '3') {
+      //up
+      rotY -= PI / 12;
+   }
+   else if (key == '4') {
+      //right
+      rotY += PI / 12;
+   }
+   else if (key == '5') {
+      //left
+      rotX -= PI / 12;
+   }
+   else if (key == '6') {
       //down
-       trans(_x, _y+50, _z);
+      rotX += PI / 12;
    }
   
 }
@@ -166,5 +185,5 @@ void trans(int x, int y, int z){
   _x = x;
   _y = y;
   _z = z;
-  nav.trans.set(_x, _y, _z);
+  //nav.trans.set(_x, _y, _z);
 }

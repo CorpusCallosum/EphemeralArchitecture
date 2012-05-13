@@ -92,7 +92,7 @@ class Mesh {
       noStroke();
     }
     updateMesh();
-
+  
     drawMesh( g, mesh, !isWireFrame, showNormals );
     //drawLines();
 

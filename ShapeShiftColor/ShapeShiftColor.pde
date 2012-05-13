@@ -27,7 +27,7 @@ float noiseXD, noiseYD; // modifiers for X,Y noise
 
 boolean toggleSolid=true; // controls rendering style
 
-UNav3D nav; // camera controller
+//UNav3D nav; // camera controller
 Mesh mesh; // Terrain object
 
 OpenCV opencv;
@@ -41,6 +41,7 @@ PImage blendedImg;
 PImage alphaImg, scaledImg;
 PImage colorSnapshot; //save color information every hour
 PImage colorInit; //initialize with color from most recent snapshot
+PImage depthSnapshot;
 int startHue = 110;
 int cycles = 1;
 
@@ -50,6 +51,7 @@ boolean _debug = false;
 boolean _blendMode = true;
 boolean _drawLines = false;
 boolean _transparent = false;
+
 
 float _counter = 110;
 
@@ -63,6 +65,8 @@ int everyHour = 3600; //1 hour = 3600 seconds
 Timer _saveDepthMapTimer;
 Timer _loadColorTimer;
 
+int transX, transY, transZ;
+float rotX, rotY, rotZ;
 
 //==============================================
 void setup() {
@@ -86,7 +90,8 @@ noCursor();
 
   opencv = new OpenCV( this );
 
-  img = kinect.getDepthImage();
+  img = kinect.getDepthImage();//get depth prethresholded
+  
   //load the latest depth map here
   try{
     blendedImg = loadImage("data/lastDepth.jpg");
@@ -116,6 +121,7 @@ noCursor();
 
   //create image to save color to
   colorSnapshot = createImage( scaledImg.width, scaledImg.height, HSB );
+  depthSnapshot = createImage( img.width, img.height, RGB );
 
   //startTime = round(today.getTime()/1000); //unix time - seconds
   startTime = System.currentTimeMillis();
@@ -125,6 +131,13 @@ noCursor();
   
    _loadColorTimer = new Timer(1);//
   _loadColorTimer.start();
+  
+  transX = -550;
+  transY = -1650;
+  transZ = -1700;
+  rotX = -PI / 4;
+  rotY = 0;
+  rotZ = PI;
 
   draw();
   loadColor();
@@ -156,9 +169,16 @@ void draw() {
   // of draw(). that means we need to turn it on again here.
   hint(ENABLE_DEPTH_TEST); 
 
-  pushMatrix();    
+  pushMatrix();  
+  rotateX( rotX );
+  rotateY( rotY );
+  rotateZ( rotZ );
+  //rotate( rotX, rotY, rotZ );
+  translate( transX, transY, transZ );
+  //translate( 4000, 500, -2000);  
+  
   lights();
-  nav.doTransforms(); // transformations using Nav3D
+  //nav.doTransforms(); // transformations using Nav3D
   mesh.draw();
   popMatrix();
 
@@ -242,7 +262,7 @@ void generateMesh() {
 void saveSTL() {
 
   long saveTime = System.currentTimeMillis()/1000;
-  mesh.getMeshReference().saveAsSTL(sketchPath("data/LANscape"+saveTime+".stl"));
+  mesh.getMeshReference().saveAsSTL(sketchPath("data/stl/LANscape"+saveTime+".stl"));
 
   for ( int i = 0; i < scaledImg.width; i++ ) {
     for ( int j = 0; j < scaledImg.height; j++ ) {
@@ -256,15 +276,25 @@ void saveSTL() {
     }
   }
 
-  colorSnapshot.save( sketchPath("data/colorSnapshot"+saveTime+".jpg") );
+  colorSnapshot.save( sketchPath("data/color/colorSnapshot"+saveTime+".jpg") );
   colorSnapshot.save( sketchPath("data/colorInitialize.jpg") );
 }
 
 //save every minute
 void saveDepthMap() {
   long saveTime = System.currentTimeMillis()/1000;
-  img.save("data/lastDepth.jpg");
-  img.save("data/depth/depth"+saveTime+".jpg");
+  for ( int i = 0; i < img.width; i++ ) {
+    for ( int j = 0; j < img.height; j++ ) {
+      color c = img.get( i, j );
+      depthSnapshot.set(i, j, c );
+      
+    }
+  }
+  
+  depthSnapshot.save("data/lastDepth.jpg");
+  depthSnapshot.save("data/depth/depth"+saveTime+".jpg");
+  //img.save("data/lastDepth.jpg");
+  //img.save("data/depth/depth"+saveTime+".jpg");
 }
 
 void loadColor() {
@@ -279,3 +309,8 @@ void loadColor() {
   }
 }
 
+
+void stop() {
+  kinect.quit();
+  super.stop();
+}
