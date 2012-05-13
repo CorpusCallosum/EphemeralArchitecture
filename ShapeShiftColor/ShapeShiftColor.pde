@@ -21,7 +21,7 @@ import org.openkinect.processing.*;
 ControlP5 controlP5; // instance of the controlP5 library
 
 //SLIDER VRS
-int slGridResolution, _brightness, _contrast; // slider value for grid resolution
+int slGridResolution, _brightness, _contrast, _sat; // slider value for grid resolution
 float Z; // controls the height difference in the terrain
 float noiseXD, noiseYD; // modifiers for X,Y noise
 

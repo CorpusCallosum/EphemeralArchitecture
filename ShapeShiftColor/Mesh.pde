@@ -110,7 +110,7 @@ class Mesh {
     AABB bounds = mesh.getBoundingBox();
     Vec3D min = bounds.getMin();
     Vec3D max = bounds.getMax();
-    int sat = 100;
+   // int sat = 100;
     // println("boundsMin: " + bounds.getMin() + ", boundsMax: " + bounds.getMax());
 
     if ( vertexNormals ) {
@@ -126,7 +126,7 @@ class Mesh {
         while ( vertexHueA > 255 ) {
           vertexHueA -= 255;
         }
-        vertexColorA = color(vertexHueA, sat, 255 );
+        vertexColorA = color(vertexHueA, _sat, 255 );
         setVertexColor(gfx, vertexColorA);
         
         gfx.normal( f.a.normal.x, f.a.normal.y, f.a.normal.z );
@@ -138,7 +138,7 @@ class Mesh {
           vertexHueB -= 255;
         }
         // println( vertexHueB );
-        vertexColorB = color( round(vertexHueB), sat, 255 );
+        vertexColorB = color( round(vertexHueB), _sat, 255 );
         setVertexColor(gfx, vertexColorB);
 
         gfx.normal(f.b.normal.x, f.b.normal.y, f.b.normal.z);
@@ -149,7 +149,7 @@ class Mesh {
         if ( vertexHueC > 255 ) {
           vertexHueC -= 255;
         }
-        vertexColorC = color( round(vertexHueC), sat, 255 );
+        vertexColorC = color( round(vertexHueC), _sat, 255 );
         setVertexColor(gfx, vertexColorC);
  
         gfx.normal(f.c.normal.x, f.c.normal.y, f.c.normal.z);
@@ -199,6 +199,11 @@ class Mesh {
     gfx.strokeWeight(3);
     if (toggleSolid) {
       gfx.fill( c );
+      /*int strokeColor = c + 20;
+      if ( strokeColor > 255 ) {
+        strokeColor -= 255;
+      gfx.stroke( strokeColor );*/
+      gfx.stroke(150);
     } 
     else {
       gfx.fill( 0 );  
