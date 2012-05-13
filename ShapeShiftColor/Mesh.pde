@@ -110,7 +110,7 @@ class Mesh {
     AABB bounds = mesh.getBoundingBox();
     Vec3D min = bounds.getMin();
     Vec3D max = bounds.getMax();
-    //int sat = 200;
+    int sat = 100;
     // println("boundsMin: " + bounds.getMin() + ", boundsMax: " + bounds.getMax());
 
     if ( vertexNormals ) {
@@ -127,10 +127,8 @@ class Mesh {
           vertexHueA -= 255;
         }
         vertexColorA = color(vertexHueA, sat, 255 );
-
         setVertexColor(gfx, vertexColorA);
         
-
         gfx.normal( f.a.normal.x, f.a.normal.y, f.a.normal.z );
         gfx.vertex(f.a.x, f.a.y, f.a.z);
 
@@ -198,6 +196,7 @@ class Mesh {
   }
 
   void setVertexColor(PGraphics gfx, int c) {
+    gfx.strokeWeight(3);
     if (toggleSolid) {
       gfx.fill( c );
     } 
@@ -205,10 +204,20 @@ class Mesh {
       gfx.fill( 0 );  
       gfx.stroke( c );
     }
+    
+    if(_drawLines){
+      color lineColor = color(hue(c), 255, brightness(c));
+      gfx.stroke( lineColor );
+    }
+    else{
+      gfx.noStroke();
+    }
+    if(_transparent){
+      gfx.noFill();
+    }
   }
 
   void updateMesh() {
-
     terrain = new Terrain(round(scaledImg.width), round(scaledImg.height), round(50));
     float[] el = new float[scaledImg.width*scaledImg.height];
 
@@ -218,8 +227,7 @@ class Mesh {
         el[i] = brightness(scaledImg.get(x, z))/255.0 * 4000;
 
         if ( el[i] - brightnessGrid[x][z] > 20 ) {
-          
-          colorGrid[x][z] = round( colorTime * 255 / runTime ); //convert from time since start to int between 0-255
+          colorGrid[x][z] = round( currentTime * 255 / runTime ); //convert from time since start to int between 0-255
           //println("colorgridValue: " + colorGrid[x][z]);
         }
         brightnessGrid[x][z] = el[i];

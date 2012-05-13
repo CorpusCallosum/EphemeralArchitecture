@@ -102,6 +102,12 @@ void keyPressed() {
   else if (key == 'w') {
    toggleSolid = !toggleSolid;
   }
+  else if (key == 't') {
+   _transparent = !_transparent;
+  }
+   else if (key == 'l') {
+   _drawLines = !_drawLines;
+  }
   else if (key == 'm') {
    _blendMode = !_blendMode;
   }
@@ -110,7 +116,7 @@ void keyPressed() {
     saveSTL();
     saveDepthMap();
    }
-    else if (key == 'l') {
+    else if (key == 'c') {
     loadColor();
    }
   
