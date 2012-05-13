@@ -42,12 +42,13 @@ PImage alphaImg, scaledImg;
 PImage colorSnapshot; //save color information every hour
 PImage colorInit; //initialize with color from most recent snapshot
 int startHue = 110;
+int cycles = 1;
 
 Kinect kinect;
 boolean drawKinect = false;
 boolean _debug = false;
 boolean _blendMode = true;
-boolean _drawLines = true;
+boolean _drawLines = false;
 boolean _transparent = false;
 
 float _counter = 110;
@@ -85,9 +86,17 @@ noCursor();
 
   img = kinect.getDepthImage();
   //load the latest depth map here
-  blendedImg = loadImage("data/lastDepth.jpg");
+  try{
+    blendedImg = loadImage("data/lastDepth.jpg");
+  }
+  catch (Exception e){
+    blendedImg = createImage(img.width, img.height, RGB);
+  }
+  if(blendedImg == null){
+    blendedImg = createImage(img.width, img.height, RGB);
+  }
   alphaImg = createImage(img.width, img.height, RGB);
- // blendedImg = createImage(img.width, img.height, RGB);
+ // 
   
   float _scale = .1;
   scaledImg = createImage(round(img.width*_scale), round(img.height*_scale), RGB);
