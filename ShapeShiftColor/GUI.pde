@@ -50,6 +50,14 @@ void initControllers() {
   _contrast, // the default value
   20, 80, // X,Y position of slider
   500, 13); // width and height of slider
+  
+  //SATURATION
+  _sat=200;
+  controlP5.addSlider("_sat", // name, must match variable name
+  0, 255, // min and max values
+  _sat, // the default value
+  20, 100, // X,Y position of slider
+  500, 13); // width and height of slider
 
   // add a "bang" input, a button that triggers a custom function.
   // we'll use it to regenerate the mesh
