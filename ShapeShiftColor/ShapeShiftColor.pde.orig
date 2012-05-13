@@ -21,7 +21,7 @@ import org.openkinect.processing.*;
 ControlP5 controlP5; // instance of the controlP5 library
 
 //SLIDER VRS
-int slGridResolution, _brightness, _contrast; // slider value for grid resolution
+int slGridResolution, _brightness, _contrast, _sat; // slider value for grid resolution
 float Z; // controls the height difference in the terrain
 float noiseXD, noiseYD; // modifiers for X,Y noise
 
@@ -42,24 +42,27 @@ PImage alphaImg, scaledImg;
 PImage colorSnapshot; //save color information every hour
 PImage colorInit; //initialize with color from most recent snapshot
 int startHue = 110;
-int sat = 200;
+int cycles = 1;
 
 Kinect kinect;
 boolean drawKinect = false;
 boolean _debug = false;
 boolean _blendMode = true;
+boolean _drawLines = false;
+boolean _transparent = false;
+boolean _firstRun = true;
 
 float _counter = 110;
 
 //Date today = new Date();
 long startTime; 
 long currentTime;
-long colorTime = 0;
 long lastTime = 0;
+long colorTime = 0;
 int runTime = 120000; //4 days = 345600000 milliseconds
 int everyHour = 3600; //1 hour = 3600 seconds
-int cycles = 1;
 Timer _saveDepthMapTimer;
+Timer _loadColorTimer;
 
 
 //==============================================
@@ -72,58 +75,62 @@ void setup() {
   // this image is borrowed from the excellent contour map tutorial
   // by OnFormative:
   // http://onformative.com/lab/creating-contour-maps/
-  
-  
+
+
   initControllers(); // initialize interface, see "GUI" tab
   generateMesh(); // initialize mesh surface, see "Terrain"
 
   kinect = new Kinect(this);
   kinect.start();
   kinect.enableDepth(true);
-  
+
   opencv = new OpenCV( this );
 
   img = kinect.getDepthImage();
   //load the latest depth map here
-  blendedImg = loadImage("data/lastDepth.jpg");
+  try{
+    blendedImg = loadImage("data/lastDepth.jpg");
+  }
+  catch (Exception e){
+    blendedImg = createImage(img.width, img.height, RGB);
+  }
+  if(blendedImg == null){
+    blendedImg = createImage(img.width, img.height, RGB);
+  }
   alphaImg = createImage(img.width, img.height, RGB);
- // blendedImg = createImage(img.width, img.height, RGB);
+<<<<<<< HEAD
+  // blendedImg = createImage(img.width, img.height, RGB);
+
+=======
+ // 
   
+>>>>>>> c0759bec649b1278b9334278818e6480615171fe
   float _scale = .1;
   scaledImg = createImage(round(img.width*_scale), round(img.height*_scale), RGB);
   colorGrid = new float[scaledImg.width][scaledImg.height];
   brightnessGrid = new float[scaledImg.width][scaledImg.height];
 
   opencv.allocate( img.width, img.height );
-  for(int x=0;x<alphaImg.width;x++){
-     for(int y=0;y<alphaImg.height;y++){
-       alphaImg.set(x,y,10); 
-     }
-  }
-  
-  
-<<<<<<< HEAD
-  colorInit = loadImage("colorInitialize.jpg");
-  for (int i = 0; i < scaledImg.width; i++ ) {
-    for ( int j = 0; j < scaledImg.height; j++ ) {
-      colorMode( HSB, 255 );
-      int initialHue = round( hue(colorInit.get( i, j )) );
-      colorGrid[i][j] = initialHue - startHue;
-      //colorGrid[i][j] = currentTime * 255 / runTime; 
+  for (int x=0;x<alphaImg.width;x++) {
+    for (int y=0;y<alphaImg.height;y++) {
+      alphaImg.set(x, y, 10);
     }
   }
-=======
->>>>>>> 6ea0bc754088c8fe82ddb15f56b2587a25938224
-  
+
+
+
   //create image to save color to
   colorSnapshot = createImage( scaledImg.width, scaledImg.height, HSB );
-  
+
   //startTime = round(today.getTime()/1000); //unix time - seconds
   startTime = System.currentTimeMillis();
- 
- _saveDepthMapTimer = new Timer(60);//one minute
+
+  _saveDepthMapTimer = new Timer(60);//one minute
   _saveDepthMapTimer.start();
   
+   _loadColorTimer = new Timer(1);//
+  _loadColorTimer.start();
+
   draw();
   loadColor();
 }
@@ -131,10 +138,10 @@ void setup() {
 
 //============================================================
 void draw() {
-  
+
   background(0);
   smooth();
-  
+
   //currentTime = round( today.getTime()/1000 ) - startTime;// how long the sketch has been running in seconds
   currentTime = System.currentTimeMillis() - startTime;
   if ( colorTime >= runTime ) {
@@ -146,6 +153,8 @@ void draw() {
   else {
     colorTime = currentTime;
   }
+
+  //println("startTime: " + startTime + ", currentTime: " + currentTime);
 
   // because we want controlP5 to be drawn on top of everything
   // we need to disable OpenGL's depth testing at the end
@@ -172,14 +181,13 @@ void draw() {
 
   modifiedImg = opencv.image();
   modifiedImg.mask(alphaImg);
-// if(counter >= 10){
+  // if(counter >= 10){
   int mode;
-  if(_blendMode){
-     mode = DIFFERENCE;
+  if (_blendMode) {
+    mode = DIFFERENCE;
   }
-  else{
-       mode = BLEND;
-
+  else {
+    mode = BLEND;
   }
   blendedImg.blend(modifiedImg, 0, 0, img.width, img.height, 0, 0, img.width, img.height, mode);
 
@@ -190,89 +198,81 @@ void draw() {
     image(blendedImg, width-310, 240*2, 320, 240);
   }
   img = blendedImg;
-  
+
   float s = .1;
-  
-  scaledImg.copy(img, 0, 0, img.width,  img.height, 0, 0, round(img.width*s), round(img.height*s));
-  
+
+  scaledImg.copy(img, 0, 0, img.width, img.height, 0, 0, round(img.width*s), round(img.height*s));
+
   generateMesh(); // initialize mesh surface, see "Terrain"
-  
-  if(_debug)
+
+  if (_debug)
     controlP5.draw();
-  
+
   /*_counter+=.01;
-  if(_counter >= 255)
+   if(_counter >= 255)
    _counter = 0;*/
-   
-   if ( round(currentTime/1000) % everyHour == 0 && round(lastTime/1000) % everyHour !=0) {
-     saveSTL();
-     //println("saved");
-   }
-   _saveDepthMapTimer.update();
-   if ( _saveDepthMapTimer.isExpired()) {
-     saveDepthMap();
-     _saveDepthMapTimer.reset();
-     _saveDepthMapTimer.start();
-   }
-   
-    lastTime = currentTime;
-    
+
+  if ( round(currentTime/1000) % everyHour == 0 && round(lastTime/1000) % everyHour !=0) {
+    saveSTL();
+    //println("saved");
+  }
+  _saveDepthMapTimer.update();
+  if ( _saveDepthMapTimer.isExpired()) {
+    saveDepthMap();
+    _saveDepthMapTimer.reset();
+    _saveDepthMapTimer.start();
+  }
+
+  lastTime = currentTime;
+
+  /*if (_firstRun) {
+    loadColor();
+    _firstRun = false;
+  }*/
+  
+  if(_loadColorTimer.isExpired()){
+    loadColor();
+  }
 }
 
 // initializes 3D mesh
 void generateMesh() {
- 
+
   if (mesh == null) mesh = new Mesh(this);
   //terrain.buildModel();
 }
 
 //save mesh to stl
 void saveSTL() {
-  
+
   long saveTime = System.currentTimeMillis()/1000;
   mesh.getMeshReference().saveAsSTL(sketchPath("data/LANscape"+saveTime+".stl"));
-  
+
   for ( int i = 0; i < scaledImg.width; i++ ) {
     for ( int j = 0; j < scaledImg.height; j++ ) {
-      
+
       colorMode( HSB, 255 );
-      color c = color( round( startHue + colorGrid[i][j] ), sat, 255 );
-      
+      color c = color( round( startHue + colorGrid[i][j] ), 255, 255 );
+
       //println("colorGridValue: " + colorGrid[i][j] + ", red: " + red(c) + ", green: " + green(c) + ", blue: " + blue(c));
       //println(colorGrid[i][j]);
       colorSnapshot.set( i, j, c );
-<<<<<<< HEAD
-     
-    
-      
     }
   }
-      colorSnapshot.save( sketchPath("data/colorInitialize.png") );
-      //colorSnapshot.save( sketchPath("data/colorSnapshot"+saveTime+".jpg") );
-=======
-   
-      
-    }
-  }
-  
-     colorSnapshot.save( sketchPath("data/colorSnapshot"+saveTime+".jpg") );
-      colorSnapshot.save( sketchPath("data/colorInitialize.jpg") );
-      
->>>>>>> 6ea0bc754088c8fe82ddb15f56b2587a25938224
+
+  colorSnapshot.save( sketchPath("data/colorSnapshot"+saveTime+".jpg") );
+  colorSnapshot.save( sketchPath("data/colorInitialize.jpg") );
 }
 
 //save every minute
-void saveDepthMap(){
-<<<<<<< HEAD
-  img.save("data/depth.png");
-=======
+void saveDepthMap() {
   long saveTime = System.currentTimeMillis()/1000;
   img.save("data/lastDepth.jpg");
   img.save("data/depth/depth"+saveTime+".jpg");
 }
 
-void loadColor(){
-   //initialize color grid to starting color
+void loadColor() {
+  //initialize color grid to starting color
   colorInit = loadImage("colorInitialize.jpg");
   for (int i = 0; i < scaledImg.width; i++ ) {
     for ( int j = 0; j < scaledImg.height; j++ ) {
@@ -280,6 +280,6 @@ void loadColor(){
       int initialHue = round( hue(colorInit.get( i, j )) );
       colorGrid[i][j] = initialHue - startHue;
     }
-  } 
->>>>>>> 6ea0bc754088c8fe82ddb15f56b2587a25938224
+  }
 }
+
