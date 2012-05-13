@@ -47,8 +47,6 @@ Kinect kinect;
 boolean drawKinect = false;
 boolean _debug = false;
 boolean _blendMode = true;
-boolean _drawLines = true;
-boolean _transparent = false;
 
 float _counter = 110;
 
@@ -63,8 +61,8 @@ Timer _saveDepthMapTimer;
 
 //==============================================
 void setup() {
-  size(1024, 768, OPENGL);
-noCursor();
+  size(1440, 900, OPENGL);
+
 
   // input image must be square or have a greater height than width.
 
@@ -220,6 +218,8 @@ void saveSTL() {
       //println("colorGridValue: " + colorGrid[i][j] + ", red: " + red(c) + ", green: " + green(c) + ", blue: " + blue(c));
       //println(colorGrid[i][j]);
       colorSnapshot.set( i, j, c );
+   
+      
     }
   }
   

@@ -64,7 +64,7 @@ Timer _saveDepthMapTimer;
 //==============================================
 void setup() {
   size(1024, 768, OPENGL);
-noCursor();
+
 
   // input image must be square or have a greater height than width.
 
