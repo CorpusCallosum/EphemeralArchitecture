@@ -7,6 +7,9 @@
 // needs to be able to regenerate the mesh and calculate the
 // Z heights every frame.
 
+  float vertexHueA;
+
+
 class Mesh {
   PApplet parent;
 
@@ -32,7 +35,6 @@ class Mesh {
   boolean showNormals;
   boolean doSave;
 
-  float vertexHueA;
   color vertexColorA;
   float vertexHueB;
   color vertexColorB;

@@ -143,6 +143,9 @@ noCursor();
 
   draw();
   loadColor();
+  
+  //load text file
+  startHue = int(loadStrings("data.txt")[0]);
 }
 
 
@@ -287,6 +290,11 @@ void saveSTL() {
 
   colorSnapshot.save( sketchPath("data/color/colorSnapshot"+saveTime+".jpg") );
   colorSnapshot.save( sketchPath("data/colorInitialize.jpg") );
+  
+  //save data
+  String[] data = new String[1];;
+  data[0] = ""+round(vertexHueA);
+  saveStrings("data.txt", data);
 }
 
 //save every minute
