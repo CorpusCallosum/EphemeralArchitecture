@@ -7,7 +7,6 @@
 // needs to be able to regenerate the mesh and calculate the
 // Z heights every frame.
 
-  float vertexHueA;
 
 
 class Mesh {
@@ -35,6 +34,8 @@ class Mesh {
   boolean showNormals;
   boolean doSave;
 
+  float vertexHueA;
+
   color vertexColorA;
   float vertexHueB;
   color vertexColorB;
@@ -58,7 +59,7 @@ class Mesh {
   }
 
   void draw() {
-
+   // println(vertexHueA);
     // check which drawing style to use
     /*if(toggleSolid) {
      fill(37, 109, 154);
@@ -108,6 +109,7 @@ class Mesh {
 
 
   void drawMesh( PGraphics gfx, TriangleMesh mesh, boolean vertexNormals, boolean showNormals ) {
+
     gfx.beginShape( PConstants.TRIANGLES );
     AABB bounds = mesh.getBoundingBox();
     Vec3D min = bounds.getMin();
@@ -125,6 +127,8 @@ class Mesh {
         
         //println("vertexHueA: " + colorGrid[floor(map((f.a.x), -1575, 1575, 0, scaledImg.width-1))][floor(map((f.a.z), -1175, 1175, 0, scaledImg.height-1))]);
         vertexHueA = startHue + colorGrid[floor(map((f.a.x), -1575, 1575, 0, scaledImg.width-1))][floor(map((f.a.z), -1175, 1175, 0, scaledImg.height-1))]; //mapping based on 4 day cycle in seconds
+              //  println(vertexHueA);
+
         while ( vertexHueA > 255 ) {
           vertexHueA -= 255;
         }
@@ -248,6 +252,13 @@ class Mesh {
     // create mesh
     mesh = (TriangleMesh)terrain.toMesh();
     mesh.center(null);
+  }
+  
+  int getCurrentColor(){
+   return  round( colorTime * 255 / runTime )+startHue;
+          // vertexHueA = startHue + colorGrid[floor(map((f.a.x), -1575, 1575, 0, scaledImg.width-1))][floor(map((f.a.z), -1175, 1175, 0, scaledImg.height-1))]; //mapping based on 4 day cycle in seconds
+
+ 
   }
   
 }

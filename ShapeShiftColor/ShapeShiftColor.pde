@@ -50,7 +50,7 @@ Kinect kinect;
 boolean drawKinect = false;
 boolean _debug = false;
 boolean _blendMode = true;
-boolean _drawLines = false;
+boolean _drawLines = true;
 boolean _transparent = false;
 
 
@@ -61,7 +61,7 @@ long startTime;
 long currentTime;
 long lastTime = 0;
 long colorTime = 0;
-int runTime = 345600000; //4 days = 345600000 milliseconds
+int runTime = 1000*60*60; //4 days = 345600000 milliseconds
 int everyHour = 3600; //1 hour = 3600 seconds
 Timer _saveDepthMapTimer;
 Timer _loadColorTimer;
@@ -292,9 +292,10 @@ void saveSTL() {
   colorSnapshot.save( sketchPath("data/colorInitialize.jpg") );
   
   //save data
-  String[] data = new String[1];;
-  data[0] = ""+round(vertexHueA);
-  saveStrings("data.txt", data);
+  String[] data = new String[1];
+  data[0] = ""+round(mesh.getCurrentColor());
+ // println(data[0]);
+  saveStrings("data/data.txt", data);
 }
 
 //save every minute
