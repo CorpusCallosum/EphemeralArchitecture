@@ -196,7 +196,7 @@ class Mesh {
   }
 
   void setVertexColor(PGraphics gfx, int c) {
-    gfx.strokeWeight(3);
+    gfx.strokeWeight(1);
     if (toggleSolid) {
       gfx.fill( c );
       /*int strokeColor = c + 20;
@@ -211,7 +211,8 @@ class Mesh {
     }
     
     if(_drawLines){
-      color lineColor = color(hue(c), 150, brightness(c));
+      //color lineColor = color(hue(c), 150, brightness(c));
+      color lineColor = color(255);
       gfx.stroke( lineColor );
     }
     else{

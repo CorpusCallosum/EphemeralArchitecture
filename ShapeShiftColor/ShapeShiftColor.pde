@@ -1,4 +1,5 @@
  import unlekker.util.*;
+
 import unlekker.modelbuilder.*;
 import ec.util.*;
 
@@ -252,6 +253,11 @@ void draw() {
     loadColor();
     _loadColorTimer.reset();
   }
+  
+  //draw rect
+  fill(0);
+  rect(0,0,25,height);
+  rect(width-5,0,20,height);
 }
 
 // initializes 3D mesh
