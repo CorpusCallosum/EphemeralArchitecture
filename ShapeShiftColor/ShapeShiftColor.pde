@@ -1,4 +1,4 @@
-import unlekker.util.*;
+ import unlekker.util.*;
 import unlekker.modelbuilder.*;
 import ec.util.*;
 
@@ -60,7 +60,7 @@ long startTime;
 long currentTime;
 long lastTime = 0;
 long colorTime = 0;
-int runTime = 120000; //4 days = 345600000 milliseconds
+int runTime = 345600000; //4 days = 345600000 milliseconds
 int everyHour = 3600; //1 hour = 3600 seconds
 Timer _saveDepthMapTimer;
 Timer _loadColorTimer;
@@ -133,9 +133,9 @@ noCursor();
    _loadColorTimer = new Timer(1);//
   _loadColorTimer.start();
   
-  transX = -550;
-  transY = -1650;
-  transZ = -1700;
+  transX = -600;
+  transY = -1400;
+  transZ = -800;
   rotX = -PI / 4;
   rotY = 0;
   rotZ = PI;
@@ -195,7 +195,7 @@ void draw() {
 //  img = flipH(img);
   
   opencv.copy( img); 
-  opencv.flip(OpenCV.FLIP_HORIZONTAL); //THIS IS CAUSING THE BLACK STRIPE
+  opencv.flip(OpenCV.FLIP_BOTH); //THIS IS CAUSING THE BLACK STRIPE
   
 
   opencv.brightness( _brightness );
@@ -303,12 +303,14 @@ void saveDepthMap() {
 void loadColor() {
   //initialize color grid to starting color
   colorInit = loadImage("colorInitialize.jpg");
+  if(colorInit != null){
   for (int i = 0; i < scaledImg.width; i++ ) {
     for ( int j = 0; j < scaledImg.height; j++ ) {
       colorMode( HSB, 255 );
       int initialHue = round( hue(colorInit.get( i, j )) );
       colorGrid[i][j] = initialHue - startHue;
     }
+  }
   }
 }
 
