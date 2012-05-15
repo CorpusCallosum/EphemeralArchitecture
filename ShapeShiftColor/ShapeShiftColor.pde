@@ -61,7 +61,7 @@ long startTime;
 long currentTime;
 long lastTime = 0;
 long colorTime = 0;
-int runTime = 1000*60*60; //4 days = 345600000 milliseconds
+int runTime = 1000*60*5; //4 days = 345600000 milliseconds
 int everyHour = 3600; //1 hour = 3600 seconds
 Timer _saveDepthMapTimer;
 Timer _loadColorTimer;

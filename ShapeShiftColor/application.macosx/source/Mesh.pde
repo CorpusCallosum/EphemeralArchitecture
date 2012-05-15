@@ -7,6 +7,8 @@
 // needs to be able to regenerate the mesh and calculate the
 // Z heights every frame.
 
+
+
 class Mesh {
   PApplet parent;
 
@@ -33,6 +35,7 @@ class Mesh {
   boolean doSave;
 
   float vertexHueA;
+
   color vertexColorA;
   float vertexHueB;
   color vertexColorB;
@@ -56,7 +59,7 @@ class Mesh {
   }
 
   void draw() {
-
+   // println(vertexHueA);
     // check which drawing style to use
     /*if(toggleSolid) {
      fill(37, 109, 154);
@@ -92,7 +95,7 @@ class Mesh {
       noStroke();
     }
     updateMesh();
-
+  
     drawMesh( g, mesh, !isWireFrame, showNormals );
     //drawLines();
 
@@ -106,11 +109,12 @@ class Mesh {
 
 
   void drawMesh( PGraphics gfx, TriangleMesh mesh, boolean vertexNormals, boolean showNormals ) {
+
     gfx.beginShape( PConstants.TRIANGLES );
     AABB bounds = mesh.getBoundingBox();
     Vec3D min = bounds.getMin();
     Vec3D max = bounds.getMax();
-    int sat = 100;
+   // int sat = 100;
     // println("boundsMin: " + bounds.getMin() + ", boundsMax: " + bounds.getMax());
 
     if ( vertexNormals ) {
@@ -123,10 +127,12 @@ class Mesh {
         
         //println("vertexHueA: " + colorGrid[floor(map((f.a.x), -1575, 1575, 0, scaledImg.width-1))][floor(map((f.a.z), -1175, 1175, 0, scaledImg.height-1))]);
         vertexHueA = startHue + colorGrid[floor(map((f.a.x), -1575, 1575, 0, scaledImg.width-1))][floor(map((f.a.z), -1175, 1175, 0, scaledImg.height-1))]; //mapping based on 4 day cycle in seconds
+              //  println(vertexHueA);
+
         while ( vertexHueA > 255 ) {
           vertexHueA -= 255;
         }
-        vertexColorA = color(vertexHueA, sat, 255 );
+        vertexColorA = color(vertexHueA, _sat, 255 );
         setVertexColor(gfx, vertexColorA);
         
         gfx.normal( f.a.normal.x, f.a.normal.y, f.a.normal.z );
@@ -138,7 +144,7 @@ class Mesh {
           vertexHueB -= 255;
         }
         // println( vertexHueB );
-        vertexColorB = color( round(vertexHueB), sat, 255 );
+        vertexColorB = color( round(vertexHueB), _sat, 255 );
         setVertexColor(gfx, vertexColorB);
 
         gfx.normal(f.b.normal.x, f.b.normal.y, f.b.normal.z);
@@ -149,7 +155,7 @@ class Mesh {
         if ( vertexHueC > 255 ) {
           vertexHueC -= 255;
         }
-        vertexColorC = color( round(vertexHueC), sat, 255 );
+        vertexColorC = color( round(vertexHueC), _sat, 255 );
         setVertexColor(gfx, vertexColorC);
  
         gfx.normal(f.c.normal.x, f.c.normal.y, f.c.normal.z);
@@ -196,9 +202,14 @@ class Mesh {
   }
 
   void setVertexColor(PGraphics gfx, int c) {
-    gfx.strokeWeight(3);
+    gfx.strokeWeight(1);
     if (toggleSolid) {
       gfx.fill( c );
+      /*int strokeColor = c + 20;
+      if ( strokeColor > 255 ) {
+        strokeColor -= 255;
+      gfx.stroke( strokeColor );*/
+      gfx.stroke(150);
     } 
     else {
       gfx.fill( 0 );  
@@ -206,7 +217,8 @@ class Mesh {
     }
     
     if(_drawLines){
-      color lineColor = color(hue(c), 255, brightness(c));
+      //color lineColor = color(hue(c), 150, brightness(c));
+      color lineColor = color(255);
       gfx.stroke( lineColor );
     }
     else{
@@ -226,8 +238,8 @@ class Mesh {
 
         el[i] = brightness(scaledImg.get(x, z))/255.0 * Z;
 
-        if ( el[i] - brightnessGrid[x][z] > 20 ) {
-          colorGrid[x][z] = round( currentTime * 255 / runTime ); //convert from time since start to int between 0-255
+        if ( abs(el[i] - brightnessGrid[x][z]) > 20 ) {
+          colorGrid[x][z] = round( colorTime * 255 / runTime ); //convert from time since start to int between 0-255
           //println("colorgridValue: " + colorGrid[x][z]);
         }
         brightnessGrid[x][z] = el[i];
@@ -240,6 +252,13 @@ class Mesh {
     // create mesh
     mesh = (TriangleMesh)terrain.toMesh();
     mesh.center(null);
+  }
+  
+  int getCurrentColor(){
+   return  round( colorTime * 255 / runTime )+startHue;
+          // vertexHueA = startHue + colorGrid[floor(map((f.a.x), -1575, 1575, 0, scaledImg.width-1))][floor(map((f.a.z), -1175, 1175, 0, scaledImg.height-1))]; //mapping based on 4 day cycle in seconds
+
+ 
   }
   
 }

@@ -36,6 +36,7 @@ import java.util.regex.*;
 
 public class ShapeShiftColor extends PApplet {
 
+ 
 
 
 
@@ -59,13 +60,13 @@ public class ShapeShiftColor extends PApplet {
 ControlP5 controlP5; // instance of the controlP5 library
 
 //SLIDER VRS
-int slGridResolution, _brightness, _contrast; // slider value for grid resolution
+int slGridResolution, _brightness, _contrast, _sat; // slider value for grid resolution
 float Z; // controls the height difference in the terrain
 float noiseXD, noiseYD; // modifiers for X,Y noise
 
 boolean toggleSolid=true; // controls rendering style
 
-UNav3D nav; // camera controller
+//UNav3D nav; // camera controller
 Mesh mesh; // Terrain object
 
 OpenCV opencv;
@@ -79,7 +80,9 @@ PImage blendedImg;
 PImage alphaImg, scaledImg;
 PImage colorSnapshot; //save color information every hour
 PImage colorInit; //initialize with color from most recent snapshot
+PImage depthSnapshot;
 int startHue = 110;
+int cycles = 1;
 
 Kinect kinect;
 boolean drawKinect = false;
@@ -88,20 +91,26 @@ boolean _blendMode = true;
 boolean _drawLines = true;
 boolean _transparent = false;
 
+
 float _counter = 110;
 
 //Date today = new Date();
 long startTime; 
 long currentTime;
 long lastTime = 0;
-int runTime = 120000; //4 days = 345600000 milliseconds
+long colorTime = 0;
+int runTime = 1000*60*5; //4 days = 345600000 milliseconds
 int everyHour = 3600; //1 hour = 3600 seconds
 Timer _saveDepthMapTimer;
+Timer _loadColorTimer;
 
+int transX, transY, transZ;
+float rotX, rotY, rotZ;
 
 //==============================================
 public void setup() {
   size(1024, 768, OPENGL);
+noCursor();
 
 
   // input image must be square or have a greater height than width.
@@ -109,59 +118,93 @@ public void setup() {
   // this image is borrowed from the excellent contour map tutorial
   // by OnFormative:
   // http://onformative.com/lab/creating-contour-maps/
-  
-  
+
+
   initControllers(); // initialize interface, see "GUI" tab
   generateMesh(); // initialize mesh surface, see "Terrain"
 
   kinect = new Kinect(this);
   kinect.start();
   kinect.enableDepth(true);
-  
+
   opencv = new OpenCV( this );
 
-  img = kinect.getDepthImage();
+  img = kinect.getDepthImage();//get depth prethresholded
+  
   //load the latest depth map here
-  blendedImg = loadImage("data/lastDepth.jpg");
+  try{
+    blendedImg = loadImage("data/lastDepth.jpg");
+  }
+  catch (Exception e){
+    blendedImg = createImage(img.width, img.height, RGB);
+  }
+  if(blendedImg == null){
+    blendedImg = createImage(img.width, img.height, RGB);
+  }
   alphaImg = createImage(img.width, img.height, RGB);
- // blendedImg = createImage(img.width, img.height, RGB);
+ // 
   
   float _scale = .1f;
   scaledImg = createImage(round(img.width*_scale), round(img.height*_scale), RGB);
+ 
   colorGrid = new float[scaledImg.width][scaledImg.height];
   brightnessGrid = new float[scaledImg.width][scaledImg.height];
 
   opencv.allocate( img.width, img.height );
-  for(int x=0;x<alphaImg.width;x++){
-     for(int y=0;y<alphaImg.height;y++){
-       alphaImg.set(x,y,10); 
-     }
+  for (int x=0;x<alphaImg.width;x++) {
+    for (int y=0;y<alphaImg.height;y++) {
+      alphaImg.set(x, y, 10);
+    }
   }
-  
-  
-  
+
+
+
   //create image to save color to
   colorSnapshot = createImage( scaledImg.width, scaledImg.height, HSB );
-  
+  depthSnapshot = createImage( img.width, img.height, RGB );
+
   //startTime = round(today.getTime()/1000); //unix time - seconds
   startTime = System.currentTimeMillis();
- 
- _saveDepthMapTimer = new Timer(60);//one minute
+
+  _saveDepthMapTimer = new Timer(60*60);//one hour
   _saveDepthMapTimer.start();
   
+   _loadColorTimer = new Timer(1);//
+  _loadColorTimer.start();
+  
+  transX = -600;
+  transY = -1400;
+  transZ = -800;
+  rotX = -PI / 4;
+  rotY = 0;
+  rotZ = PI;
+
   draw();
   loadColor();
+  
+  //load text file
+  startHue = PApplet.parseInt(loadStrings("data.txt")[0]);
 }
 
 
 //============================================================
 public void draw() {
-  
+
   background(0);
   smooth();
-  
+
   //currentTime = round( today.getTime()/1000 ) - startTime;// how long the sketch has been running in seconds
   currentTime = System.currentTimeMillis() - startTime;
+  if ( colorTime >= runTime ) {
+    cycles++;
+  }
+  if ( cycles > 1 ) {
+    colorTime = currentTime - ( (cycles - 1 ) * runTime );
+  }
+  else {
+    colorTime = currentTime;
+  }
+
   //println("startTime: " + startTime + ", currentTime: " + currentTime);
 
   // because we want controlP5 to be drawn on top of everything
@@ -169,9 +212,16 @@ public void draw() {
   // of draw(). that means we need to turn it on again here.
   hint(ENABLE_DEPTH_TEST); 
 
-  pushMatrix();    
+  pushMatrix();  
+  rotateX( rotX );
+  rotateY( rotY );
+  rotateZ( rotZ );
+  //rotate( rotX, rotY, rotZ );
+  translate( transX, transY, transZ );
+  //translate( 4000, 500, -2000);  
+  
   lights();
-  nav.doTransforms(); // transformations using Nav3D
+  //nav.doTransforms(); // transformations using Nav3D
   mesh.draw();
   popMatrix();
 
@@ -180,109 +230,158 @@ public void draw() {
 
   //contrast
   img = kinect.getDepthImage();
+  
+  img.copy(img, 0,0,img.width,img.height,0,0, img.width+10, img.height+10);
 
   //use opencv for brightness and contrast
+//  img = flipH(img);
+  
   opencv.copy( img); 
+  opencv.flip(OpenCV.FLIP_BOTH); //THIS IS CAUSING THE BLACK STRIPE
+  
+
   opencv.brightness( _brightness );
   opencv.contrast( _contrast );
-  opencv.flip(OpenCV.FLIP_HORIZONTAL);
 
   modifiedImg = opencv.image();
   modifiedImg.mask(alphaImg);
-// if(counter >= 10){
+  // if(counter >= 10){
   int mode;
-  if(_blendMode){
-     mode = DIFFERENCE;
+  if (_blendMode) {
+    mode = DIFFERENCE;
   }
-  else{
-       mode = BLEND;
-
+  else {
+    mode = BLEND;
   }
   blendedImg.blend(modifiedImg, 0, 0, img.width, img.height, 0, 0, img.width, img.height, mode);
 
   fill(255);
   if (drawKinect) {
-    image(img, width-310, 0, 320, 240);
-    image(modifiedImg, width-310, 240, 320, 240);
-    image(blendedImg, width-310, 240*2, 320, 240);
+    image(img, width-350, 0, 320, 240);
+    image(modifiedImg, width-350, 240, 320, 240);
+    image(blendedImg, width-350, 240*2, 320, 240);
   }
   img = blendedImg;
-  
+
   float s = .1f;
-  
-  scaledImg.copy(img, 0, 0, img.width,  img.height, 0, 0, round(img.width*s), round(img.height*s));
-  
+
+  scaledImg.copy(img, 0, 0, img.width, img.height, 0, 0, round(img.width*s), round(img.height*s));
+
   generateMesh(); // initialize mesh surface, see "Terrain"
-  
-  if(_debug)
+
+  if (_debug)
     controlP5.draw();
+
+  if ( round(currentTime/1000) % everyHour == 0 && round(lastTime/1000) % everyHour !=0) {
+    saveSTL();
+    //println("saved");
+  }
+  _saveDepthMapTimer.update();
+  if ( _saveDepthMapTimer.isExpired()) {
+    saveDepthMap();
+    _saveDepthMapTimer.reset();
+    _saveDepthMapTimer.start();
+  }
+
+  lastTime = currentTime;
+
+  /*if (_firstRun) {
+    loadColor();
+    _firstRun = false;
+  }*/
   
-  /*_counter+=.01;
-  if(_counter >= 255)
-   _counter = 0;*/
-   
-   if ( round(currentTime/1000) % everyHour == 0 && round(lastTime/1000) % everyHour !=0) {
-     saveSTL();
-     //println("saved");
-   }
-   _saveDepthMapTimer.update();
-   if ( _saveDepthMapTimer.isExpired()) {
-     saveDepthMap();
-     _saveDepthMapTimer.reset();
-     _saveDepthMapTimer.start();
-   }
-   
-    lastTime = currentTime;
-    
+  if(_loadColorTimer.isExpired()){
+    loadColor();
+    _loadColorTimer.reset();
+  }
+  
+  //draw rect
+  fill(0);
+  rect(0,0,25,height);
+  rect(width-5,0,20,height);
 }
 
 // initializes 3D mesh
 public void generateMesh() {
- 
+
   if (mesh == null) mesh = new Mesh(this);
   //terrain.buildModel();
 }
 
 //save mesh to stl
 public void saveSTL() {
-  
+
   long saveTime = System.currentTimeMillis()/1000;
-  mesh.getMeshReference().saveAsSTL(sketchPath("data/LANscape"+saveTime+".stl"));
-  
+  mesh.getMeshReference().saveAsSTL(sketchPath("data/stl/LANscape"+saveTime+".stl"));
+
   for ( int i = 0; i < scaledImg.width; i++ ) {
     for ( int j = 0; j < scaledImg.height; j++ ) {
-      
+
       colorMode( HSB, 255 );
       int c = color( round( startHue + colorGrid[i][j] ), 255, 255 );
-      
+
       //println("colorGridValue: " + colorGrid[i][j] + ", red: " + red(c) + ", green: " + green(c) + ", blue: " + blue(c));
       //println(colorGrid[i][j]);
       colorSnapshot.set( i, j, c );
     }
   }
+
+  colorSnapshot.save( sketchPath("data/color/colorSnapshot"+saveTime+".jpg") );
+  colorSnapshot.save( sketchPath("data/colorInitialize.jpg") );
   
-     colorSnapshot.save( sketchPath("data/colorSnapshot"+saveTime+".jpg") );
-      colorSnapshot.save( sketchPath("data/colorInitialize.jpg") );
-      
+  //save data
+  String[] data = new String[1];
+  data[0] = ""+round(mesh.getCurrentColor());
+ // println(data[0]);
+  saveStrings("data/data.txt", data);
 }
 
 //save every minute
-public void saveDepthMap(){
+public void saveDepthMap() {
   long saveTime = System.currentTimeMillis()/1000;
-  img.save("data/lastDepth.jpg");
-  img.save("data/depth/depth"+saveTime+".jpg");
+  for ( int i = 0; i < img.width; i++ ) {
+    for ( int j = 0; j < img.height; j++ ) {
+      int c = img.get( i, j );
+      depthSnapshot.set(i, j, c );
+      
+    }
+  }
+  
+  depthSnapshot.save("data/lastDepth.jpg");
+  depthSnapshot.save("data/depth/depth"+saveTime+".jpg");
+  //img.save("data/lastDepth.jpg");
+  //img.save("data/depth/depth"+saveTime+".jpg");
 }
 
-public void loadColor(){
-   //initialize color grid to starting color
+public void loadColor() {
+  //initialize color grid to starting color
   colorInit = loadImage("colorInitialize.jpg");
+  if(colorInit != null){
   for (int i = 0; i < scaledImg.width; i++ ) {
     for ( int j = 0; j < scaledImg.height; j++ ) {
       colorMode( HSB, 255 );
       int initialHue = round( hue(colorInit.get( i, j )) );
       colorGrid[i][j] = initialHue - startHue;
     }
-  } 
+  }
+  }
+}
+
+
+public void stop() {
+  kinect.quit();
+  super.stop();
+}
+
+public PImage flipH(PImage si){
+  PImage fi;
+  fi = createImage(si.width, si.height, RGB);
+  for (int x=0;x<si.width;x++){
+      for (int y=0;y<si.width;y++){
+        fi.set(si.width-x-10, y, si.get(x,y));
+      }    
+  }
+  return fi;
 }
 // functions for setting up our controlP5 GUI and the Nav3D 
 // camera controller. to receive mouse wheel events we have to 
@@ -293,25 +392,17 @@ public void loadColor(){
 int _x, _y, _z;
 
 public void initControllers() {
-  _x = width/2;
-  _y = 500;//height/2;
-  _z = -3000;
-  nav = new UNav3D(this); 
-  nav.trans.set(_x, _y, _z);
-  nav.rot.set(10*PI/12, 0, 0);
+  //_x = width/2;
+  //_y = 500;//height/2;
+  //_z = -3000;
+  //nav = new UNav3D(this); 
+  //nav.trans.set(_x, _y, _z);
+  //nav.rot.set(10*PI/12, 0, 0);
 
   // create a listener for mouse wheel events
   controlP5 = new ControlP5(this);
   controlP5.setColorLabel(color(0, 0, 0));
 
-  //GRID RESOUTION
-  /*slGridResolution=50;
-  controlP5.addSlider("slGridResolution", // name, must match variable name
-  5, scaledImg.width, // min and max values
-  slGridResolution, // the default value
-  20, 20, // X,Y position of slider
-  100, 13) // width and height of slider
-    .setId(1); */
 
   //Z SHIFT
   Z = 3000;
@@ -335,6 +426,14 @@ public void initControllers() {
   -200, 200, // min and max values
   _contrast, // the default value
   20, 80, // X,Y position of slider
+  500, 13); // width and height of slider
+  
+  //SATURATION
+  _sat=200;
+  controlP5.addSlider("_sat", // name, must match variable name
+  0, 255, // min and max values
+  _sat, // the default value
+  20, 100, // X,Y position of slider
   500, 13); // width and height of slider
 
   // add a "bang" input, a button that triggers a custom function.
@@ -361,11 +460,12 @@ public void mouseDragged() {
   // ignore mouse event if cursor is over controlP5 GUI elements
   if (controlP5.window(this).isMouseOver()) return;
 
-  nav.mouseDragged();
+  //nav.mouseDragged();
 }
 
 public void keyPressed() {
-  nav.keyPressed();
+  
+  //nav.keyPressed();
 
   if (key == ' ') {
     //load image as mesh
@@ -379,11 +479,16 @@ public void keyPressed() {
   else if (key == 'd') {
     //draw the kinect image
     _debug = !_debug;
+    if(_debug){
+     cursor(); 
+    }
+    else{
+     noCursor(); 
+    }
   }
   else if (key == 'o') {
-    println("x : " +nav.rot.x);
-    println("y : " +nav.rot.y);
-    println("z : " +nav.rot.z);
+   println("transX: " + transX + ", transY: " + transY + ", transZ: " + transZ);
+   println("rotX: " + rotX + ", rotY: " + rotY + ", rotZ: " + rotZ);
   }
   else if (key == 'w') {
    toggleSolid = !toggleSolid;
@@ -405,7 +510,67 @@ public void keyPressed() {
     else if (key == 'c') {
     loadColor();
    }
+   
+   //translate
+    else if (key == '=') {
+      //zoom in
+      transZ +=50;
+   }
+   else if (key == '-') {
+      //zoom out
+      transZ -= 50;
+   }
+    else if (key == '7') {
+      //down
+      transY += 50;
+    }
+    else if (key == '8') {
+      //up
+      transY -= 50;
+   }
+   else if (key == '9') {
+      //left
+      transX -= 50;
+   }
+   else if (key == '0') {
+      //right
+      transX += 50;
+   }
+   
+   
+   //rotation
+       else if (key == '1') {
+      //zoom in
+      rotZ -= PI / 12;
+   }
+   else if (key == '2') {
+      //zoom out
+     rotZ += PI / 12;
+   }
+    else if (key == '3') {
+      //up
+      rotY -= PI / 12;
+   }
+   else if (key == '4') {
+      //right
+      rotY += PI / 12;
+   }
+   else if (key == '5') {
+      //left
+      rotX -= PI / 12;
+   }
+   else if (key == '6') {
+      //down
+      rotX += PI / 12;
+   }
   
+}
+
+public void trans(int x, int y, int z){
+  _x = x;
+  _y = y;
+  _z = z;
+  //nav.trans.set(_x, _y, _z);
 }
 // this class calculates a 3D terrain using the noise(x,y)
 // function. see http://processing.org/reference/noise_.html
@@ -415,6 +580,8 @@ public void keyPressed() {
 // modifiers for the noise function, the Terrain.draw() function
 // needs to be able to regenerate the mesh and calculate the
 // Z heights every frame.
+
+
 
 class Mesh {
   PApplet parent;
@@ -442,6 +609,7 @@ class Mesh {
   boolean doSave;
 
   float vertexHueA;
+
   int vertexColorA;
   float vertexHueB;
   int vertexColorB;
@@ -465,7 +633,7 @@ class Mesh {
   }
 
   public void draw() {
-
+   // println(vertexHueA);
     // check which drawing style to use
     /*if(toggleSolid) {
      fill(37, 109, 154);
@@ -501,7 +669,7 @@ class Mesh {
       noStroke();
     }
     updateMesh();
-
+  
     drawMesh( g, mesh, !isWireFrame, showNormals );
     //drawLines();
 
@@ -515,11 +683,12 @@ class Mesh {
 
 
   public void drawMesh( PGraphics gfx, TriangleMesh mesh, boolean vertexNormals, boolean showNormals ) {
+
     gfx.beginShape( PConstants.TRIANGLES );
     AABB bounds = mesh.getBoundingBox();
     Vec3D min = bounds.getMin();
     Vec3D max = bounds.getMax();
-    int sat = 100;
+   // int sat = 100;
     // println("boundsMin: " + bounds.getMin() + ", boundsMax: " + bounds.getMax());
 
     if ( vertexNormals ) {
@@ -532,10 +701,12 @@ class Mesh {
         
         //println("vertexHueA: " + colorGrid[floor(map((f.a.x), -1575, 1575, 0, scaledImg.width-1))][floor(map((f.a.z), -1175, 1175, 0, scaledImg.height-1))]);
         vertexHueA = startHue + colorGrid[floor(map((f.a.x), -1575, 1575, 0, scaledImg.width-1))][floor(map((f.a.z), -1175, 1175, 0, scaledImg.height-1))]; //mapping based on 4 day cycle in seconds
+              //  println(vertexHueA);
+
         while ( vertexHueA > 255 ) {
           vertexHueA -= 255;
         }
-        vertexColorA = color(vertexHueA, sat, 255 );
+        vertexColorA = color(vertexHueA, _sat, 255 );
         setVertexColor(gfx, vertexColorA);
         
         gfx.normal( f.a.normal.x, f.a.normal.y, f.a.normal.z );
@@ -547,7 +718,7 @@ class Mesh {
           vertexHueB -= 255;
         }
         // println( vertexHueB );
-        vertexColorB = color( round(vertexHueB), sat, 255 );
+        vertexColorB = color( round(vertexHueB), _sat, 255 );
         setVertexColor(gfx, vertexColorB);
 
         gfx.normal(f.b.normal.x, f.b.normal.y, f.b.normal.z);
@@ -558,7 +729,7 @@ class Mesh {
         if ( vertexHueC > 255 ) {
           vertexHueC -= 255;
         }
-        vertexColorC = color( round(vertexHueC), sat, 255 );
+        vertexColorC = color( round(vertexHueC), _sat, 255 );
         setVertexColor(gfx, vertexColorC);
  
         gfx.normal(f.c.normal.x, f.c.normal.y, f.c.normal.z);
@@ -605,9 +776,14 @@ class Mesh {
   }
 
   public void setVertexColor(PGraphics gfx, int c) {
-    gfx.strokeWeight(3);
+    gfx.strokeWeight(1);
     if (toggleSolid) {
       gfx.fill( c );
+      /*int strokeColor = c + 20;
+      if ( strokeColor > 255 ) {
+        strokeColor -= 255;
+      gfx.stroke( strokeColor );*/
+      gfx.stroke(150);
     } 
     else {
       gfx.fill( 0 );  
@@ -615,7 +791,8 @@ class Mesh {
     }
     
     if(_drawLines){
-      int lineColor = color(hue(c), 255, brightness(c));
+      //color lineColor = color(hue(c), 150, brightness(c));
+      int lineColor = color(255);
       gfx.stroke( lineColor );
     }
     else{
@@ -635,8 +812,8 @@ class Mesh {
 
         el[i] = brightness(scaledImg.get(x, z))/255.0f * Z;
 
-        if ( el[i] - brightnessGrid[x][z] > 20 ) {
-          colorGrid[x][z] = round( currentTime * 255 / runTime ); //convert from time since start to int between 0-255
+        if ( abs(el[i] - brightnessGrid[x][z]) > 20 ) {
+          colorGrid[x][z] = round( colorTime * 255 / runTime ); //convert from time since start to int between 0-255
           //println("colorgridValue: " + colorGrid[x][z]);
         }
         brightnessGrid[x][z] = el[i];
@@ -649,6 +826,13 @@ class Mesh {
     // create mesh
     mesh = (TriangleMesh)terrain.toMesh();
     mesh.center(null);
+  }
+  
+  public int getCurrentColor(){
+   return  round( colorTime * 255 / runTime )+startHue;
+          // vertexHueA = startHue + colorGrid[floor(map((f.a.x), -1575, 1575, 0, scaledImg.width-1))][floor(map((f.a.z), -1175, 1175, 0, scaledImg.height-1))]; //mapping based on 4 day cycle in seconds
+
+ 
   }
   
 }
