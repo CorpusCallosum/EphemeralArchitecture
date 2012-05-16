@@ -170,7 +170,7 @@ noCursor();
   _saveDepthMapTimer.start();
   
    _loadColorTimer = new Timer(1);//
-  _loadColorTimer.start();
+   _loadColorTimer.start();
   
   transX = -600;
   transY = -1400;
@@ -183,7 +183,7 @@ noCursor();
   loadColor();
   
   //load text file
-  startHue = PApplet.parseInt(loadStrings("data.txt")[0]);
+ // startHue = int(loadStrings("data.txt")[0]);
 }
 
 
@@ -330,10 +330,10 @@ public void saveSTL() {
   colorSnapshot.save( sketchPath("data/colorInitialize.jpg") );
   
   //save data
-  String[] data = new String[1];
+ /* String[] data = new String[1];
   data[0] = ""+round(mesh.getCurrentColor());
  // println(data[0]);
-  saveStrings("data/data.txt", data);
+  saveStrings("data/data.txt", data);*/
 }
 
 //save every minute
