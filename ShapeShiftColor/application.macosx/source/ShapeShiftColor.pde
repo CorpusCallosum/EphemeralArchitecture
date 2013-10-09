@@ -15,6 +15,10 @@ import java.awt.Color;
 
 import org.openkinect.*;
 import org.openkinect.processing.*;
+import processing.video.*;
+Capture video;
+
+
 
 // modelab.nu Processing Tutorial - Marius Watz, 2010
 // http://modelab.nu/?p=4147 / http://workshop.evolutionzone.com
@@ -52,7 +56,7 @@ boolean _debug = false;
 boolean _blendMode = true;
 boolean _drawLines = true;
 boolean _transparent = false;
-
+boolean _useKinect = true;
 
 float _counter = 110;
 
@@ -72,7 +76,7 @@ float rotX, rotY, rotZ;
 //==============================================
 void setup() {
   size(1024, 768, OPENGL);
-noCursor();
+  noCursor();
 
 
   // input image must be square or have a greater height than width.
@@ -81,17 +85,38 @@ noCursor();
   // by OnFormative:
   // http://onformative.com/lab/creating-contour-maps/
 
-
   initControllers(); // initialize interface, see "GUI" tab
   generateMesh(); // initialize mesh surface, see "Terrain"
 
-  kinect = new Kinect(this);
-  kinect.start();
-  kinect.enableDepth(true);
-
   opencv = new OpenCV( this );
 
-  img = kinect.getDepthImage();//get depth prethresholded
+  
+  kinect = new Kinect(this);
+  
+  kinect.start();
+  try{
+    kinect.enableDepth(true);
+  }
+  catch(Exception e){
+   println("kinect not kinects, fuuuuuuu");
+   _useKinect = false;
+  //create webcam object 
+   // video = new Capture(this, 640, 480, 12);
+     opencv.capture( 640, 480 ); 
+
+  }
+  
+//  _useKinect = true;
+
+
+  if(_useKinect){
+    img = kinect.getDepthImage();//get depth prethresholded
+  }
+  else{
+    opencv.read();
+   // video.loadPixels();
+    img = opencv.image();
+  }
   
   //load the latest depth map here
   try{
@@ -191,7 +216,13 @@ void draw() {
   hint(DISABLE_DEPTH_TEST);
 
   //contrast
-  img = kinect.getDepthImage();
+  if(_useKinect){
+    img = kinect.getDepthImage();
+  }
+  else{
+    opencv.read();
+    img = opencv.image(); 
+  }
   
   img.copy(img, 0,0,img.width,img.height,0,0, img.width+10, img.height+10);
 
@@ -258,6 +289,7 @@ void draw() {
   }
   
   //draw rect
+  noStroke();
   fill(0);
   rect(0,0,25,height);
   rect(width-5,0,20,height);
