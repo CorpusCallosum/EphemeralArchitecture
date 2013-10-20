@@ -40,8 +40,6 @@ PImage alphaImg, scaledImg;
 PImage colorSnapshot; //save color information every hour
 PImage colorInit; //initialize with color from most recent snapshot
 PImage depthSnapshot;
-int startHue = 110;
-int cycles = 1;
 
 SimpleOpenNI kinect;
 
@@ -54,12 +52,26 @@ boolean _useKinect = true;
 
 float _counter = 110;
 
+//color timers
 long startTime; 
 long currentTime;
 long lastTime = 0;
 long colorTime = 0;
-int runTime = 1000*60*5; //5 minutes
-int everyHour = 3600; //1 hour = 3600 seconds
+int colorDuration = 1000 * 20; //how long each color lasts in ms
+//int runTime = 1000*60*5; //5 minutes
+int everyHour = 3600; //1 hour = 3600 seconds to save out every hour
+
+int cycles = 1;
+
+color colorPalette[] = new color[ 5 ];
+color fromColor;
+color toColor;
+color transColor;
+int currentColor;
+int lastColor;
+float transSpeed; // moves 0 - 1 to transition fromColor toColor
+
+
 Timer _saveDepthMapTimer;
 Timer _loadColorTimer;
 
@@ -71,15 +83,10 @@ void setup() {
   size(1024, 768, OPENGL);
   noCursor();
 
-  // input image must be square or have a greater height than width.
-
-  // this image is borrowed from the excellent contour map tutorial
-  // by OnFormative:
-  // http://onformative.com/lab/creating-contour-maps/
-
   initControllers(); // initialize interface, see "GUI" tab
   generateMesh(); // initialize mesh surface, see "Terrain"
 
+  //camera or kinect initialize
   opencv = new OpenCV( this );
   kinect = new SimpleOpenNI( this );
   kinect.start();
@@ -114,12 +121,6 @@ void setup() {
     blendedImg = createImage(img.width, img.height, RGB);
   }
   alphaImg = createImage(img.width, img.height, RGB);
- // 
-  
-  float _scale = .1;
-  scaledImg = createImage(round(img.width*_scale), round(img.height*_scale), RGB);
-  colorGrid = new color[scaledImg.width][scaledImg.height];
-  brightnessGrid = new float[scaledImg.width][scaledImg.height];
 
   opencv.allocate( img.width, img.height );
   for (int x=0;x<alphaImg.width;x++) {
@@ -127,8 +128,35 @@ void setup() {
       alphaImg.set(x, y, 10);
     }
   }
-
-
+  
+  float _scale = .1;
+  scaledImg = createImage(round(img.width*_scale), round(img.height*_scale), RGB);
+  
+  //color grid initialize
+  colorGrid = new color[scaledImg.width][scaledImg.height];
+  brightnessGrid = new float[scaledImg.width][scaledImg.height];
+  
+  currentColor = 1;
+  lastColor = 0;
+  transSpeed = 0.0;
+  
+  startTime = System.currentTimeMillis();
+  cycles = 1;
+  
+  //initialize color palette
+  colorMode( RGB );
+  colorPalette[ 0 ] = color( 25, 228, 245, 255 );   //ice blue
+  colorPalette[ 1 ] = color( 5, 3, 255, 255 );      //dark blue
+  colorPalette[ 2 ] = color( 88, 4, 180, 255 );     //purple
+  colorPalette[ 3 ] = color( 233, 19, 237, 255 );   //magenta
+  colorPalette[ 4 ] = color( 255, 255, 255, 255 );  //white
+  
+    
+  fromColor = colorPalette[ lastColor ];
+  transColor = colorPalette[ lastColor ];
+  toColor = colorPalette[ currentColor ];
+  
+  
   //create image to save color to
   colorSnapshot = createImage( scaledImg.width, scaledImg.height, HSB );
   depthSnapshot = createImage( img.width, img.height, RGB );
@@ -147,6 +175,7 @@ void setup() {
   rotX = -PI / 4;
   rotY = 0;
   rotZ = PI;
+  
 
   draw();
   loadColor();
@@ -161,13 +190,22 @@ void draw() {
   background(0);
   smooth();
 
+  transSpeed = (float) colorTime / colorDuration;
+  transColor = lerpColor( colorPalette[ lastColor ], colorPalette[ currentColor ], transSpeed ); //the current color
   
   currentTime = System.currentTimeMillis() - startTime;//how long the sketch has been running in m
-  if ( colorTime >= runTime ) {
-    cycles++;
+  if ( colorTime >= colorDuration ) {
+    cycles ++;
+    lastColor = currentColor;
+    currentColor ++;
+    if ( currentColor > colorPalette.length - 1 ) {
+      currentColor = 0;
+    } 
+    fromColor = colorPalette[ lastColor ];
+    toColor = colorPalette[ currentColor ];
   }
   if ( cycles > 1 ) {
-    colorTime = currentTime - ( (cycles - 1 ) * runTime );
+    colorTime = currentTime - ((cycles - 1 ) * colorDuration );
   }
   else {
     colorTime = currentTime;
@@ -324,7 +362,7 @@ void loadColor() {
     for ( int j = 0; j < scaledImg.height; j++ ) {
       colorMode( HSB, 255 );
       int initialHue = round( hue(colorInit.get( i, j )) );
-      colorGrid[i][j] = color( 163, 0, 255 );
+      colorGrid[i][j] = color( 163, 0, 255, 255 );
     }
   }
   }

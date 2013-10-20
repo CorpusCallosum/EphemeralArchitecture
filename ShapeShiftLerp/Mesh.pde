@@ -61,12 +61,11 @@ class Mesh {
 
   void draw() {
  
-
     background(0);
     lights();
     shininess(16);
-    directionalLight(255, 255, 255, 100, 25 , 0);
-    pointLight(255,255,255, 0,0, 300);    
+    directionalLight( 255, 255, 255, 100, 25 , 0);
+    pointLight( 255, 255, 255, 0,0, 300);    
     specular(255);
   
 
@@ -90,8 +89,6 @@ class Mesh {
   }
 
 
-
-
   void drawMesh( PGraphics gfx, TriangleMesh mesh, boolean vertexNormals, boolean showNormals ) {
 
     gfx.beginShape( PConstants.TRIANGLES );
@@ -105,7 +102,7 @@ class Mesh {
       for ( Iterator i = mesh.faces.iterator(); i.hasNext(); ) {
 
         Face f = (Face)i.next();
-        colorMode(HSB);
+        colorMode(RGB);
 
         //vertexA
         Vec3D n = normalMap.applyTo(f.a.normal);
@@ -220,7 +217,7 @@ class Mesh {
         el[i] = brightness(scaledImg.get(x, z))/255.0 * Z;
 
         if ( abs(el[i] - brightnessGrid[x][z]) > 20 ) {
-          colorGrid[x][z] = color( 126, 252, 245 ); 
+          colorGrid[x][z] = transColor; 
           //println("colorgridValue: " + colorGrid[x][z]);
         }
         brightnessGrid[x][z] = el[i];
@@ -235,8 +232,9 @@ class Mesh {
     mesh.center(null);
   }
   
-  int getCurrentColor(){
-   return  round( colorTime * 255 / runTime ) + startHue;
+  color getCurrentColor(){
+   //return  round( colorTime * 255 / runTime ) + startHue;
+   return transColor;
  
   }
   
