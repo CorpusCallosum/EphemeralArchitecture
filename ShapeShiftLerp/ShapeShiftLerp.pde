@@ -29,8 +29,8 @@ Mesh mesh; // Terrain object
 
 OpenCV opencv;
 
-//float[][] colorGrid;
 color[][] colorGrid;
+int[][] alphaGrid;
 float[][] brightnessGrid;
 
 PImage img;
@@ -134,6 +134,7 @@ void setup() {
   
   //color grid initialize
   colorGrid = new color[scaledImg.width][scaledImg.height];
+  alphaGrid = new int[scaledImg.width][scaledImg.height];
   brightnessGrid = new float[scaledImg.width][scaledImg.height];
   
   currentColor = 1;
@@ -145,11 +146,17 @@ void setup() {
   
   //initialize color palette
   colorMode( RGB );
-  colorPalette[ 0 ] = color( 25, 228, 245, 255 );   //ice blue
-  colorPalette[ 1 ] = color( 5, 3, 255, 255 );      //dark blue
-  colorPalette[ 2 ] = color( 88, 4, 180, 255 );     //purple
-  colorPalette[ 3 ] = color( 233, 19, 237, 255 );   //magenta
-  colorPalette[ 4 ] = color( 255, 255, 255, 255 );  //white
+  colorPalette[ 0 ] = color( 25, 228, 245 );   //ice blue
+  colorPalette[ 1 ] = color( 5, 3, 255 );      //dark blue
+  colorPalette[ 2 ] = color( 88, 4, 180 );     //purple
+  colorPalette[ 3 ] = color( 233, 19, 237 );   //magenta
+  colorPalette[ 4 ] = color( 255, 255, 255 );  //white
+  
+  for ( int i = 0; i < scaledImg.width; i ++ ) {
+    for ( int j = 0; j < scaledImg.height; j ++ ) {
+      alphaGrid[i][j] = 255;
+    }
+  }
   
     
   fromColor = colorPalette[ lastColor ];
@@ -228,7 +235,12 @@ void draw() {
   
   lights();
   //nav.doTransforms(); // transformations using Nav3D
+  rectMode( CENTER );
   mesh.draw();
+  fill( 0 );
+  rotateX(90);
+  //translateY( -200 );
+  //rect( 0, 0, 5000, 5000 );
   popMatrix();
 
   // turn off depth test so the controlP5 GUI draws correctly
@@ -304,11 +316,6 @@ void draw() {
     _loadColorTimer.reset();
   }
   
-  //draw rect
-  noStroke();
-  fill(0);
-  rect(0,0,25,height);
-  rect(width-5,0,20,height);
 }
 
 // initializes 3D mesh
