@@ -4,11 +4,14 @@
 <dict>
 	<key>Label</key>
 	<string>pt.floating.lanscapes</string>
-	<key>ProgramArguments</key>
-	<array>
-		<string>/Library/Applications/LANscapes.app</string>
-	</array>
+	<key>Program</key>
+	<string>/Applications/LANscapes.app/Contents/MacOS/JavaApplicationStub</string>
 	<key>RunAtLoad</key>
     <true/>
+	<key>KeepAlive</key>
+    <dict>
+    	<key>SuccessfulExit</key>
+    	<false/>
+    </dict>
 </dict>
 </plist>
