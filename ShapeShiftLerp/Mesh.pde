@@ -32,6 +32,7 @@ class Mesh {
   boolean isWireFrame;
   boolean showNormals;
   boolean doSave;
+  boolean drawLine;
 
   float vertexHueA;
   color vertexColorA;
@@ -108,7 +109,13 @@ class Mesh {
         Vec3D n = normalMap.applyTo(f.a.normal);
         
         vertexColorA = colorGrid[floor(map((f.a.x), -1575, 1575, 0, scaledImg.width-1))][floor(map((f.a.z), -1175, 1175, 0, scaledImg.height-1))];
-        setVertexColor(gfx, vertexColorA);
+        if (f.a.y < -100 ) {  //threshold for whether or not to draw line
+          drawLine = false;
+        }
+        else {
+          drawLine = true;
+        }
+        setVertexColor(gfx, vertexColorA, drawLine);
         
         gfx.normal( f.a.normal.x, f.a.normal.y, f.a.normal.z );
         gfx.vertex(f.a.x, f.a.y, f.a.z);
@@ -117,7 +124,13 @@ class Mesh {
         n = normalMap.applyTo(f.b.normal);
         
         vertexColorB = colorGrid[floor(map((f.b.x), -1575, 1575, 0, scaledImg.width-1))][floor(map((f.b.z), -1175, 1175, 0, scaledImg.height-1))];
-        setVertexColor(gfx, vertexColorB);
+        if (f.b.y < -100 ) {
+          drawLine = false;
+        }
+        else {
+          drawLine = true;
+        }
+        setVertexColor(gfx, vertexColorB, drawLine);
 
         gfx.normal(f.b.normal.x, f.b.normal.y, f.b.normal.z);
         gfx.vertex(f.b.x, f.b.y, f.b.z);
@@ -126,7 +139,13 @@ class Mesh {
         n = normalMap.applyTo(f.c.normal);
         
         vertexColorC = colorGrid[floor(map((f.c.x), -1575, 1575, 0, scaledImg.width-1))][floor(map((f.c.z), -1175, 1175, 0, scaledImg.height-1))];
-        setVertexColor(gfx, vertexColorC);
+        if (f.c.y < -100 ) {
+          drawLine = false;
+        }
+        else {
+          drawLine = true;
+        }
+        setVertexColor(gfx, vertexColorC, drawLine);
  
         gfx.normal(f.c.normal.x, f.c.normal.y, f.c.normal.z);
         gfx.vertex(f.c.x, f.c.y, f.c.z);
@@ -171,14 +190,10 @@ class Mesh {
     }
   }
 
-  void setVertexColor(PGraphics gfx, int c) {
+  void setVertexColor(PGraphics gfx, int c, boolean b) {
     gfx.strokeWeight(1);
     if (toggleSolid) {
       gfx.fill( c );
-      /*int strokeColor = c + 20;
-      if ( strokeColor > 255 ) {
-        strokeColor -= 255;
-      gfx.stroke( strokeColor );*/
       gfx.stroke(150);
     } 
     else {
@@ -187,17 +202,23 @@ class Mesh {
     }
     
     if(_drawLines){
-      //color lineColor = color(hue(c), 150, brightness(c));
-      vertexBrightness = map( noise( xSeed, ySeed), 0, 1, 150, 255 );
+      vertexBrightness = map( noise( xSeed, ySeed), 0, 1, 150, 255 ); //make it shimmery
       xSeed += .05;
         if (xSeed % 150 == 0 ) {
           ySeed += .1;
         }
         //color lineColor = color( 0, 0, vertexBrightness);
- 
       color lineColor = color( vertexBrightness );
+      if ( b ) {           //if above threshold, line is opaque
+        color lineColorDraw = color( lineColor, 255 );
+        gfx.stroke( lineColorDraw );
+      }
+      else {               //if below threshold, line is transparent
+        color lineColorDraw = color( lineColor, 0 );
+        gfx.stroke( lineColorDraw );
+      }
      
-      gfx.stroke( lineColor );
+      
     }
     else{
       gfx.noStroke();
@@ -218,8 +239,15 @@ class Mesh {
 
         if ( abs(el[i] - brightnessGrid[x][z]) > 20 ) {
           colorGrid[x][z] = transColor; 
-          //println("colorgridValue: " + colorGrid[x][z]);
         }
+          if ( abs( el[ i ] )  < 500 ) {    //threshold for whether faces are transarent or opaque
+            colorGrid[x][z] = color( colorGrid[x][z], 0 );
+          }
+          else {
+            colorGrid[x][z] = color ( colorGrid[x][z], 255 ) ;
+          }
+        
+        
         brightnessGrid[x][z] = el[i];
 
         i++;
