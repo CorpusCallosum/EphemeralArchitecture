@@ -255,7 +255,9 @@ class Mesh {
   }
   
   int getCurrentColor(){
-   return  round( colorTime * 255 / runTime )+startHue;
+   return  round( colorTime * 255 / runTime ) + startHue;
+   
+   
           // vertexHueA = startHue + colorGrid[floor(map((f.a.x), -1575, 1575, 0, scaledImg.width-1))][floor(map((f.a.z), -1175, 1175, 0, scaledImg.height-1))]; //mapping based on 4 day cycle in seconds
 
  
