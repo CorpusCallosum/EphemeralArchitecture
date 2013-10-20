@@ -15,7 +15,6 @@ class Mesh {
   Pt pt[][];
   int gridRes; // grid resolution
   int lastGridRes; // last known grid resolution
-  UGeometry model;
 
   import processing.opengl.*;
 
@@ -35,12 +34,15 @@ class Mesh {
   boolean doSave;
 
   float vertexHueA;
-
   color vertexColorA;
   float vertexHueB;
   color vertexColorB;
   float vertexHueC;
   color vertexColorC;
+  
+  float xSeed, ySeed = 0;
+  float vertexBrightness;
+ 
 
   Terrain terrain;
 
@@ -48,7 +50,6 @@ class Mesh {
 
   Mesh(PApplet _parent) {    
     parent=_parent;
-    //  buildModel();
 
     //TRY LOADING THE STL HERE
     //  mesh=(TriangleMesh)new STLReader().loadBinary(sketchPath("stl/LANscape1336843728.stl"),STLReader.TRIANGLEMESH);
@@ -59,32 +60,14 @@ class Mesh {
   }
 
   void draw() {
-   // println(vertexHueA);
-    // check which drawing style to use
-    /*if(toggleSolid) {
-     fill(37, 109, 154);
-     //       stroke(0);
-     
-     colorMode(HSB);
-     stroke(_counter, 255, 255);
-     //noFill();
-     fill(0);
-     // noStroke();
-     }
-     else {
-     noFill();
-     fill(0, 0, 0, 128);
-     stroke(9, 133, 255 );
-     //noStroke();
-     }
-     model.draw(parent);*/
-
+ 
     background(0);
     lights();
     shininess(16);
-    directionalLight(255, 255, 255, 100, 25 , 0);
-    pointLight(255,255,255, 0,0, 300);    specular(255);
-    //drawAxes(400);
+    directionalLight( 255, 255, 255, 100, 25 , 0);
+    pointLight( 255, 255, 255, 0,0, 300);    
+    specular(255);
+  
 
     if ( isWireFrame ) {
       noFill();
@@ -106,8 +89,6 @@ class Mesh {
   }
 
 
-
-
   void drawMesh( PGraphics gfx, TriangleMesh mesh, boolean vertexNormals, boolean showNormals ) {
 
     gfx.beginShape( PConstants.TRIANGLES );
@@ -121,41 +102,30 @@ class Mesh {
       for ( Iterator i = mesh.faces.iterator(); i.hasNext(); ) {
 
         Face f = (Face)i.next();
-        colorMode(HSB);
+        colorMode(RGB);
 
+        //vertexA
         Vec3D n = normalMap.applyTo(f.a.normal);
         
-        //println("vertexHueA: " + colorGrid[floor(map((f.a.x), -1575, 1575, 0, scaledImg.width-1))][floor(map((f.a.z), -1175, 1175, 0, scaledImg.height-1))]);
-        vertexHueA = startHue + colorGrid[floor(map((f.a.x), -1575, 1575, 0, scaledImg.width-1))][floor(map((f.a.z), -1175, 1175, 0, scaledImg.height-1))]; //mapping based on 4 day cycle in seconds
-              //  println(vertexHueA);
-
-        while ( vertexHueA > 255 ) {
-          vertexHueA -= 255;
-        }
-        vertexColorA = color(vertexHueA, _sat, 255 );
+        vertexColorA = colorGrid[floor(map((f.a.x), -1575, 1575, 0, scaledImg.width-1))][floor(map((f.a.z), -1175, 1175, 0, scaledImg.height-1))];
         setVertexColor(gfx, vertexColorA);
         
         gfx.normal( f.a.normal.x, f.a.normal.y, f.a.normal.z );
         gfx.vertex(f.a.x, f.a.y, f.a.z);
 
+        //vertexB
         n = normalMap.applyTo(f.b.normal);
-        vertexHueB = startHue +colorGrid[floor(map((f.b.x), -1575, 1575, 0, scaledImg.width-1))][floor(map((f.b.z), -1175, 1175, 0, scaledImg.height-1))]; //mapping based on 4 day cycle in seconds
-        if ( vertexHueB > 255 ) {
-          vertexHueB -= 255;
-        }
-        // println( vertexHueB );
-        vertexColorB = color( round(vertexHueB), _sat, 255 );
+        
+        vertexColorB = colorGrid[floor(map((f.b.x), -1575, 1575, 0, scaledImg.width-1))][floor(map((f.b.z), -1175, 1175, 0, scaledImg.height-1))];
         setVertexColor(gfx, vertexColorB);
 
         gfx.normal(f.b.normal.x, f.b.normal.y, f.b.normal.z);
         gfx.vertex(f.b.x, f.b.y, f.b.z);
 
+        //vertexC
         n = normalMap.applyTo(f.c.normal);
-        vertexHueC = startHue + colorGrid[floor(map((f.c.x), -1575, 1575, 0, scaledImg.width-1))][floor(map((f.c.z), -1175, 1175, 0, scaledImg.height-1))]; //mapping based on 4 day cycle in seconds
-        if ( vertexHueC > 255 ) {
-          vertexHueC -= 255;
-        }
-        vertexColorC = color( round(vertexHueC), _sat, 255 );
+        
+        vertexColorC = colorGrid[floor(map((f.c.x), -1575, 1575, 0, scaledImg.width-1))][floor(map((f.c.z), -1175, 1175, 0, scaledImg.height-1))];
         setVertexColor(gfx, vertexColorC);
  
         gfx.normal(f.c.normal.x, f.c.normal.y, f.c.normal.z);
@@ -218,7 +188,15 @@ class Mesh {
     
     if(_drawLines){
       //color lineColor = color(hue(c), 150, brightness(c));
-      color lineColor = color(255);
+      vertexBrightness = map( noise( xSeed, ySeed), 0, 1, 150, 255 );
+      xSeed += .05;
+        if (xSeed % 150 == 0 ) {
+          ySeed += .1;
+        }
+        //color lineColor = color( 0, 0, vertexBrightness);
+ 
+      color lineColor = color( vertexBrightness );
+     
       gfx.stroke( lineColor );
     }
     else{
@@ -239,7 +217,7 @@ class Mesh {
         el[i] = brightness(scaledImg.get(x, z))/255.0 * Z;
 
         if ( abs(el[i] - brightnessGrid[x][z]) > 20 ) {
-          colorGrid[x][z] = round( colorTime * 255 / runTime ); //convert from time since start to int between 0-255
+          colorGrid[x][z] = transColor; 
           //println("colorgridValue: " + colorGrid[x][z]);
         }
         brightnessGrid[x][z] = el[i];
@@ -254,12 +232,9 @@ class Mesh {
     mesh.center(null);
   }
   
-  int getCurrentColor(){
-   return  round( colorTime * 255 / runTime ) + startHue;
-   
-   
-          // vertexHueA = startHue + colorGrid[floor(map((f.a.x), -1575, 1575, 0, scaledImg.width-1))][floor(map((f.a.z), -1175, 1175, 0, scaledImg.height-1))]; //mapping based on 4 day cycle in seconds
-
+  color getCurrentColor(){
+   //return  round( colorTime * 255 / runTime ) + startHue;
+   return transColor;
  
   }
   
