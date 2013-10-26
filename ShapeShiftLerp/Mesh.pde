@@ -64,7 +64,7 @@ class Mesh {
  
     background(0);
     lights();
-    shininess(16);
+    shininess(25);
     directionalLight( 255, 255, 255, 100, 25 , 0);
     pointLight( 255, 255, 255, 0,0, 300);    
     specular(255);
@@ -109,7 +109,7 @@ class Mesh {
         Vec3D n = normalMap.applyTo(f.a.normal);
         
         vertexColorA = colorGrid[floor(map((f.a.x), -1575, 1575, 0, scaledImg.width-1))][floor(map((f.a.z), -1175, 1175, 0, scaledImg.height-1))];
-        if (f.a.y < -100 ) {  //threshold for whether or not to draw line  
+        if (f.a.y < lineCutoff ) {  //threshold for whether or not to draw line  
           drawLine = false;
         }
         else {
@@ -124,7 +124,7 @@ class Mesh {
         n = normalMap.applyTo(f.b.normal);
         
         vertexColorB = colorGrid[floor(map((f.b.x), -1575, 1575, 0, scaledImg.width-1))][floor(map((f.b.z), -1175, 1175, 0, scaledImg.height-1))];
-        if (f.b.y < -100 ) {
+        if (f.b.y < lineCutoff ) {
           drawLine = false;
         }
         else {
@@ -139,7 +139,7 @@ class Mesh {
         n = normalMap.applyTo(f.c.normal);
         
         vertexColorC = colorGrid[floor(map((f.c.x), -1575, 1575, 0, scaledImg.width-1))][floor(map((f.c.z), -1175, 1175, 0, scaledImg.height-1))];
-        if (f.c.y < -100 ) {
+        if (f.c.y < lineCutoff ) {
           drawLine = false;
         }
         else {
@@ -194,7 +194,7 @@ class Mesh {
     gfx.strokeWeight(1);
     if (toggleSolid) {
       gfx.fill( c );
-      gfx.stroke(150);
+      gfx.stroke( 150 );
     } 
     else {
       gfx.fill( 0 );  
@@ -240,7 +240,7 @@ class Mesh {
         if ( abs(el[i] - brightnessGrid[x][z]) > 20 ) {
           colorGrid[x][z] = transColor; 
         }
-          if ( abs( el[ i ] )  < 500 ) {    //threshold for whether faces are transarent or opaque
+          if ( abs( el[ i ] )  < faceCutoff ) {    //threshold for whether faces are transarent or opaque
             colorGrid[x][z] = color( colorGrid[x][z], 0 );
           }
           else {

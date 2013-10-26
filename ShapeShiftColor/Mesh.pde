@@ -15,7 +15,7 @@ class Mesh {
   Pt pt[][];
   int gridRes; // grid resolution
   int lastGridRes; // last known grid resolution
-  UGeometry model;
+  //UGeometry model;
 
   import processing.opengl.*;
 

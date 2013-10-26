@@ -280,10 +280,10 @@ void draw() {
   }
   
   //draw rect
-  noStroke();
-  fill(0);
-  rect(0,0,25,height);
-  rect(width-5,0,20,height);
+  //noStroke();
+  //fill(0);
+  //rect(0,0,25,height);
+  //rect(width-5,0,20,height);
 }
 
 // initializes 3D mesh

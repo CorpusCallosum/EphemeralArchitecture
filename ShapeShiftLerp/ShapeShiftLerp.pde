@@ -20,6 +20,8 @@ ControlP5 controlP5; // instance of the controlP5 library
 
 //SLIDER VRS
 int slGridResolution, _brightness, _contrast, _sat; // slider value for grid resolution
+int lineCutoff, faceCutoff;
+int alphaValue;
 float Z; // controls the height difference in the terrain
 float noiseXD, noiseYD; // modifiers for X,Y noise
 
@@ -123,9 +125,9 @@ void setup() {
   alphaImg = createImage(img.width, img.height, RGB);
 
   opencv.allocate( img.width, img.height );
-  for (int x=0;x<alphaImg.width;x++) {
-    for (int y=0;y<alphaImg.height;y++) {
-      alphaImg.set(x, y, 10);
+  for (int x = 0; x < alphaImg.width; x ++) {
+    for (int y = 0; y < alphaImg.height; y ++) {
+      alphaImg.set( x, y, alphaValue );
     }
   }
   
@@ -146,11 +148,11 @@ void setup() {
   
   //initialize color palette
   colorMode( RGB );
-  colorPalette[ 0 ] = color( 25, 228, 245 );   //ice blue
-  colorPalette[ 1 ] = color( 5, 3, 255 );      //dark blue
-  colorPalette[ 2 ] = color( 88, 4, 180 );     //purple
-  colorPalette[ 3 ] = color( 233, 19, 237 );   //magenta
-  colorPalette[ 4 ] = color( 255, 255, 255 );  //white
+  colorPalette[ 0 ] = color( 70, 216, 98 );// 0, 227, 221 );   //ice blue
+  colorPalette[ 1 ] = color( 0, 23, 216 );//21, 55, 232 );      //dark blue
+  colorPalette[ 2 ] = color( 216, 0, 119 );//88, 4, 180 );     //purple
+  colorPalette[ 3 ] = color( 124, 124, 124 );//170, 0, 170 );   //magenta
+  colorPalette[ 4 ] = color( 92, 218, 255 );//230, 230, 230 );  //white
   
   for ( int i = 0; i < scaledImg.width; i ++ ) {
     for ( int j = 0; j < scaledImg.height; j ++ ) {
@@ -177,8 +179,8 @@ void setup() {
    _loadColorTimer.start();
   
   transX = -600;
-  transY = -1400;
-  transZ = -800;
+  transY = -1800;
+  transZ = -1050;
   rotX = -PI / 4;
   rotY = 0;
   rotZ = PI;
@@ -265,7 +267,7 @@ void draw() {
   opencv.contrast( _contrast );
 
   modifiedImg = opencv.image();
-  modifiedImg.mask(alphaImg);
+  modifiedImg.mask( alphaImg );
   // if(counter >= 10){
   int mode;
   if (_blendMode) {
@@ -274,13 +276,13 @@ void draw() {
   else {
     mode = BLEND;
   }
-  blendedImg.blend(modifiedImg, 0, 0, img.width, img.height, 0, 0, img.width, img.height, mode);
+  blendedImg.blend( modifiedImg, 0, 0, img.width, img.height, 0, 0, img.width, img.height, mode );
 
-  fill(255);
-  if (drawKinect) {
-    image(img, width-350, 0, 320, 240);
-    image(modifiedImg, width-350, 240, 320, 240);
-    image(blendedImg, width-350, 240*2, 320, 240);
+  fill( 255 );
+  if ( drawKinect ) {
+    image( img, width-350, 0, 320, 240 );
+    image( modifiedImg, width-350, 240, 320, 240 );
+    image( blendedImg, width-350, 240*2, 320, 240 );
   }
   img = blendedImg;
 

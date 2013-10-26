@@ -28,7 +28,7 @@ void initControllers() {
   100, 13); // width and height of slider
 
   //BRIGHTNESS
-  _brightness=-10;
+  _brightness = -94;
   controlP5.addSlider("_brightness", // name, must match variable name
   -200, 200, // min and max values
   _brightness, // the default value
@@ -36,7 +36,7 @@ void initControllers() {
   500, 13); // width and height of slider
 
   //CONTRAST
-  _contrast=0;
+  _contrast = 96;
   controlP5.addSlider("_contrast", // name, must match variable name
   -200, 200, // min and max values
   _contrast, // the default value
@@ -44,12 +44,24 @@ void initControllers() {
   500, 13); // width and height of slider
   
   //SATURATION
-  _sat=200;
+  _sat = 200;
   controlP5.addSlider("_sat", // name, must match variable name
   0, 255, // min and max values
   _sat, // the default value
   20, 100, // X,Y position of slider
   500, 13); // width and height of slider
+  
+  //FACE CUTOFF
+  faceCutoff = 524;
+  controlP5.addSlider( "faceCutoff", 0, 1000, faceCutoff, 20, 120, 500, 13 );
+  
+  //LINE CUTOFF
+  lineCutoff = 200;
+  controlP5.addSlider( "lineCutoff", -500, 500, lineCutoff, 20, 140, 500, 13 );
+  
+  //ALPHA VALUE
+  alphaValue = 20;
+  controlP5.addSlider( "alphaValue", 0, 255, alphaValue, 20, 160, 500, 13 );
 
   // add a "bang" input, a button that triggers a custom function.
   // we'll use it to regenerate the mesh
@@ -104,6 +116,7 @@ void keyPressed() {
   else if (key == 'o') {
    println("transX: " + transX + ", transY: " + transY + ", transZ: " + transZ);
    println("rotX: " + rotX + ", rotY: " + rotY + ", rotZ: " + rotZ);
+   println("brightness: " + _brightness + ", contrast: " + _contrast + ", lineCutoff: " + lineCutoff + ", faceCutoff: " + faceCutoff);
   }
   else if (key == 'w') {
    toggleSolid = !toggleSolid;
