@@ -109,7 +109,7 @@ class Mesh {
         Vec3D n = normalMap.applyTo(f.a.normal);
         
         vertexColorA = colorGrid[floor(map((f.a.x), -1575, 1575, 0, scaledImg.width-1))][floor(map((f.a.z), -1175, 1175, 0, scaledImg.height-1))];
-        if (f.a.y < -100 ) {  //threshold for whether or not to draw line
+        if (f.a.y < -100 ) {  //threshold for whether or not to draw line  
           drawLine = false;
         }
         else {

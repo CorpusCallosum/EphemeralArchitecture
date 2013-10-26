@@ -329,20 +329,19 @@ void generateMesh() {
 void saveSTL() {
 
   long saveTime = System.currentTimeMillis()/1000;
-  mesh.getMeshReference().saveAsSTL(sketchPath("data/stl/LANscape"+saveTime+".stl"));
+  //mesh.getMeshReference().saveAsSTL(sketchPath("data/stl/LANscape"+saveTime+".stl")); //saves mesh configuration as STL
 
   for ( int i = 0; i < scaledImg.width; i++ ) {
     for ( int j = 0; j < scaledImg.height; j++ ) {
 
-      colorMode( HSB, 255 );
+      colorMode( RGB, 255 );
       color c = colorGrid[i][j];
-      //println(colorGrid[i][j]);
       colorSnapshot.set( i, j, c );
     }
   }
 
-  colorSnapshot.save( sketchPath("data/color/colorSnapshot"+saveTime+".jpg") );
-  colorSnapshot.save( sketchPath("data/colorInitialize.jpg") );
+  //colorSnapshot.save( sketchPath("data/color/colorSnapshot"+saveTime+".jpg") ); //saves color configuration to jpg
+  //colorSnapshot.save( sketchPath("data/colorInitialize.jpg") ); //updates initialize color grid so that restart colors look the same as when the app was closed
   
 }
 
@@ -357,8 +356,8 @@ void saveDepthMap() {
     }
   }
   
-  depthSnapshot.save("data/lastDepth.jpg");
-  depthSnapshot.save("data/depth/depth"+saveTime+".jpg");
+  //depthSnapshot.save("data/lastDepth.jpg");  //updates initialize depth grid so that restart heights look the same as when the app was closed
+  //depthSnapshot.save("data/depth/depth"+saveTime+".jpg"); //save depth image
 }
 
 void loadColor() {
