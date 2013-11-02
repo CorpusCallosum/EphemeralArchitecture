@@ -8,7 +8,7 @@ void lanscapes::setup() {
 	// enable depth->video image calibration
 	kinect.setRegistration(true);
     
-	kinect.init();
+	kinect.init(false, false);
 	//kinect.init(true); // shows infrared instead of RGB video image
 	//kinect.init(false, false); // disable video image (faster fps)
 	
@@ -48,6 +48,9 @@ void lanscapes::setup() {
 	bDrawPointCloud = false;
     
     debug = false;
+    
+    mesh.setup(kinect.width, kinect.height);
+
 }
 
 //--------------------------------------------------------------
@@ -62,6 +65,9 @@ void lanscapes::update() {
 		
 		// load grayscale depth image from the kinect source
 		grayImage.setFromPixels(kinect.getDepthPixels(), kinect.width, kinect.height);
+        
+        //UPDATE MESH
+        mesh.update(grayImage);
 		
 		// we do two thresholds - one for the far plane and one for the near plane
 		// we then do a cvAnd to get the pixels which are a union of the two thresholds
@@ -92,11 +98,15 @@ void lanscapes::update() {
 		// find contours which are between the size of 20 pixels and 1/3 the w*h pixels.
 		// also, find holes is set to true so we will get interior contours as well....
 		contourFinder.findContours(grayImage, 10, (kinect.width*kinect.height)/2, 20, false);
+        
+       
 	}
 	
 #ifdef USE_TWO_KINECTS
 	kinect2.update();
 #endif
+    
+
 }
 
 //--------------------------------------------------------------
@@ -148,6 +158,11 @@ void lanscapes::draw() {
     }
     
 	ofDrawBitmapString(reportStream.str(), 20, 652);
+        
+    }
+    else{
+        //draw the 3d mesh
+        mesh.draw();
     }
 }
 

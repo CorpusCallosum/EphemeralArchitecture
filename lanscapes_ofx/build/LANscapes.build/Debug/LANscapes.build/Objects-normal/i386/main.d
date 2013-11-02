@@ -230,4 +230,5 @@ dependencies: \
   /Volumes/HD2/OpenFrameworks/of_v0.8.0_osx_release/addons/ofxKinect/src/ofxKinect.h \
   /Volumes/HD2/OpenFrameworks/of_v0.8.0_osx_release/apps/LANscapes/lanscapes_ofx/../../../addons/ofxKinect/libs/libfreenect/include/libfreenect.h \
   ../../../addons/ofxKinect/src/ofxBase3DVideo.h \
-  /Volumes/HD2/OpenFrameworks/of_v0.8.0_osx_release/apps/LANscapes/lanscapes_ofx/../../../addons/ofxKinect/libs/libusb-1.0/include/libusb-1.0/libusb.h
+  /Volumes/HD2/OpenFrameworks/of_v0.8.0_osx_release/apps/LANscapes/lanscapes_ofx/../../../addons/ofxKinect/libs/libusb-1.0/include/libusb-1.0/libusb.h \
+  src/mesh.h

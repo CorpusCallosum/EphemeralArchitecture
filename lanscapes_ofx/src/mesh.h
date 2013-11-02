@@ -11,25 +11,19 @@
 
 #pragma once
 #include "ofMain.h"
+#include "ofxOpenCv.h"
 
 
-class mesh : public ofBaseApp{
+
+class Mesh : public ofBaseApp{
 	
 public:
-	void setup();
-	void update();
+	void setup(int w, int h);
+	void update(ofxCvGrayscaleImage img);
 	void draw();
 	
 	void keyPressed  (int key);
-	void keyReleased(int key);
-	void mouseMoved(int x, int y );
-	void mouseDragged(int x, int y, int button);
-	void mousePressed(int x, int y, int button);
-	void mouseReleased(int x, int y, int button);
-	void windowResized(int w, int h);
-	void dragEvent(ofDragInfo dragInfo);
-	void gotMessage(ofMessage msg);
-	
+    
 	ofCamera cam; // add mouse controls for camera movement
 	float extrusionAmount;
 	ofVboMesh mainMesh;

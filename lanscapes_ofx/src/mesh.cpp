@@ -13,7 +13,7 @@
 #include "mesh.h"
 
 //--------------------------------------------------------------
-void mesh::setup(){
+void Mesh::setup(int w, int h){
     
 	ofSetVerticalSync(true);
 	ofSetFrameRate(60);
@@ -24,8 +24,8 @@ void mesh::setup(){
 	vidGrabber.initGrabber(320,240);
     
 	//store the width and height for convenience
-	int width = vidGrabber.getWidth();
-	int height = vidGrabber.getHeight();
+	int width = w;
+	int height = h;
 	
 	//add one vertex to the mesh for each pixel
 	for (int y = 0; y < height; y++){
@@ -57,28 +57,37 @@ void mesh::setup(){
 }
 
 //--------------------------------------------------------------
-void mesh::update(){
+void Mesh::update(ofxCvGrayscaleImage img){
 	//grab a new frame
-	vidGrabber.update();
+	//vidGrabber.update();
 	
 	//update the mesh if we have a new frame
-	if (vidGrabber.isFrameNew()){
+	//if (vidGrabber.isFrameNew()){
 		//this determines how far we extrude the mesh
-		for (int i=0; i<vidGrabber.getWidth()*vidGrabber.getHeight(); i++){
+    
+    
+    
+    
+		for (int i=0; i<img.getWidth()*img.getHeight(); i++){
             
-			ofFloatColor sampleColor(vidGrabber.getPixels()[i*3]/255.f,				// r
-									 vidGrabber.getPixels()[i*3+1]/255.f,			// g
-									 vidGrabber.getPixels()[i*3+2]/255.f);			// b
+			//ofFloatColor sampleColor(img.getPixels()[i*3]/255.f,				// r
+			//						 img.getPixels()[i*3+1]/255.f,			// g
+			//						 img.getPixels()[i*3+2]/255.f);			// b
 			
 			//now we get the vertex aat this position
 			//we extrude the mesh based on it's brightness
+            
+            float b = img.getPixels()[i]/255.f;
+            
 			ofVec3f tmpVec = mainMesh.getVertex(i);
-			tmpVec.z = sampleColor.getBrightness() * extrusionAmount;
+			//tmpVec.z = sampleColor.getBrightness() * extrusionAmount;
+            tmpVec.z = b * extrusionAmount;
+
 			mainMesh.setVertex(i, tmpVec);
             
-			mainMesh.setColor(i, sampleColor);
+			mainMesh.setColor(i, b);
 		}
-	}
+	//}
 	
 	//let's move the camera when you move the mouse
 	float rotateAmount = ofMap(ofGetMouseY(), 0, ofGetHeight(), 0, 360);
@@ -86,7 +95,7 @@ void mesh::update(){
 	
 	//move the camera around the mesh
 	ofVec3f camDirection(0,0,1);
-	ofVec3f centre(vidGrabber.getWidth()/2.f,vidGrabber.getHeight()/2.f, 255/2.f);
+	ofVec3f centre(vidGrabber.getWidth()/2.f,img.getHeight()/2.f, 255/2.f);
 	ofVec3f camDirectionRotated = camDirection.rotated(rotateAmount, ofVec3f(1,0,0));
 	ofVec3f camPosition = centre + camDirectionRotated * extrusionAmount;
 	
@@ -95,7 +104,7 @@ void mesh::update(){
 }
 
 //--------------------------------------------------------------
-void mesh::draw(){
+void Mesh::draw(){
 	//we have to disable depth testing to draw the video frame
 	ofDisableDepthTest();
     //	vidGrabber.draw(20,20);
@@ -117,7 +126,7 @@ void mesh::draw(){
 }
 
 //--------------------------------------------------------------
-void mesh::keyPressed(int key){
+void Mesh::keyPressed(int key){
 	switch(key) {
 		case 'f':
 			ofToggleFullscreen();

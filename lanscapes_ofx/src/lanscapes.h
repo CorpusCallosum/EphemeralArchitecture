@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "ofxOpenCv.h"
 #include "ofxKinect.h"
+#include "mesh.h"
 
 // uncomment this to read from two kinects simultaneously
 //#define USE_TWO_KINECTS
@@ -49,4 +50,7 @@ public:
 	
 	// used for viewing the point cloud
 	ofEasyCam easyCam;
+    
+    Mesh mesh;
+    float imgScale;
 };
