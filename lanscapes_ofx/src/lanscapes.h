@@ -52,5 +52,6 @@ public:
 	ofEasyCam easyCam;
     
     Mesh mesh;
-    float imgScale;
+    
+    int imgW, imgH;
 };

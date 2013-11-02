@@ -17,11 +17,11 @@ void Mesh::setup(int w, int h){
     
 	ofSetVerticalSync(true);
 	ofSetFrameRate(60);
-	ofBackground(66,66,66);
+	ofBackground(0,0,0);
 	
 	//initialize the video grabber
-	vidGrabber.setVerbose(true);
-	vidGrabber.initGrabber(320,240);
+	//vidGrabber.setVerbose(true);
+	//vidGrabber.initGrabber(320,240);
     
 	//store the width and height for convenience
 	int width = w;

@@ -49,14 +49,17 @@ void lanscapes::setup() {
     
     debug = false;
     
-    mesh.setup(kinect.width, kinect.height);
+    imgW = 320;
+    imgH = 240;
+    
+    mesh.setup(imgW, imgH);
 
 }
 
 //--------------------------------------------------------------
 void lanscapes::update() {
 	
-	ofBackground(100, 100, 100);
+	ofBackground(0, 0, 0);
 	
 	kinect.update();
 	
@@ -67,37 +70,12 @@ void lanscapes::update() {
 		grayImage.setFromPixels(kinect.getDepthPixels(), kinect.width, kinect.height);
         
         //UPDATE MESH
+        grayImage.resize(imgW, imgH);
+        
         mesh.update(grayImage);
-		
-		// we do two thresholds - one for the far plane and one for the near plane
-		// we then do a cvAnd to get the pixels which are a union of the two thresholds
-		if(bThreshWithOpenCV) {
-			grayThreshNear = grayImage;
-			grayThreshFar = grayImage;
-			grayThreshNear.threshold(nearThreshold, true);
-			grayThreshFar.threshold(farThreshold);
-			cvAnd(grayThreshNear.getCvImage(), grayThreshFar.getCvImage(), grayImage.getCvImage(), NULL);
-		} else {
-			
-			// or we do it ourselves - show people how they can work with the pixels
-			unsigned char * pix = grayImage.getPixels();
-			
-			int numPixels = grayImage.getWidth() * grayImage.getHeight();
-			for(int i = 0; i < numPixels; i++) {
-				if(pix[i] < nearThreshold && pix[i] > farThreshold) {
-					pix[i] = 255;
-				} else {
-					pix[i] = 0;
-				}
-			}
-		}
 		
 		// update the cv images
 		grayImage.flagImageChanged();
-		
-		// find contours which are between the size of 20 pixels and 1/3 the w*h pixels.
-		// also, find holes is set to true so we will get interior contours as well....
-		contourFinder.findContours(grayImage, 10, (kinect.width*kinect.height)/2, 20, false);
         
        
 	}
