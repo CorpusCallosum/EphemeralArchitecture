@@ -1,6 +1,6 @@
 dependencies: \
-  /Volumes/HD2/OpenFrameworks/of_v0.8.0_osx_release/apps/myApps/LANscapes/src/main.cpp \
-  src/testApp.h ../../../libs/openFrameworks/ofMain.h \
+  /Volumes/HD2/OpenFrameworks/of_v0.8.0_osx_release/apps/LANscapes/lanscapes_ofx/src/main.cpp \
+  src/lanscapes.h ../../../libs/openFrameworks/ofMain.h \
   ../../../libs/openFrameworks/utils/ofConstants.h \
   ../../../libs/glew/include/GL/glew.h \
   ../../../libs/tess2/include/tesselator.h \
@@ -171,7 +171,7 @@ dependencies: \
   ../../../libs/openFrameworks/3d/ofEasyCam.h \
   /Volumes/HD2/OpenFrameworks/of_v0.8.0_osx_release/addons/ofxOpenCv/src/ofxOpenCv.h \
   ../../../addons/ofxOpenCv/src/ofxCvConstants.h \
-  /Volumes/HD2/OpenFrameworks/of_v0.8.0_osx_release/apps/myApps/LANscapes/../../../addons/ofxOpenCv/libs/opencv/include/opencv/cv.h \
+  /Volumes/HD2/OpenFrameworks/of_v0.8.0_osx_release/apps/LANscapes/lanscapes_ofx/../../../addons/ofxOpenCv/libs/opencv/include/opencv/cv.h \
   ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/core/core_c.h \
   ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/core/types_c.h \
   ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/core/core.hpp \
@@ -228,6 +228,6 @@ dependencies: \
   ../../../addons/ofxOpenCv/src/ofxCvContourFinder.h \
   ../../../addons/ofxOpenCv/src/ofxCvHaarFinder.h \
   /Volumes/HD2/OpenFrameworks/of_v0.8.0_osx_release/addons/ofxKinect/src/ofxKinect.h \
-  /Volumes/HD2/OpenFrameworks/of_v0.8.0_osx_release/apps/myApps/LANscapes/../../../addons/ofxKinect/libs/libfreenect/include/libfreenect.h \
+  /Volumes/HD2/OpenFrameworks/of_v0.8.0_osx_release/apps/LANscapes/lanscapes_ofx/../../../addons/ofxKinect/libs/libfreenect/include/libfreenect.h \
   ../../../addons/ofxKinect/src/ofxBase3DVideo.h \
-  /Volumes/HD2/OpenFrameworks/of_v0.8.0_osx_release/apps/myApps/LANscapes/../../../addons/ofxKinect/libs/libusb-1.0/include/libusb-1.0/libusb.h
+  /Volumes/HD2/OpenFrameworks/of_v0.8.0_osx_release/apps/LANscapes/lanscapes_ofx/../../../addons/ofxKinect/libs/libusb-1.0/include/libusb-1.0/libusb.h
