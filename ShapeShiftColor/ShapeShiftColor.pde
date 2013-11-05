@@ -259,7 +259,7 @@ void draw() {
   opencv.contrast( _contrast );
 
   modifiedImg = opencv.image();
-  modifiedImg.mask(alphaImg);
+  modifiedImg.mask( alphaImg );
   // if(counter >= 10){
   int mode;
   if (_blendMode) {
