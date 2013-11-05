@@ -49,8 +49,6 @@ ofxCvGrayscaleImage processImage::getProcessedImage( ofxCvGrayscaleImage img ) {
             else
                 lastPixels[ loc ] += add;
             
-//            if ( lastPixels[ loc ] > 255) { lastPixels [ loc ] = 255;}
-//            else if ( lastPixels[ loc ] < 0) { lastPixels [ loc ] = 0;}
 
         }
     }

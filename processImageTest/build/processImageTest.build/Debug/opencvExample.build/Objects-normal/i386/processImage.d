@@ -226,5 +226,4 @@ dependencies: \
   ../../../addons/ofxOpenCv/src/ofxCvFloatImage.h \
   ../../../addons/ofxOpenCv/src/ofxCvShortImage.h \
   ../../../addons/ofxOpenCv/src/ofxCvContourFinder.h \
-  ../../../addons/ofxOpenCv/src/ofxCvHaarFinder.h \
-  src/ofxCvColorImageAlpha.h
+  ../../../addons/ofxOpenCv/src/ofxCvHaarFinder.h
