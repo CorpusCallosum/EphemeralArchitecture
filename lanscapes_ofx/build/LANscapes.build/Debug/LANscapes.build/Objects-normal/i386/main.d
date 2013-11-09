@@ -1,5 +1,5 @@
 dependencies: \
-  /Volumes/HD2/OpenFrameworks/of_v0.8.0_osx_release/apps/LANscapes/lanscapes_ofx/src/main.cpp \
+  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/apps/EphemeralArchitecture/lanscapes_ofx/src/main.cpp \
   src/lanscapes.h ../../../libs/openFrameworks/ofMain.h \
   ../../../libs/openFrameworks/utils/ofConstants.h \
   ../../../libs/glew/include/GL/glew.h \
@@ -169,9 +169,9 @@ dependencies: \
   ../../../libs/openFrameworks/video/ofQTKitPlayer.h \
   ../../../libs/openFrameworks/3d/ofCamera.h \
   ../../../libs/openFrameworks/3d/ofEasyCam.h \
-  /Volumes/HD2/OpenFrameworks/of_v0.8.0_osx_release/addons/ofxOpenCv/src/ofxOpenCv.h \
+  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/apps/EphemeralArchitecture/lanscapes_ofx/../../../addons/ofxOpenCv/src/ofxOpenCv.h \
   ../../../addons/ofxOpenCv/src/ofxCvConstants.h \
-  /Volumes/HD2/OpenFrameworks/of_v0.8.0_osx_release/apps/LANscapes/lanscapes_ofx/../../../addons/ofxOpenCv/libs/opencv/include/opencv/cv.h \
+  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/apps/EphemeralArchitecture/lanscapes_ofx/../../../addons/ofxOpenCv/libs/opencv/include/opencv/cv.h \
   ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/core/core_c.h \
   ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/core/types_c.h \
   ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/core/core.hpp \
@@ -227,8 +227,8 @@ dependencies: \
   ../../../addons/ofxOpenCv/src/ofxCvShortImage.h \
   ../../../addons/ofxOpenCv/src/ofxCvContourFinder.h \
   ../../../addons/ofxOpenCv/src/ofxCvHaarFinder.h \
-  /Volumes/HD2/OpenFrameworks/of_v0.8.0_osx_release/addons/ofxKinect/src/ofxKinect.h \
-  /Volumes/HD2/OpenFrameworks/of_v0.8.0_osx_release/apps/LANscapes/lanscapes_ofx/../../../addons/ofxKinect/libs/libfreenect/include/libfreenect.h \
+  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/apps/EphemeralArchitecture/lanscapes_ofx/../../../addons/ofxKinect/src/ofxKinect.h \
+  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/apps/EphemeralArchitecture/lanscapes_ofx/../../../addons/ofxKinect/libs/libfreenect/include/libfreenect.h \
   ../../../addons/ofxKinect/src/ofxBase3DVideo.h \
-  /Volumes/HD2/OpenFrameworks/of_v0.8.0_osx_release/apps/LANscapes/lanscapes_ofx/../../../addons/ofxKinect/libs/libusb-1.0/include/libusb-1.0/libusb.h \
+  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/apps/EphemeralArchitecture/lanscapes_ofx/../../../addons/ofxKinect/libs/libusb-1.0/include/libusb-1.0/libusb.h \
   src/mesh.h

@@ -2,6 +2,7 @@ dependencies: \
   /Users/curry/Documents/openframeworks_releases/of_v0.8.0/apps/EphemeralArchitecture/processImageTest/src/main.cpp \
   ../../../libs/openFrameworks/ofMain.h \
   ../../../libs/openFrameworks/utils/ofConstants.h \
+  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/apps/EphemeralArchitecture/processImageTest/../../../addons/ofxKinect/libs/libfreenect/platform/windows/unistd.h \
   ../../../libs/glew/include/GL/glew.h \
   ../../../libs/tess2/include/tesselator.h \
   ../../../libs/openFrameworks/utils/ofFileUtils.h \
@@ -226,4 +227,9 @@ dependencies: \
   ../../../addons/ofxOpenCv/src/ofxCvFloatImage.h \
   ../../../addons/ofxOpenCv/src/ofxCvShortImage.h \
   ../../../addons/ofxOpenCv/src/ofxCvContourFinder.h \
-  ../../../addons/ofxOpenCv/src/ofxCvHaarFinder.h src/processImage.h
+  ../../../addons/ofxOpenCv/src/ofxCvHaarFinder.h \
+  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/apps/EphemeralArchitecture/processImageTest/../../../addons/ofxKinect/src/ofxKinect.h \
+  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/apps/EphemeralArchitecture/processImageTest/../../../addons/ofxKinect/libs/libfreenect/include/libfreenect.h \
+  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/apps/EphemeralArchitecture/processImageTest/../../../addons/ofxKinect/src/ofxBase3DVideo.h \
+  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/apps/EphemeralArchitecture/processImageTest/../../../addons/ofxKinect/libs/libfreenect/platform/windows/libusb10emu/libusb-1.0/libusb.h \
+  src/processImage.h

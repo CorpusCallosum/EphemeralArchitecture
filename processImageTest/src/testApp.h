@@ -3,6 +3,7 @@
 #include "ofMain.h"
 
 #include "ofxOpenCv.h"
+#include "ofxKinect.h"
 #include "processImage.h"
 
 //#define _USE_LIVE_VIDEO		// uncomment this to use a live camera
@@ -30,6 +31,7 @@ class testApp : public ofBaseApp{
         ofxCvGrayscaleImage     modifiedImage;
         
         ofVideoGrabber          video;
+        ofxKinect               kinect;
         ofxCvColorImage         colorImage;
         ofxCvGrayscaleImage     grayImage;
         int                     camWidth, camHeight;

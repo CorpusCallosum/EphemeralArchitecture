@@ -38,22 +38,22 @@ void Mesh::setup(int w, int h){
 	
 	for (int y = 0; y<height-1; y++){
 		for (int x=0; x<width-1; x++){
-			mainMesh.addIndex(x+y*width);				// 0
-			mainMesh.addIndex((x+1)+y*width);			// 1
-			mainMesh.addIndex(x+(y+1)*width);			// 10
+			mainMesh.addIndex( x + y * width );				// 0
+			mainMesh.addIndex( (x + 1) + y * width );			// 1
+			mainMesh.addIndex( x + (y + 1) * width );			// 10
 			
-			mainMesh.addIndex((x+1)+y*width);			// 1
-			mainMesh.addIndex((x+1)+(y+1)*width);		// 11
-			mainMesh.addIndex(x+(y+1)*width);			// 10
+			mainMesh.addIndex( (x + 1) + y * width );			// 1
+			mainMesh.addIndex( (x + 1) + (y + 1) * width );		// 11
+			mainMesh.addIndex( x + (y + 1) * width );			// 10
 		}
 	}
 	
 	//this is an annoying thing that is used to flip the camera
-	cam.setScale(1,-1,1);
+	cam.setScale( 1, -1, 1);
 	
 	
 	//this determines how much we push the meshes out
-	extrusionAmount = 300.0;
+	extrusionAmount = 100.0;
 }
 
 //--------------------------------------------------------------
@@ -94,7 +94,7 @@ void Mesh::update(ofxCvGrayscaleImage img){
     
 	
 	//move the camera around the mesh
-	ofVec3f camDirection(0,0,1);
+	ofVec3f camDirection( 0,0,1 );
 	ofVec3f centre(vidGrabber.getWidth()/2.f,img.getHeight()/2.f, 255/2.f);
 	ofVec3f camDirectionRotated = camDirection.rotated(rotateAmount, ofVec3f(1,0,0));
 	ofVec3f camPosition = centre + camDirectionRotated * extrusionAmount;

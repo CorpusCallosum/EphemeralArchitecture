@@ -2,6 +2,7 @@ dependencies: \
   /Users/curry/Documents/openframeworks_releases/of_v0.8.0/apps/EphemeralArchitecture/processImageTest/src/processImage.cpp \
   src/processImage.h ../../../libs/openFrameworks/ofMain.h \
   ../../../libs/openFrameworks/utils/ofConstants.h \
+  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/apps/EphemeralArchitecture/processImageTest/../../../addons/ofxKinect/libs/libfreenect/platform/windows/unistd.h \
   ../../../libs/glew/include/GL/glew.h \
   ../../../libs/tess2/include/tesselator.h \
   ../../../libs/openFrameworks/utils/ofFileUtils.h \

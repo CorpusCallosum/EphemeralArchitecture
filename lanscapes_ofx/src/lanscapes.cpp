@@ -34,8 +34,8 @@ void lanscapes::setup() {
 	grayThreshNear.allocate(kinect.width, kinect.height);
 	grayThreshFar.allocate(kinect.width, kinect.height);
 	
-	nearThreshold = 230;
-	farThreshold = 70;
+	nearThreshold = 255;
+	farThreshold = 0;
 	bThreshWithOpenCV = true;
 	
 	ofSetFrameRate(60);
@@ -69,10 +69,11 @@ void lanscapes::update() {
 		// load grayscale depth image from the kinect source
 		grayImage.setFromPixels(kinect.getDepthPixels(), kinect.width, kinect.height);
         
+        
         //UPDATE MESH
         grayImage.resize(imgW, imgH);
-        
         mesh.update(grayImage);
+        
 		
 		// update the cv images
 		grayImage.flagImageChanged();
@@ -161,8 +162,8 @@ void lanscapes::drawPointCloud() {
 	glPointSize(3);
 	ofPushMatrix();
 	// the projected points are 'upside down' and 'backwards' 
-	ofScale(1, -1, -1);
-	ofTranslate(0, 0, -1000); // center the points a bit
+	//ofScale(1, -1, -1);
+	//ofTranslate(-4000   , 0, -1000); // center the points a bit
 	ofEnableDepthTest();
 	mesh.drawVertices();
 	ofDisableDepthTest();

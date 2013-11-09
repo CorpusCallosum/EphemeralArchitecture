@@ -7,7 +7,7 @@ void testApp::setup(){
 	camHeight 		= 480;
 	
     //we can now get back a list of devices.
-	vector<ofVideoDevice> devices = video.listDevices();
+	/*vector<ofVideoDevice> devices = video.listDevices();
 	
     for(int i = 0; i < devices.size(); i++){
 		cout << devices[i].id << ": " << devices[i].deviceName;
@@ -20,7 +20,23 @@ void testApp::setup(){
     
 	video.setDeviceID(0);
 	video.setDesiredFrameRate(60);
-	video.initGrabber(camWidth,camHeight);
+	video.initGrabber(camWidth,camHeight);*/
+    
+    // enable depth->video image calibration
+	kinect.setRegistration(true);
+    
+	kinect.init(false, false);
+	
+	kinect.open();		// opens first available kinect
+	
+	// print the intrinsic IR sensor values
+	if(kinect.isConnected()) {
+		ofLogNotice() << "sensor-emitter dist: " << kinect.getSensorEmitterDistance() << "cm";
+		ofLogNotice() << "sensor-camera dist:  " << kinect.getSensorCameraDistance() << "cm";
+		ofLogNotice() << "zero plane pixel size: " << kinect.getZeroPlanePixelSize() << "mm";
+		ofLogNotice() << "zero plane dist: " << kinect.getZeroPlaneDistance() << "mm";
+    }
+
 	
 	ofSetVerticalSync(true);
     
@@ -35,10 +51,14 @@ void testApp::setup(){
 void testApp::update(){
 	ofBackground(100,100,100);
 	
-	video.update();
-    colorImage.setFromPixels( video.getPixels(), camWidth, camHeight );
-    grayImage = colorImage;
-    
+	//video.update();
+    //colorImage.setFromPixels( video.getPixels(), camWidth, camHeight );
+    //grayImage = colorImage;
+
+    if(kinect.isFrameNew()) {
+        kinect.update();
+        grayImage.setFromPixels( kinect.getDepthPixels(), camWidth, camHeight );
+    }
     modifiedImage = processImage.getProcessedImage( grayImage );
 }
 

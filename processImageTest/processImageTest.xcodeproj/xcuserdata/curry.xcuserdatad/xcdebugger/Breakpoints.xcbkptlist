@@ -8,24 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/processImage.cpp"
-         timestampString = "405369362.716941"
+         timestampString = "405381596.572093"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "99"
-         endingLineNumber = "99">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "src/processImage.cpp"
-         timestampString = "405309967.008542"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "43"
-         endingLineNumber = "43"
-         landmarkName = "processImage::getProcessedImage( ofxCvGrayscaleImage img )"
-         landmarkType = "5">
+         startingLineNumber = "119"
+         endingLineNumber = "119">
       </FileBreakpoint>
    </FileBreakpoints>
 </Bucket>

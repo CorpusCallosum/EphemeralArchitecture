@@ -25,13 +25,14 @@ public:
     //variables
     
     int                     imgWidth, imgHeight;
+    int                     moveThreshLow, moveThreshHigh;
     ofxCvGrayscaleImage     kinectSource;
-    ofxCvGrayscaleImage     differenceImage;
+    ofxCvGrayscaleImage     lastKinect;
     ofxCvGrayscaleImage     modifiedImage;
     
     unsigned char *         sourcePixels;
     unsigned char *         lastPixels;
-    //vector <int>            newPixels;
+    unsigned char *         modifiedPixels;
     vector <int>            difference;
     
     float                   _brightness, _contrast;
