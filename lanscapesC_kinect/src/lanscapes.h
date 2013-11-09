@@ -23,6 +23,7 @@ public:
     ofxCvColorImage			colorImg;
     ofxCvGrayscaleImage 	grayImage;
     ofxCvGrayscaleImage     modifiedImage;
+    ofxCvGrayscaleImage     kinectImage;
     
     bool                    fullscreen, bDrawVideo, bWireframe, bFaces;
     bool                    useKinect;

@@ -36,7 +36,7 @@ public:
     unsigned char *         modifiedPixels;
     vector <int>            difference;
     
-    float                   _brightness, _contrast;
+    float                   _brightness, _contrast, alphaAmount;
     
 private:
     

@@ -67,7 +67,7 @@ void lanscapes::update() {
 	if(kinect.isFrameNew()) {
 		
 		// load grayscale depth image from the kinect source
-		grayImage.setFromPixels(kinect.getDepthPixels(), kinect.width, kinect.height);
+		grayImage.setFromPixels( kinect.getDepthPixels(), kinect.width, kinect.height );
         
         
         //UPDATE MESH

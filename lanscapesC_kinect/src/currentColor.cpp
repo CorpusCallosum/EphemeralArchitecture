@@ -23,11 +23,11 @@ void currentColor::setup( int w, int h ) {
     
     colorPalette.resize( 5 );
     
-    colorPalette[ 0 ] = ofColor( 70, 216, 98 );// 0, 227, 221 );   //ice blue
-    colorPalette[ 1 ] = ofColor( 0, 23, 216 );//21, 55, 232 );      //dark blue
-    colorPalette[ 2 ] = ofColor( 216, 0, 119 );//88, 4, 180 );     //purple
-    colorPalette[ 3 ] = ofColor( 124, 124, 124 );//170, 0, 170 );   //magenta
-    colorPalette[ 4 ] = ofColor( 92, 218, 255 );//230, 230, 230 );  //white
+    colorPalette[ 0 ] = ofColor( 0, 227, 221 );   //ice blue
+    colorPalette[ 1 ] = ofColor( 21, 55, 232 );      //dark blue
+    colorPalette[ 2 ] = ofColor( 88, 4, 180 );     //purple
+    colorPalette[ 3 ] = ofColor( 170, 0, 170 );   //magenta
+    colorPalette[ 4 ] = ofColor( 230, 230, 230 );  //white
     
     lastColor = 0;
     nextColor = 1;
@@ -78,7 +78,7 @@ vector<ofColor> currentColor::getCurrentColor( ofxCvGrayscaleImage img) {
     unsigned char * meshPix = meshImage.getPixels();
     unsigned char * lastPix = lastMeshImage.getPixels();
     for ( int i = 0; i < width * height; i ++ ) {
-        if ( abs( meshPix[ i ] - lastPix[ i ] ) > 5 ) {
+        if ( abs( meshPix[ i ] - lastPix[ i ] ) > 1 ) {
             colorGrid [ i ] = currentColor;
         }
     }

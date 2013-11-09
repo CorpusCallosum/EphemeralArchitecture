@@ -8,7 +8,7 @@ void lanscapes::setup(){
     bDrawVideo = true;
     bWireframe = true;
     bFaces = true;
-    useKinect = false;
+    useKinect = true;
     
     rotX = -300;
     rotY = 0;
@@ -19,7 +19,7 @@ void lanscapes::setup(){
     
     width = 320;
     height = 240;
-    extrusionAmount = 200.0;
+    extrusionAmount = 300.0;
     
     if ( useKinect ) {
         // enable depth->video image calibration
@@ -36,6 +36,7 @@ void lanscapes::setup(){
     colorImg.allocate( width, height );
 	grayImage.allocate( width, height );
     modifiedImage.allocate( width, height );
+    kinectImage.allocate( kinect.width, kinect.height );
     
     mainMesh.setup( width, height, extrusionAmount, true, true );// ( width, height, extrusion amount, draw wireframe, draw faces );
     
@@ -58,8 +59,15 @@ void lanscapes::update(){
         if(kinect.isFrameNew()) {
             
             // load grayscale depth image from the kinect source
-            grayImage.setFromPixels( kinect.getDepthPixels(), width, height);
-            modifiedImage = processImage.getProcessedImage( grayImage );
+            kinectImage.setFromPixels( kinect.getDepthPixels(), kinect.width, kinect.height);
+            kinectImage.resize( width, height );
+            modifiedImage = processImage.getProcessedImage( kinectImage );
+            
+            mainMesh.update( modifiedImage );
+
+            
+            kinectImage.flagImageChanged();
+            //modifiedImage.flagImageChanged();
             
         }
     }
@@ -108,13 +116,14 @@ void lanscapes::draw(){
     if ( bDrawVideo ) {
         
         if ( useKinect ) {
-            grayImage.draw( 20, 20 );
+            
+            kinectImage.draw( 20, 20 );
             modifiedImage.draw( 320, 20 );
         }
         
         else {
-            colorImg.draw(20,20);
-            grayImage.draw(360,20);
+            colorImg.draw( 20, 20);
+            grayImage.draw( 320, 20);
             modifiedImage.draw( 700, 20 );
         }
         
