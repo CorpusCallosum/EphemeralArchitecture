@@ -23,11 +23,11 @@ void currentColor::setup( int w, int h ) {
     
     colorPalette.resize( 5 );
     
-    colorPalette[ 0 ] = ofColor( 0, 227, 221 );   //ice blue
-    colorPalette[ 1 ] = ofColor( 21, 55, 232 );      //dark blue
-    colorPalette[ 2 ] = ofColor( 88, 4, 180 );     //purple
-    colorPalette[ 3 ] = ofColor( 170, 0, 170 );   //magenta
-    colorPalette[ 4 ] = ofColor( 230, 230, 230 );  //white
+    colorPalette[ 0 ] = ofColor( 21, 70, 228 ); //0, 227, 221 );   //ice blue
+    colorPalette[ 1 ] = ofColor( 64, 52, 95 ); //21, 55, 232 );      //dark blue
+    colorPalette[ 2 ] = ofColor( 200, 23, 178 ); //88, 4, 180 );     //purple
+    colorPalette[ 3 ] = ofColor( 203, 103, 10 ); //170, 0, 170 );   //magenta
+    colorPalette[ 4 ] = ofColor( 5, 100, 42 ); //230, 230, 230 );  //white
     
     lastColor = 0;
     nextColor = 1;

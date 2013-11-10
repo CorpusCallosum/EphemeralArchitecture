@@ -29,6 +29,8 @@ void processImage::setup( int w, int h, int low, int high ) {
     difference.resize( imgWidth * imgHeight );
     
     alphaAmount = .03;
+    _brightness = .1;
+    _contrast = .2;
     
 }
 
@@ -36,8 +38,8 @@ ofxCvGrayscaleImage processImage::getProcessedImage( ofxCvGrayscaleImage img ) {
     
     
     kinectSource = img;
-    kinectSource.mirror( true, true ); // mirror( bool bFlipVertically, bool bFlipHorizontally )
-    //kinectSource.brightnessContrast( _brightness, _contrast );
+    //kinectSource.mirror( true, true ); // mirror( bool bFlipVertically, bool bFlipHorizontally )
+    kinectSource.brightnessContrast( _brightness, _contrast );
     
     sourcePixels = kinectSource.getPixels();
     lastPixels = lastKinect.getPixels();
