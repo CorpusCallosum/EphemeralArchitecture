@@ -1,5 +1,5 @@
 dependencies: \
-  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/apps/EphemeralArchitecture/lanscapes_ofx/../../../addons/ofxOpenCv/src/ofxCvHaarFinder.cpp \
+  /Volumes/HD2/OpenFrameworks/of_v0.8.0_osx_release/addons/ofxOpenCv/src/ofxCvHaarFinder.cpp \
   ../../../addons/ofxOpenCv/src/ofxCvHaarFinder.h \
   ../../../libs/openFrameworks/ofMain.h \
   ../../../libs/openFrameworks/utils/ofConstants.h \
@@ -172,7 +172,7 @@ dependencies: \
   ../../../libs/openFrameworks/3d/ofEasyCam.h \
   ../../../addons/ofxOpenCv/src/ofxOpenCv.h \
   ../../../addons/ofxOpenCv/src/ofxCvConstants.h \
-  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/apps/EphemeralArchitecture/lanscapes_ofx/../../../addons/ofxOpenCv/libs/opencv/include/opencv/cv.h \
+  /Volumes/HD2/OpenFrameworks/of_v0.8.0_osx_release/apps/LANscapes/lanscapesC_kinect/../../../addons/ofxOpenCv/libs/opencv/include/opencv/cv.h \
   ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/core/core_c.h \
   ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/core/types_c.h \
   ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/core/core.hpp \

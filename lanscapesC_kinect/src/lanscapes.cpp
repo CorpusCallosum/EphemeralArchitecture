@@ -4,11 +4,13 @@
 //--------------------------------------------------------------
 void lanscapes::setup(){
     
-    fullscreen = false; //"f"
-    bDrawVideo = true;  // "v"
-    bWireframe = true; // "w"
-    bFaces = true;     // "e"
-    useKinect = true;
+    //setup vars default values
+    fullscreen = false;
+    bDrawVideo = true;
+    bWireframe = false;  //draw wireframe of main mesh?
+    bFaces = true;      //draw faces of main mesh?
+    //Set this to FALSE to use webcam
+    useKinect = false;
     
     rotX = -240;
     rotY = 0;
@@ -21,12 +23,13 @@ void lanscapes::setup(){
     height = 240 / 2;
     extrusionAmount = 200.0 / 2;
     
+    previousHour = ofGetHours();
+    
     if ( useKinect ) {
         //kinect.setRegistration(false);
         kinect.init( false, false );
         kinect.open();		// opens first available kinect
     }
-    
     else {
         vidGrabber.setVerbose(true);
         vidGrabber.initGrabber( width, height );
@@ -49,7 +52,8 @@ void lanscapes::setup(){
     processImage.setup( width, height, 2, 30, modifiedImage ); // (width, height, low threshold for movement, high threshold for movement);
     
     
-    	
+    gui.setup();
+	
 }
 
 //--------------------------------------------------------------
@@ -92,6 +96,7 @@ void lanscapes::update(){
         }
     }
 
+    gui.update();
 	
 	//move the camera around the mesh
 	ofVec3f camDirection( 0, 0, 1 );
@@ -103,10 +108,17 @@ void lanscapes::update(){
 	cam.setPosition( camPosition );
 	cam.lookAt( centre + ofVec3f( 0, -70, 0 ));
     
+    //SAVE the mesh every hour
+    int hour = ofGetHours();
+    if(hour != previousHour){
+        mainMesh.save();
+        previousHour = hour;
+    }
 }
 
 //--------------------------------------------------------------
 void lanscapes::draw(){
+
     
     //we have to disable depth testing to draw the video frame
     ofDisableDepthTest();
@@ -126,11 +138,13 @@ void lanscapes::draw(){
             
         }
         
+                
     }
     
    	
 	//but we want to enable it to show the mesh
 	ofEnableDepthTest();
+    
 	cam.begin();
     mainMesh.draw( bWireframe, bFaces );
 	cam.end();
@@ -142,7 +156,7 @@ void lanscapes::draw(){
         string msg = "fps: " + ofToString(ofGetFrameRate(), 2);
         ofDrawBitmapString(msg, 10, 20);
     }
-    
+    gui.draw();
 }
 
 //--------------------------------------------------------------
@@ -228,15 +242,18 @@ void lanscapes::keyPressed(int key){
         case 'p':
             cout << "( transX, transY, transZ ): ( " << transX << ", " << transY << ", " << transZ << " )" << endl;
             cout << "( rotX, rotY, rotZ ): ( " << rotX << ", " << rotY << ", " << rotZ << " )" << endl;
-            break;  
-            
-        case 'b':
+			break;
+        case 's':
+            //save the mesh and color data
+            mainMesh.save();
+			break;
+		case 'b':
             unsigned char * snapShotPix = modifiedImage.getPixels();
             snapShot.setFromPixels( snapShotPix, width, height, OF_IMAGE_GRAYSCALE );
             snapShot.saveImage( "background.jpg" );
             break;
+
 	}
 }
-
 
 

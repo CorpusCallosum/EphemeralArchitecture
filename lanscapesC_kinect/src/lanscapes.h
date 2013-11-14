@@ -3,9 +3,12 @@
 #include "ofMain.h"
 #include "ofxOpenCv.h"
 #include "ofxKinect.h"
+#include "ofxGui.h"
 
 #include "meshGenerator.h"
 #include "processImage.h"
+#include "gui.h"
+
 
 
 class lanscapes : public ofBaseApp{
@@ -33,12 +36,13 @@ public:
     
     meshGenerator           mainMesh;
     processImage            processImage;
+    gui                     gui;
     
     ofCamera                cam;
     
     int                     rotX, rotY, rotZ, transX, transY, transZ, width, height;
     float                   extrusionAmount;
     
+    int                     previousHour;
+    
 };
-
-

@@ -22,13 +22,14 @@ public:
     ofVboMesh update( ofxCvGrayscaleImage );
     //ofVboMesh update( ofxCvGrayscaleImage, ofColor ); //get current color from current color class
 	void draw( bool, bool );
+    void save();
 
     
 	//variables
     ofxCvGrayscaleImage meshImage;
     
 	float extrusionAmount;
-	ofVboMesh mainMesh;
+	ofVboMesh mainMesh, wireframeMesh;
     bool    bDrawWireframe, bDrawFaces;
     int width, height;
     

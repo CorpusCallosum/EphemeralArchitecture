@@ -1,18 +1,24 @@
-
 *.DS_Store
+.app
+lanscapesC_kinect/bin/
+lanscapesC_kinect/build/LANscapes.build/Debug/LANscapes.build/LANscapes.dep
 
-<<<<<<< HEAD
-ShapeShift/.DS_Store
+lanscapesC_kinect/build/LANscapes.build/Debug/LANscapes.build/LANscapes.dep
 
-ShapeShift/.DS_Store
+lanscapesC_kinect/build/LANscapes.build/Debug/LANscapes.build/Objects-normal/i386/currentColor.o
 
-ShapeShiftColor/.DS_Store
+lanscapesC_kinect/build/LANscapes.build/Debug/LANscapes.build/Objects-normal/i386/currentColor.o
 
-ShapeShiftColor/.DS_Store
+lanscapesC_kinect/build/LANscapes.build/Debug/LANscapes.build/Objects-normal/i386/lanscapes.o
 
-ShapeShiftColorNI/.DS_Store
+lanscapesC_kinect/build/LANscapes.build/Debug/LANscapes.build/Objects-normal/i386/main.o
 
-ShapeShiftColorNI/.DS_Store
-=======
-.DS_Store
->>>>>>> f86bd17dcd665e2e680be4b07ced6c105f1d1123
+lanscapesC_kinect/build/LANscapes.build/Debug/LANscapes.build/Objects-normal/i386/main.o
+
+lanscapesC_kinect/build/LANscapes.build/Debug/LANscapes.build/Objects-normal/i386/processImage.o
+
+lanscapesC_kinect/build/LANscapes.build/Debug/LANscapes.build/Objects-normal/i386/processImage.o
+
+lanscapesC_kinect/build/LANscapes.build/Debug/LANscapes.build/build-state.dat
+
+lanscapesC_kinect/build/LANscapes.build/Debug/LANscapes.build/build-state.dat
