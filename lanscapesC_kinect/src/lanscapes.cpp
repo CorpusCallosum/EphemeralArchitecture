@@ -233,6 +233,10 @@ void lanscapes::keyPressed(int key){
             useKinect = !useKinect;
             break;
             
+        case 'g':
+            gui.bHide = !gui.bHide;
+            break;
+            
         case 'p':
             cout << "( transX, transY, transZ ): ( " << transX << ", " << transY << ", " << transZ << " )" << endl;
             cout << "( rotX, rotY, rotZ ): ( " << rotX << ", " << rotY << ", " << rotZ << " )" << endl;
