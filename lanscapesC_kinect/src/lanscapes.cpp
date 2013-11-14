@@ -4,6 +4,9 @@
 //--------------------------------------------------------------
 void lanscapes::setup(){
     
+    ofEnableSmoothing();
+	ofEnableDepthTest();
+    
     fullscreen = false;
     bDrawVideo = true;
     bWireframe = true;
@@ -41,11 +44,17 @@ void lanscapes::setup(){
     mainMesh.setup( width, height, extrusionAmount, true, true );// ( width, height, extrusion amount, draw wireframe, draw faces );
     
     processImage.setup( width, height, 5, 100 );
+    light.setAmbientColor(ofColor(0, 0, 0));
+
 	
 }
 
 //--------------------------------------------------------------
 void lanscapes::update(){
+    
+
+
+
     
     ofSetFullscreen( fullscreen );
     if ( fullscreen ) {
@@ -108,6 +117,8 @@ void lanscapes::update(){
 //--------------------------------------------------------------
 void lanscapes::draw(){
     
+	
+    
     //we have to disable depth testing to draw the video frame
     ofDisableDepthTest();
 	// draw the incoming, the grayscale, the bg and the thresholded difference
@@ -131,8 +142,14 @@ void lanscapes::draw(){
 	
 	//but we want to enable it to show the mesh
 	ofEnableDepthTest();
+    
 	cam.begin();
+    light.enable();
+
+    
     mainMesh.draw( bWireframe, bFaces );
+    
+    light.disable();
 	cam.end();
 	
     if ( !fullscreen ) {
@@ -141,6 +158,7 @@ void lanscapes::draw(){
         string msg = "fps: " + ofToString(ofGetFrameRate(), 2);
         ofDrawBitmapString(msg, 10, 20);
     }
+    
     
 }
 
