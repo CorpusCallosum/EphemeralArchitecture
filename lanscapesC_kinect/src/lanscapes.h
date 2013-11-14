@@ -36,9 +36,6 @@ public:
     int                     rotX, rotY, rotZ, transX, transY, transZ, width, height;
     float                   extrusionAmount;
     
-    ofLight light;
-    
-    
 };
 
 

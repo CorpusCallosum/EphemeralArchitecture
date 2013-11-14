@@ -4,25 +4,22 @@
 //--------------------------------------------------------------
 void lanscapes::setup(){
     
-    ofEnableSmoothing();
-	ofEnableDepthTest();
-    
     fullscreen = false;
     bDrawVideo = true;
     bWireframe = true;
     bFaces = true;
     useKinect = true;
     
-    rotX = -300;
+    rotX = -310;
     rotY = 0;
     rotZ = 0;
     transX = 0;
-    transY = -50;
-    transZ = 100;
+    transY = -30;
+    transZ = 110;
     
     width = 320;
     height = 240;
-    extrusionAmount = 300.0;
+    extrusionAmount = 200.0;
     
     if ( useKinect ) {
         // enable depth->video image calibration
@@ -44,17 +41,13 @@ void lanscapes::setup(){
     mainMesh.setup( width, height, extrusionAmount, true, true );// ( width, height, extrusion amount, draw wireframe, draw faces );
     
     processImage.setup( width, height, 5, 100 );
-    light.setAmbientColor(ofColor(0, 0, 0));
-
-	
+    
+    
+    	
 }
 
 //--------------------------------------------------------------
 void lanscapes::update(){
-    
-
-
-
     
     ofSetFullscreen( fullscreen );
     if ( fullscreen ) {
@@ -73,10 +66,7 @@ void lanscapes::update(){
             modifiedImage = processImage.getProcessedImage( kinectImage );
             
             mainMesh.update( modifiedImage );
-
-            
-            kinectImage.flagImageChanged();
-            //modifiedImage.flagImageChanged();
+            //kinectImage.flagImageChanged();
             
         }
     }
@@ -95,12 +85,7 @@ void lanscapes::update(){
             
         }
     }
-	
-    
-    
-    
-	//let's move the camera when you move the mouse
-	float rotateAmount = ofMap( ofGetMouseY(), 0, ofGetHeight(), 0, 360 );
+
 	
 	//move the camera around the mesh
 	ofVec3f camDirection( 0, 0, 1 );
@@ -110,47 +95,41 @@ void lanscapes::update(){
     camPosition += ofVec3f( transX, transY, transZ );
 	
 	cam.setPosition( camPosition );
-	cam.lookAt( centre );
+	cam.lookAt( centre - ofVec3f( 0, 70, 0 ));
     
 }
 
 //--------------------------------------------------------------
 void lanscapes::draw(){
     
-	
-    
     //we have to disable depth testing to draw the video frame
     ofDisableDepthTest();
-	// draw the incoming, the grayscale, the bg and the thresholded difference
-	//ofSetHexColor(0xffffff);
     
     if ( bDrawVideo ) {
         
         if ( useKinect ) {
-            
             kinectImage.draw( 20, 20 );
             modifiedImage.draw( 320, 20 );
         }
         
         else {
+            
             colorImg.draw( 20, 20);
             grayImage.draw( 320, 20);
             modifiedImage.draw( 700, 20 );
+            
         }
         
     }
-	
+    
+   	
 	//but we want to enable it to show the mesh
 	ofEnableDepthTest();
     
 	cam.begin();
-    light.enable();
-
-    
     mainMesh.draw( bWireframe, bFaces );
-    
-    light.disable();
 	cam.end();
+    
 	
     if ( !fullscreen ) {
         //draw framerate for fun
@@ -158,7 +137,6 @@ void lanscapes::draw(){
         string msg = "fps: " + ofToString(ofGetFrameRate(), 2);
         ofDrawBitmapString(msg, 10, 20);
     }
-    
     
 }
 
