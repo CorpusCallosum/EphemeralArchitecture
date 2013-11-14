@@ -10,7 +10,7 @@ void lanscapes::setup(){
     bWireframe = false;  //draw wireframe of main mesh?
     bFaces = true;      //draw faces of main mesh?
     //Set this to FALSE to use webcam
-    useKinect = true;
+    useKinect = false;
     
     rotX = -240;
     rotY = 0;
@@ -52,8 +52,6 @@ void lanscapes::setup(){
     mainMesh.setup( width, height, extrusionAmount, true, true );// ( width, height, extrusion amount, draw wireframe, draw faces );
     
     processImage.setup( width, height, 2, 30, modifiedImage ); // (width, height, low threshold for movement, high threshold for movement);
-    
-    
 	
 }
 
