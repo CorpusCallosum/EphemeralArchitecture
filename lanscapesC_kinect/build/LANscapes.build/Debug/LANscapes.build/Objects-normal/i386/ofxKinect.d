@@ -1,5 +1,5 @@
 dependencies: \
-  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/apps/EphemeralArchitecture/lanscapes_ofx/../../../addons/ofxKinect/src/ofxKinect.cpp \
+  /Users/gabriellalevine/Documents/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapesC_kinect/../../../addons/ofxKinect/src/ofxKinect.cpp \
   ../../../addons/ofxKinect/src/ofxKinect.h \
   ../../../libs/openFrameworks/ofMain.h \
   ../../../libs/openFrameworks/utils/ofConstants.h \
@@ -170,9 +170,9 @@ dependencies: \
   ../../../libs/openFrameworks/video/ofQTKitPlayer.h \
   ../../../libs/openFrameworks/3d/ofCamera.h \
   ../../../libs/openFrameworks/3d/ofEasyCam.h \
-  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/apps/EphemeralArchitecture/lanscapes_ofx/../../../addons/ofxKinect/libs/libfreenect/include/libfreenect.h \
+  /Users/gabriellalevine/Documents/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapesC_kinect/../../../addons/ofxKinect/libs/libfreenect/include/libfreenect.h \
   ../../../addons/ofxKinect/src/ofxBase3DVideo.h \
-  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/apps/EphemeralArchitecture/lanscapes_ofx/../../../addons/ofxKinect/libs/libusb-1.0/include/libusb-1.0/libusb.h \
-  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/apps/EphemeralArchitecture/lanscapes_ofx/../../../addons/ofxKinect/libs/libfreenect/include/libfreenect-registration.h \
-  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/apps/EphemeralArchitecture/lanscapes_ofx/../../../addons/ofxKinect/libs/libfreenect/src/freenect_internal.h \
+  /Users/gabriellalevine/Documents/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapesC_kinect/../../../addons/ofxKinect/libs/libusb-1.0/include/libusb-1.0/libusb.h \
+  /Users/gabriellalevine/Documents/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapesC_kinect/../../../addons/ofxKinect/libs/libfreenect/include/libfreenect-registration.h \
+  /Users/gabriellalevine/Documents/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapesC_kinect/../../../addons/ofxKinect/libs/libfreenect/src/freenect_internal.h \
   ../../../addons/ofxKinect/libs/libfreenect/src/usb_libusb10.h

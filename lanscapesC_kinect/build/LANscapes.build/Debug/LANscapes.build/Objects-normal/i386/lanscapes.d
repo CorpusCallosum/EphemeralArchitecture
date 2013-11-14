@@ -1,5 +1,5 @@
 dependencies: \
-  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/apps/EphemeralArchitecture/lanscapesC_kinect/src/lanscapes.cpp \
+  /Users/gabriellalevine/Documents/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapesC_kinect/src/lanscapes.cpp \
   src/lanscapes.h ../../../libs/openFrameworks/ofMain.h \
   ../../../libs/openFrameworks/utils/ofConstants.h \
   ../../../libs/glew/include/GL/glew.h \
@@ -169,9 +169,9 @@ dependencies: \
   ../../../libs/openFrameworks/video/ofQTKitPlayer.h \
   ../../../libs/openFrameworks/3d/ofCamera.h \
   ../../../libs/openFrameworks/3d/ofEasyCam.h \
-  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/apps/EphemeralArchitecture/lanscapesC_kinect/../../../addons/ofxOpenCv/src/ofxOpenCv.h \
+  /Users/gabriellalevine/Documents/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapesC_kinect/../../../addons/ofxOpenCv/src/ofxOpenCv.h \
   ../../../addons/ofxOpenCv/src/ofxCvConstants.h \
-  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/apps/EphemeralArchitecture/lanscapesC_kinect/../../../addons/ofxOpenCv/libs/opencv/include/opencv/cv.h \
+  /Users/gabriellalevine/Documents/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapesC_kinect/../../../addons/ofxOpenCv/libs/opencv/include/opencv/cv.h \
   ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/core/core_c.h \
   ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/core/types_c.h \
   ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/core/core.hpp \
@@ -227,8 +227,18 @@ dependencies: \
   ../../../addons/ofxOpenCv/src/ofxCvShortImage.h \
   ../../../addons/ofxOpenCv/src/ofxCvContourFinder.h \
   ../../../addons/ofxOpenCv/src/ofxCvHaarFinder.h \
-  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/apps/EphemeralArchitecture/lanscapesC_kinect/../../../addons/ofxKinect/src/ofxKinect.h \
-  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/apps/EphemeralArchitecture/lanscapesC_kinect/../../../addons/ofxKinect/libs/libfreenect/include/libfreenect.h \
+  /Users/gabriellalevine/Documents/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapesC_kinect/../../../addons/ofxKinect/src/ofxKinect.h \
+  /Users/gabriellalevine/Documents/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapesC_kinect/../../../addons/ofxKinect/libs/libfreenect/include/libfreenect.h \
   ../../../addons/ofxKinect/src/ofxBase3DVideo.h \
-  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/apps/EphemeralArchitecture/lanscapesC_kinect/../../../addons/ofxKinect/libs/libusb-1.0/include/libusb-1.0/libusb.h \
-  src/meshGenerator.h src/currentColor.h src/processImage.h
+  /Users/gabriellalevine/Documents/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapesC_kinect/../../../addons/ofxKinect/libs/libusb-1.0/include/libusb-1.0/libusb.h \
+  /Users/gabriellalevine/Documents/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapesC_kinect/ofxGui/src/ofxGui.h \
+  /Users/gabriellalevine/Documents/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapesC_kinect/ofxGui/src/ofxToggle.h \
+  /Users/gabriellalevine/Documents/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapesC_kinect/ofxGui/src/ofxBaseGui.h \
+  /Users/gabriellalevine/Documents/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapesC_kinect/ofxGui/src/ofxSlider.h \
+  /Users/gabriellalevine/Documents/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapesC_kinect/ofxGui/src/ofxSliderGroup.h \
+  /Users/gabriellalevine/Documents/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapesC_kinect/ofxGui/src/ofxGuiGroup.h \
+  /Users/gabriellalevine/Documents/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapesC_kinect/ofxGui/src/ofxButton.h \
+  /Users/gabriellalevine/Documents/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapesC_kinect/ofxGui/src/ofxPanel.h \
+  /Users/gabriellalevine/Documents/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapesC_kinect/ofxGui/src/ofxLabel.h \
+  src/meshGenerator.h src/currentColor.h src/processImage.h \
+  /Users/gabriellalevine/Documents/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapesC_kinect/src/../gui.h

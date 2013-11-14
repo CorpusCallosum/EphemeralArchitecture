@@ -8,7 +8,7 @@ void lanscapes::setup(){
     bDrawVideo = true;
     bWireframe = true;
     bFaces = true;
-    useKinect = true;
+    useKinect = false;
     
     rotX = -280;
     rotY = 0;
@@ -43,21 +43,7 @@ void lanscapes::setup(){
     processImage.setup( width, height, 5, 100 );
     
     
-    /*dir.setDiffuseColor( ofColor( 255.0f, 255.0f, 255.0f ));
-    dir.setSpecularColor( ofColor( 255.0f, 255.0f, 255.0f ));
-    
-    //dir.setDirectional();
-    //dir_rot = ofVec3f( 0, -75, 0);
-    //setLightOri( dir, dir_rot );
-    
-    material.setShininess( 120 );
-    
-    material.setSpecularColor( ofColor(255, 255, 255, 255 ));
-    material.setEmissiveColor( ofColor( 0, 0, 0, 255 ));
-    material.setDiffuseColor( ofColor( 255, 255, 255, 255 ));
-    material.setAmbientColor( ofColor( 255, 255, 255, 255 ));*/
-    
-    shinyShader.load("shinyShader/shiny");
+    gui.setup();
 	
 }
 
@@ -102,6 +88,7 @@ void lanscapes::update(){
         }
     }
 
+    gui.update();
 	
 	//move the camera around the mesh
 	ofVec3f camDirection( 0, 0, 1 );
@@ -117,6 +104,7 @@ void lanscapes::update(){
 
 //--------------------------------------------------------------
 void lanscapes::draw(){
+
     
     //we have to disable depth testing to draw the video frame
     ofDisableDepthTest();
@@ -137,24 +125,20 @@ void lanscapes::draw(){
             
         }
         
+                
     }
     
-    //glEnable(GL_CULL_FACE);
-    //dir.enable();
-    //material.begin();
+
 	
 	//but we want to enable it to show the mesh
 	ofEnableDepthTest();
 	cam.begin();
-    shinyShader.begin();
+    
     mainMesh.draw( bWireframe, bFaces );
-    shinyShader.end();
+   
 	cam.end();
     
-    //dir.disable();
-    //material.end();
-    //ofDisableLighting();
-    //glDisable(GL_CULL_FACE);
+   
 
 	
     if ( !fullscreen ) {
@@ -163,7 +147,7 @@ void lanscapes::draw(){
         string msg = "fps: " + ofToString(ofGetFrameRate(), 2);
         ofDrawBitmapString(msg, 10, 20);
     }
-    
+    gui.draw();
 }
 
 //--------------------------------------------------------------
@@ -249,6 +233,9 @@ void lanscapes::keyPressed(int key){
         case 'p':
             cout << "( transX, transY, transZ ): ( " << transX << ", " << transY << ", " << transZ << " )" << endl;
             cout << "( rotX, rotY, rotZ ): ( " << rotX << ", " << rotY << ", " << rotZ << " )" << endl;
+            
+        case 'g':
+            gui.bHide = !gui.bHide;
 	}
 }
 

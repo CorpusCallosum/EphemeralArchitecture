@@ -45,6 +45,7 @@ void meshGenerator::setup( int w, int h, float extrusion, bool wireframe, bool f
     //this determines how much we push the meshes out
 	extrusionAmount = extrusion;
     
+    
     bDrawWireframe = wireframe;
     bDrawFaces = faces;
     

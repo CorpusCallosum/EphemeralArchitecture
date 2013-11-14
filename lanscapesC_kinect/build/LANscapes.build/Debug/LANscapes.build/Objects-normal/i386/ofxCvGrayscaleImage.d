@@ -1,9 +1,9 @@
 dependencies: \
-  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/apps/EphemeralArchitecture/lanscapes_ofx/../../../addons/ofxOpenCv/src/ofxCvGrayscaleImage.cpp \
+  /Users/gabriellalevine/Documents/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapesC_kinect/../../../addons/ofxOpenCv/src/ofxCvGrayscaleImage.cpp \
   ../../../addons/ofxOpenCv/src/ofxCvGrayscaleImage.h \
   ../../../addons/ofxOpenCv/src/ofxCvImage.h \
   ../../../addons/ofxOpenCv/src/ofxCvConstants.h \
-  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/apps/EphemeralArchitecture/lanscapes_ofx/../../../addons/ofxOpenCv/libs/opencv/include/opencv/cv.h \
+  /Users/gabriellalevine/Documents/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapesC_kinect/../../../addons/ofxOpenCv/libs/opencv/include/opencv/cv.h \
   ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/core/core_c.h \
   ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/core/types_c.h \
   ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/core/core.hpp \
