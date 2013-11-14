@@ -4,11 +4,13 @@
 //--------------------------------------------------------------
 void lanscapes::setup(){
     
+    //setup vars default values
     fullscreen = false;
     bDrawVideo = true;
     bWireframe = true;
     bFaces = true;
-    useKinect = true;
+    //Set this to FALSE to use webcam
+    useKinect = false;
     
     rotX = -310;
     rotY = 0;
@@ -21,13 +23,14 @@ void lanscapes::setup(){
     height = 240;
     extrusionAmount = 200.0;
     
+    previousHour = ofGetHours();
+    
     if ( useKinect ) {
         // enable depth->video image calibration
         kinect.setRegistration(true);
         kinect.init( false, false );
         kinect.open();		// opens first available kinect
     }
-    
     else {
         vidGrabber.setVerbose(true);
         vidGrabber.initGrabber( width, height );
@@ -41,9 +44,6 @@ void lanscapes::setup(){
     mainMesh.setup( width, height, extrusionAmount, true, true );// ( width, height, extrusion amount, draw wireframe, draw faces );
     
     processImage.setup( width, height, 5, 100 );
-    
-    
-    	
 }
 
 //--------------------------------------------------------------
@@ -97,6 +97,12 @@ void lanscapes::update(){
 	cam.setPosition( camPosition );
 	cam.lookAt( centre - ofVec3f( 0, 70, 0 ));
     
+    //SAVE the mesh every hour
+    int hour = ofGetHours();
+    if(hour != previousHour){
+        mainMesh.save();
+        previousHour = hour;
+    }
 }
 
 //--------------------------------------------------------------
@@ -223,6 +229,9 @@ void lanscapes::keyPressed(int key){
         case 'p':
             cout << "( transX, transY, transZ ): ( " << transX << ", " << transY << ", " << transZ << " )" << endl;
             cout << "( rotX, rotY, rotZ ): ( " << rotX << ", " << rotY << ", " << rotZ << " )" << endl;
+        case 's':
+            //save the mesh and color data
+            mainMesh.save();
 	}
 }
 

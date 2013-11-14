@@ -91,3 +91,20 @@ void meshGenerator::draw( bool wireframe, bool faces ) {
     }
     
 }
+
+//Export STL and color data
+void meshGenerator::save(){
+    //timestamp
+    //format as: 1984-03-13_2415
+    //           year-month-day_time
+    //string fileName = "%Y-%m-%d_%H%M";
+    mainMesh.save("export/"+ofGetTimestampString()+".ply");
+}
+
+
+
+
+
+
+
+

@@ -22,6 +22,7 @@ public:
     ofVboMesh update( ofxCvGrayscaleImage );
     //ofVboMesh update( ofxCvGrayscaleImage, ofColor ); //get current color from current color class
 	void draw( bool, bool );
+    void save();
 
     
 	//variables
