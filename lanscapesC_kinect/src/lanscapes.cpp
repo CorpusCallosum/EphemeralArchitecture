@@ -44,6 +44,10 @@ void lanscapes::setup(){
     mainMesh.setup( width, height, extrusionAmount, true, true );// ( width, height, extrusion amount, draw wireframe, draw faces );
     
     processImage.setup( width, height, 5, 100 );
+    
+    
+    gui.setup();
+	
 }
 
 //--------------------------------------------------------------
@@ -86,6 +90,7 @@ void lanscapes::update(){
         }
     }
 
+    gui.update();
 	
 	//move the camera around the mesh
 	ofVec3f camDirection( 0, 0, 1 );
@@ -107,6 +112,7 @@ void lanscapes::update(){
 
 //--------------------------------------------------------------
 void lanscapes::draw(){
+
     
     //we have to disable depth testing to draw the video frame
     ofDisableDepthTest();
@@ -126,6 +132,7 @@ void lanscapes::draw(){
             
         }
         
+                
     }
     
    	
@@ -143,7 +150,7 @@ void lanscapes::draw(){
         string msg = "fps: " + ofToString(ofGetFrameRate(), 2);
         ofDrawBitmapString(msg, 10, 20);
     }
-    
+    gui.draw();
 }
 
 //--------------------------------------------------------------
