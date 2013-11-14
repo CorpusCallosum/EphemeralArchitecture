@@ -10,10 +10,10 @@ void lanscapes::setup(){
     bFaces = true;
     useKinect = true;
     
-    rotX = -280;
+    rotX = -310;
     rotY = 0;
     rotZ = 0;
-    transX = 10;
+    transX = 0;
     transY = -30;
     transZ = 110;
     
@@ -43,22 +43,7 @@ void lanscapes::setup(){
     processImage.setup( width, height, 5, 100 );
     
     
-    /*dir.setDiffuseColor( ofColor( 255.0f, 255.0f, 255.0f ));
-    dir.setSpecularColor( ofColor( 255.0f, 255.0f, 255.0f ));
-    
-    //dir.setDirectional();
-    //dir_rot = ofVec3f( 0, -75, 0);
-    //setLightOri( dir, dir_rot );
-    
-    material.setShininess( 120 );
-    
-    material.setSpecularColor( ofColor(255, 255, 255, 255 ));
-    material.setEmissiveColor( ofColor( 0, 0, 0, 255 ));
-    material.setDiffuseColor( ofColor( 255, 255, 255, 255 ));
-    material.setAmbientColor( ofColor( 255, 255, 255, 255 ));*/
-    
-    shinyShader.load("shinyShader/shiny");
-	
+    	
 }
 
 //--------------------------------------------------------------
@@ -81,7 +66,6 @@ void lanscapes::update(){
             modifiedImage = processImage.getProcessedImage( kinectImage );
             
             mainMesh.update( modifiedImage );
-            
             //kinectImage.flagImageChanged();
             
         }
@@ -111,7 +95,7 @@ void lanscapes::update(){
     camPosition += ofVec3f( transX, transY, transZ );
 	
 	cam.setPosition( camPosition );
-	cam.lookAt( centre - ofVec3f( -10, 70, 0 ));
+	cam.lookAt( centre - ofVec3f( 0, 70, 0 ));
     
 }
 
@@ -124,7 +108,6 @@ void lanscapes::draw(){
     if ( bDrawVideo ) {
         
         if ( useKinect ) {
-            
             kinectImage.draw( 20, 20 );
             modifiedImage.draw( 320, 20 );
         }
@@ -139,23 +122,13 @@ void lanscapes::draw(){
         
     }
     
-    //glEnable(GL_CULL_FACE);
-    //dir.enable();
-    //material.begin();
-	
+   	
 	//but we want to enable it to show the mesh
 	ofEnableDepthTest();
 	cam.begin();
-    shinyShader.begin();
     mainMesh.draw( bWireframe, bFaces );
-    shinyShader.end();
 	cam.end();
     
-    //dir.disable();
-    //material.end();
-    //ofDisableLighting();
-    //glDisable(GL_CULL_FACE);
-
 	
     if ( !fullscreen ) {
         //draw framerate for fun
@@ -252,16 +225,5 @@ void lanscapes::keyPressed(int key){
 	}
 }
 
-//--------------------------------------------------------------
-void
-lanscapes::setLightOri(ofLight &light, ofVec3f rot)
-{
-    ofVec3f xax(1, 0, 0);
-    ofVec3f yax(0, 1, 0);
-    ofVec3f zax(0, 0, 1);
-    ofQuaternion q;
-    q.makeRotate(rot.x, xax, rot.y, yax, rot.z, zax);
-    light.setOrientation(q);
-}
 
 
