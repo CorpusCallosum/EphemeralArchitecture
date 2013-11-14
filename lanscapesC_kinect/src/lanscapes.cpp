@@ -19,8 +19,8 @@ void lanscapes::setup(){
     transY = -30;
     transZ = 110;
     
-    width = 320;
-    height = 240;
+    width = 320/2;
+    height = 240/2;
     extrusionAmount = 200.0;
     
     previousHour = ofGetHours();
@@ -78,7 +78,7 @@ void lanscapes::update(){
         
         if (bNewFrame){
             
-            colorImg.setFromPixels( vidGrabber.getPixels(), 320, 240 );
+            colorImg.setFromPixels( vidGrabber.getPixels(), width, height );
             grayImage = colorImg;
             modifiedImage = processImage.getProcessedImage( grayImage );
             mainMesh.update( modifiedImage );
