@@ -34,6 +34,8 @@ public:
     ofxCvGrayscaleImage     lastKinect;
     ofxCvGrayscaleImage     modifiedImage;
     
+    vector<ofxCvGrayscaleImage> lastImages; //will use this to compare incoming pixels vs smoothed average of previous frames
+    
     unsigned char *         sourcePixels;
     unsigned char *         lastPixels;
     unsigned char *         modifiedPixels;

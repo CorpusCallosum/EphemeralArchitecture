@@ -4,33 +4,43 @@
 //--------------------------------------------------------------
 void lanscapes::setup(){
     
+<<<<<<< HEAD
+    fullscreen = false; //"f"
+    bDrawVideo = true;  // "v"
+    bWireframe = true; // "w"
+    bFaces = true;     // "e"
+    useKinect = true;
+=======
     //setup vars default values
     fullscreen = false;
     bDrawVideo = true;
-    bWireframe = true;
-    bFaces = true;
-<<<<<<< HEAD
-=======
+    bWireframe = false;  //draw wireframe of main mesh?
+    bFaces = true;      //draw faces of main mesh?
     //Set this to FALSE to use webcam
->>>>>>> 1a6fdd72a0fe47a444511aa063d0f5df54855815
     useKinect = false;
+>>>>>>> d46db5276d785e8a7fc735d937ac9038511dc2ce
     
-    rotX = -310;
+    rotX = -240;
     rotY = 0;
     rotZ = 0;
     transX = 0;
-    transY = -30;
-    transZ = 110;
+    transY = -15;
+    transZ = 90;
     
-    width = 320;
-    height = 240;
+<<<<<<< HEAD
+    width =  320 / 2;
+    height = 240 / 2;
+    extrusionAmount = 200.0 / 2;
+=======
+    width = 320/2;
+    height = 240/2;
     extrusionAmount = 200.0;
+>>>>>>> d46db5276d785e8a7fc735d937ac9038511dc2ce
     
     previousHour = ofGetHours();
     
     if ( useKinect ) {
-        // enable depth->video image calibration
-        kinect.setRegistration(true);
+        //kinect.setRegistration(false);
         kinect.init( false, false );
         kinect.open();		// opens first available kinect
     }
@@ -44,16 +54,20 @@ void lanscapes::setup(){
     modifiedImage.allocate( width, height );
     kinectImage.allocate( kinect.width, kinect.height );
     
+    snapShot.allocate( width, height, OF_IMAGE_GRAYSCALE );
+    background.allocate( width, height, OF_IMAGE_GRAYSCALE );
+    background.loadImage( "background.jpg" );
+    
+    modifiedImage.setFromPixels( background.getPixels(), width, height );
+    
+    
     mainMesh.setup( width, height, extrusionAmount, true, true );// ( width, height, extrusion amount, draw wireframe, draw faces );
     
-    processImage.setup( width, height, 5, 100 );
-<<<<<<< HEAD
+    processImage.setup( width, height, 2, 30, modifiedImage ); // (width, height, low threshold for movement, high threshold for movement);
     
     
     gui.setup();
 	
-=======
->>>>>>> 1a6fdd72a0fe47a444511aa063d0f5df54855815
 }
 
 //--------------------------------------------------------------
@@ -88,7 +102,7 @@ void lanscapes::update(){
         
         if (bNewFrame){
             
-            colorImg.setFromPixels( vidGrabber.getPixels(), 320, 240 );
+            colorImg.setFromPixels( vidGrabber.getPixels(), width, height );
             grayImage = colorImg;
             modifiedImage = processImage.getProcessedImage( grayImage );
             mainMesh.update( modifiedImage );
@@ -106,7 +120,7 @@ void lanscapes::update(){
     camPosition += ofVec3f( transX, transY, transZ );
 	
 	cam.setPosition( camPosition );
-	cam.lookAt( centre - ofVec3f( 0, 70, 0 ));
+	cam.lookAt( centre + ofVec3f( 0, -70, 0 ));
     
     //SAVE the mesh every hour
     int hour = ofGetHours();
@@ -141,29 +155,14 @@ void lanscapes::draw(){
                 
     }
     
-<<<<<<< HEAD
-
-	
-=======
    	
->>>>>>> 1a6fdd72a0fe47a444511aa063d0f5df54855815
 	//but we want to enable it to show the mesh
 	ofEnableDepthTest();
     
 	cam.begin();
-<<<<<<< HEAD
-    
-    mainMesh.draw( bWireframe, bFaces );
-   
-	cam.end();
-    
-   
-
-=======
     mainMesh.draw( bWireframe, bFaces );
 	cam.end();
     
->>>>>>> 1a6fdd72a0fe47a444511aa063d0f5df54855815
 	
     if ( !fullscreen ) {
         //draw framerate for fun
@@ -258,14 +257,18 @@ void lanscapes::keyPressed(int key){
             cout << "( transX, transY, transZ ): ( " << transX << ", " << transY << ", " << transZ << " )" << endl;
             cout << "( rotX, rotY, rotZ ): ( " << rotX << ", " << rotY << ", " << rotZ << " )" << endl;
 <<<<<<< HEAD
+            break;  
             
-        case 'g':
-            gui.bHide = !gui.bHide;
+        case 'b':
+            unsigned char * snapShotPix = modifiedImage.getPixels();
+            snapShot.setFromPixels( snapShotPix, width, height, OF_IMAGE_GRAYSCALE );
+            snapShot.saveImage( "background.jpg" );
+            break;
 =======
         case 's':
             //save the mesh and color data
             mainMesh.save();
->>>>>>> 1a6fdd72a0fe47a444511aa063d0f5df54855815
+>>>>>>> d46db5276d785e8a7fc735d937ac9038511dc2ce
 	}
 }
 

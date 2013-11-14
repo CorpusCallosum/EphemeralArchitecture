@@ -1,7 +1,7 @@
 dependencies: \
-  /Users/gabriellalevine/Documents/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapesC_kinect/ofxGui/src/ofxGuiGroup.cpp \
-  /Users/gabriellalevine/Documents/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapesC_kinect/ofxGui/src/ofxGuiGroup.h \
-  /Users/gabriellalevine/Documents/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapesC_kinect/ofxGui/src/ofxBaseGui.h \
+  /Volumes/HD2/OpenFrameworks/of_v0.8.0_osx_release/apps/LANscapes/lanscapesC_kinect/ofxGui/src/ofxGuiGroup.cpp \
+  /Volumes/HD2/OpenFrameworks/of_v0.8.0_osx_release/apps/LANscapes/lanscapesC_kinect/ofxGui/src/ofxGuiGroup.h \
+  /Volumes/HD2/OpenFrameworks/of_v0.8.0_osx_release/apps/LANscapes/lanscapesC_kinect/ofxGui/src/ofxBaseGui.h \
   ../../../libs/openFrameworks/utils/ofConstants.h \
   ../../../libs/glew/include/GL/glew.h \
   ../../../libs/tess2/include/tesselator.h \
@@ -72,12 +72,12 @@ dependencies: \
   ../../../libs/openFrameworks/gl/ofVbo.h \
   ../../../libs/openFrameworks/graphics/ofTessellator.h \
   ../../../libs/openFrameworks/gl/ofTexture.h \
-  /Users/gabriellalevine/Documents/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapesC_kinect/ofxGui/src/ofxSlider.h \
-  /Users/gabriellalevine/Documents/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapesC_kinect/ofxGui/src/ofxButton.h \
-  /Users/gabriellalevine/Documents/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapesC_kinect/ofxGui/src/ofxToggle.h \
+  /Volumes/HD2/OpenFrameworks/of_v0.8.0_osx_release/apps/LANscapes/lanscapesC_kinect/ofxGui/src/ofxSlider.h \
+  /Volumes/HD2/OpenFrameworks/of_v0.8.0_osx_release/apps/LANscapes/lanscapesC_kinect/ofxGui/src/ofxButton.h \
+  /Volumes/HD2/OpenFrameworks/of_v0.8.0_osx_release/apps/LANscapes/lanscapesC_kinect/ofxGui/src/ofxToggle.h \
   ../../../libs/openFrameworks/types/ofParameterGroup.h \
   ../../../libs/poco/include/Poco/Any.h \
-  /Users/gabriellalevine/Documents/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapesC_kinect/ofxGui/src/ofxPanel.h \
-  /Users/gabriellalevine/Documents/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapesC_kinect/ofxGui/src/ofxSliderGroup.h \
+  /Volumes/HD2/OpenFrameworks/of_v0.8.0_osx_release/apps/LANscapes/lanscapesC_kinect/ofxGui/src/ofxPanel.h \
+  /Volumes/HD2/OpenFrameworks/of_v0.8.0_osx_release/apps/LANscapes/lanscapesC_kinect/ofxGui/src/ofxSliderGroup.h \
   ../../../libs/openFrameworks/graphics/ofGraphics.h \
-  /Users/gabriellalevine/Documents/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapesC_kinect/ofxGui/src/ofxLabel.h
+  /Volumes/HD2/OpenFrameworks/of_v0.8.0_osx_release/apps/LANscapes/lanscapesC_kinect/ofxGui/src/ofxLabel.h

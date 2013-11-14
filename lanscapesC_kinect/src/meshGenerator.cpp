@@ -50,6 +50,8 @@ void meshGenerator::setup( int w, int h, float extrusion, bool wireframe, bool f
     bDrawFaces = faces;
     
     currentColor.setup( width, height );
+    
+    wireframeMesh.disableColors();
 }
 
 //--------------------------------------------------------------
@@ -75,7 +77,11 @@ ofVboMesh meshGenerator::update( ofxCvGrayscaleImage img ){
             mainMesh.setColor( i, colorGrid[ i ] );
     
     }
-        
+    
+    //make a copy of this mesh
+    wireframeMesh = mainMesh;
+    wireframeMesh.clearColors();
+    
     return mainMesh;
 }
 
@@ -84,6 +90,7 @@ void meshGenerator::draw( bool wireframe, bool faces ) {
     
     bDrawWireframe = wireframe;
     bDrawFaces = faces;
+    
     if ( bDrawWireframe ) {
         mainMesh.drawWireframe();
     }
@@ -91,6 +98,8 @@ void meshGenerator::draw( bool wireframe, bool faces ) {
         mainMesh.drawFaces();
     }
     
+    //draw the wireframe mesh
+    wireframeMesh.drawWireframe();
 }
 
 //Export PLY mesh data file, with color
