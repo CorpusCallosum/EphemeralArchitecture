@@ -27,7 +27,7 @@ void currentColor::setup( int w, int h ) {
     colorPalette[ 1 ] = ofColor( 64, 52, 95 ); //21, 55, 232 );      //dark blue
     colorPalette[ 2 ] = ofColor( 200, 23, 178 ); //88, 4, 180 );     //purple
     colorPalette[ 3 ] = ofColor( 203, 103, 10 ); //170, 0, 170 );   //magenta
-    colorPalette[ 4 ] = ofColor( 5, 100, 42 ); //230, 230, 230 );  //white
+    colorPalette[ 4 ] = ofColor( 101, 252, 99 ); //230, 230, 230 );  //white
     
     lastColor = 0;
     nextColor = 1;
