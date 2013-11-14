@@ -25,6 +25,9 @@ public:
     ofxCvGrayscaleImage     modifiedImage;
     ofxCvGrayscaleImage     kinectImage;
     
+    ofImage                 snapShot;
+    ofImage                 background;
+    
     bool                    fullscreen, bDrawVideo, bWireframe, bFaces;
     bool                    useKinect;
     

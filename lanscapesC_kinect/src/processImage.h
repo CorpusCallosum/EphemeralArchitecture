@@ -17,7 +17,7 @@ class processImage : public ofBaseApp {
 public:
     
     //methods
-    void                setup( int, int, int, int );
+    void                setup( int, int, int, int, ofxCvGrayscaleImage );
     ofxCvGrayscaleImage getProcessedImage( ofxCvGrayscaleImage );
     
     //constructor
@@ -30,6 +30,8 @@ public:
     ofxCvGrayscaleImage     kinectSource;
     ofxCvGrayscaleImage     lastKinect;
     ofxCvGrayscaleImage     modifiedImage;
+    
+    vector<ofxCvGrayscaleImage> lastImages; //will use this to compare incoming pixels vs smoothed average of previous frames
     
     unsigned char *         sourcePixels;
     unsigned char *         lastPixels;

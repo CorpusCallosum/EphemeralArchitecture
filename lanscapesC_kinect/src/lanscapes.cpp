@@ -4,26 +4,25 @@
 //--------------------------------------------------------------
 void lanscapes::setup(){
     
-    fullscreen = false;
-    bDrawVideo = true;
-    bWireframe = true;
-    bFaces = true;
+    fullscreen = false; //"f"
+    bDrawVideo = true;  // "v"
+    bWireframe = true; // "w"
+    bFaces = true;     // "e"
     useKinect = true;
     
-    rotX = -310;
+    rotX = -240;
     rotY = 0;
     rotZ = 0;
     transX = 0;
-    transY = -30;
-    transZ = 110;
+    transY = -15;
+    transZ = 90;
     
-    width = 320;
-    height = 240;
-    extrusionAmount = 200.0;
+    width =  320 / 2;
+    height = 240 / 2;
+    extrusionAmount = 200.0 / 2;
     
     if ( useKinect ) {
-        // enable depth->video image calibration
-        kinect.setRegistration(true);
+        //kinect.setRegistration(false);
         kinect.init( false, false );
         kinect.open();		// opens first available kinect
     }
@@ -38,9 +37,16 @@ void lanscapes::setup(){
     modifiedImage.allocate( width, height );
     kinectImage.allocate( kinect.width, kinect.height );
     
+    snapShot.allocate( width, height, OF_IMAGE_GRAYSCALE );
+    background.allocate( width, height, OF_IMAGE_GRAYSCALE );
+    background.loadImage( "background.jpg" );
+    
+    modifiedImage.setFromPixels( background.getPixels(), width, height );
+    
+    
     mainMesh.setup( width, height, extrusionAmount, true, true );// ( width, height, extrusion amount, draw wireframe, draw faces );
     
-    processImage.setup( width, height, 5, 100 );
+    processImage.setup( width, height, 2, 30, modifiedImage ); // (width, height, low threshold for movement, high threshold for movement);
     
     
     	
@@ -78,7 +84,7 @@ void lanscapes::update(){
         
         if (bNewFrame){
             
-            colorImg.setFromPixels( vidGrabber.getPixels(), 320, 240 );
+            colorImg.setFromPixels( vidGrabber.getPixels(), width, height );
             grayImage = colorImg;
             modifiedImage = processImage.getProcessedImage( grayImage );
             mainMesh.update( modifiedImage );
@@ -95,7 +101,7 @@ void lanscapes::update(){
     camPosition += ofVec3f( transX, transY, transZ );
 	
 	cam.setPosition( camPosition );
-	cam.lookAt( centre - ofVec3f( 0, 70, 0 ));
+	cam.lookAt( centre + ofVec3f( 0, -70, 0 ));
     
 }
 
@@ -222,6 +228,13 @@ void lanscapes::keyPressed(int key){
         case 'p':
             cout << "( transX, transY, transZ ): ( " << transX << ", " << transY << ", " << transZ << " )" << endl;
             cout << "( rotX, rotY, rotZ ): ( " << rotX << ", " << rotY << ", " << rotZ << " )" << endl;
+            break;  
+            
+        case 'b':
+            unsigned char * snapShotPix = modifiedImage.getPixels();
+            snapShot.setFromPixels( snapShotPix, width, height, OF_IMAGE_GRAYSCALE );
+            snapShot.saveImage( "background.jpg" );
+            break;
 	}
 }
 
