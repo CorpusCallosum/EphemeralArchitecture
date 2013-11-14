@@ -92,3 +92,16 @@ void meshGenerator::draw( bool wireframe, bool faces ) {
     }
     
 }
+
+//Export PLY mesh data file, with color
+void meshGenerator::save(){
+    mainMesh.save("export/"+ofGetTimestampString()+".ply");
+}
+
+
+
+
+
+
+
+

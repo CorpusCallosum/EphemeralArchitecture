@@ -2,8 +2,6 @@
 #include "ofMain.h"
 #include "ofAppGlutWindow.h"
 
-#include "ofGLProgrammableRenderer.h" //for using shaders
-
 //========================================================================
 int main( ){
     
@@ -19,5 +17,4 @@ int main( ){
 	// can be OF_WINDOW or OF_FULLSCREEN
 	// pass in width and height too:
 	ofRunApp( new lanscapes());
-    
 }

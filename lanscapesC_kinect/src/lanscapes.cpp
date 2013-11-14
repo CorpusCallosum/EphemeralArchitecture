@@ -4,16 +4,18 @@
 //--------------------------------------------------------------
 void lanscapes::setup(){
     
+    //setup vars default values
     fullscreen = false;
     bDrawVideo = true;
     bWireframe = true;
     bFaces = true;
+    //Set this to FALSE to use webcam
     useKinect = false;
     
-    rotX = -280;
+    rotX = -310;
     rotY = 0;
     rotZ = 0;
-    transX = 10;
+    transX = 0;
     transY = -30;
     transZ = 110;
     
@@ -21,13 +23,14 @@ void lanscapes::setup(){
     height = 240;
     extrusionAmount = 200.0;
     
+    previousHour = ofGetHours();
+    
     if ( useKinect ) {
         // enable depth->video image calibration
         kinect.setRegistration(true);
         kinect.init( false, false );
         kinect.open();		// opens first available kinect
     }
-    
     else {
         vidGrabber.setVerbose(true);
         vidGrabber.initGrabber( width, height );
@@ -67,7 +70,6 @@ void lanscapes::update(){
             modifiedImage = processImage.getProcessedImage( kinectImage );
             
             mainMesh.update( modifiedImage );
-            
             //kinectImage.flagImageChanged();
             
         }
@@ -98,8 +100,14 @@ void lanscapes::update(){
     camPosition += ofVec3f( transX, transY, transZ );
 	
 	cam.setPosition( camPosition );
-	cam.lookAt( centre - ofVec3f( -10, 70, 0 ));
+	cam.lookAt( centre - ofVec3f( 0, 70, 0 ));
     
+    //SAVE the mesh every hour
+    int hour = ofGetHours();
+    if(hour != previousHour){
+        mainMesh.save();
+        previousHour = hour;
+    }
 }
 
 //--------------------------------------------------------------
@@ -112,7 +120,6 @@ void lanscapes::draw(){
     if ( bDrawVideo ) {
         
         if ( useKinect ) {
-            
             kinectImage.draw( 20, 20 );
             modifiedImage.draw( 320, 20 );
         }
@@ -128,18 +135,14 @@ void lanscapes::draw(){
                 
     }
     
-
-	
+   	
 	//but we want to enable it to show the mesh
 	ofEnableDepthTest();
-	cam.begin();
     
+	cam.begin();
     mainMesh.draw( bWireframe, bFaces );
-   
 	cam.end();
     
-   
-
 	
     if ( !fullscreen ) {
         //draw framerate for fun
@@ -233,22 +236,10 @@ void lanscapes::keyPressed(int key){
         case 'p':
             cout << "( transX, transY, transZ ): ( " << transX << ", " << transY << ", " << transZ << " )" << endl;
             cout << "( rotX, rotY, rotZ ): ( " << rotX << ", " << rotY << ", " << rotZ << " )" << endl;
-            
-        case 'g':
-            gui.bHide = !gui.bHide;
+        case 's':
+            //save the mesh and color data
+            mainMesh.save();
 	}
-}
-
-//--------------------------------------------------------------
-void
-lanscapes::setLightOri(ofLight &light, ofVec3f rot)
-{
-    ofVec3f xax(1, 0, 0);
-    ofVec3f yax(0, 1, 0);
-    ofVec3f zax(0, 0, 1);
-    ofQuaternion q;
-    q.makeRotate(rot.x, xax, rot.y, yax, rot.z, zax);
-    light.setOrientation(q);
 }
 
 

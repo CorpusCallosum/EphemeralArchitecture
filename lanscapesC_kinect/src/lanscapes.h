@@ -19,8 +19,6 @@ public:
     void draw();
     void keyPressed( int );
     
-    void setLightOri(ofLight &light, ofVec3f rot);
-    
     
     ofVideoGrabber          vidGrabber;
     ofxKinect               kinect;
@@ -42,7 +40,6 @@ public:
     int                     rotX, rotY, rotZ, transX, transY, transZ, width, height;
     float                   extrusionAmount;
     
+    int                     previousHour;
     
 };
-
-
