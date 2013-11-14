@@ -10,7 +10,7 @@ void lanscapes::setup(){
     bWireframe = true;
     bFaces = true;
     //Set this to FALSE to use webcam
-    useKinect = false;
+    useKinect = true;
     
     rotX = -310;
     rotY = 0;
@@ -24,6 +24,8 @@ void lanscapes::setup(){
     extrusionAmount = 200.0;
     
     previousHour = ofGetHours();
+    gui.setup();
+
     
     if ( useKinect ) {
         // enable depth->video image calibration
@@ -46,7 +48,6 @@ void lanscapes::setup(){
     processImage.setup( width, height, 5, 100 );
     
     
-    gui.setup();
 	
 }
 
@@ -58,6 +59,10 @@ void lanscapes::update(){
         ofHideCursor();
     }
 	ofBackground( 0 );
+   
+    
+
+
     
     
     if ( useKinect ) {
@@ -90,7 +95,6 @@ void lanscapes::update(){
         }
     }
 
-    gui.update();
 	
 	//move the camera around the mesh
 	ofVec3f camDirection( 0, 0, 1 );
@@ -108,6 +112,9 @@ void lanscapes::update(){
         mainMesh.save();
         previousHour = hour;
     }
+        gui.update();
+  //processImage.update(gui.brightness, gui.contrast, gui.extrusion);
+    
 }
 
 //--------------------------------------------------------------
@@ -135,7 +142,8 @@ void lanscapes::draw(){
                 
     }
     
-   	
+    gui.draw();
+
 	//but we want to enable it to show the mesh
 	ofEnableDepthTest();
     
@@ -150,7 +158,6 @@ void lanscapes::draw(){
         string msg = "fps: " + ofToString(ofGetFrameRate(), 2);
         ofDrawBitmapString(msg, 10, 20);
     }
-    gui.draw();
 }
 
 //--------------------------------------------------------------

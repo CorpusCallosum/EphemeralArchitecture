@@ -24,7 +24,13 @@ public:
     void update();
 	bool bHide;
     
-    ofxFloatSlider brightness, contrast, extrusion, growthFactor;
+    ofParameter<float> brightness;
+    ofParameter<float> contrast;
+    ofParameter<float> extrusion;
+	ofParameter<float> growthFactor;
+
+
+    //ofxFloatSlider brightness, contrast, extrusion, growthFactor;
 	
 	ofxPanel gui_panel;
 

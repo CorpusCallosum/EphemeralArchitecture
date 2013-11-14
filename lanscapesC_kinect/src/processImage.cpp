@@ -34,6 +34,15 @@ void processImage::setup( int w, int h, int low, int high ) {
     
 }
 
+void processImage::update(float b, float c, float e){
+    
+    _brightness = b;
+    cout<<b<<" is brightness"<<endl;
+    _contrast = c;
+    alphaAmount = e;
+    
+}
+
 ofxCvGrayscaleImage processImage::getProcessedImage( ofxCvGrayscaleImage img ) {
     
     

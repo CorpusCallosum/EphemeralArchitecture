@@ -11,6 +11,7 @@
 
 #include "ofMain.h"
 #include "ofxOpenCv.h"
+#include "gui.h"
 
 class processImage : public ofBaseApp {
     
@@ -18,6 +19,8 @@ public:
     
     //methods
     void                setup( int, int, int, int );
+    void update(float, float, float);
+
     ofxCvGrayscaleImage getProcessedImage( ofxCvGrayscaleImage );
     
     //constructor
@@ -37,6 +40,7 @@ public:
     vector <int>            difference;
     
     float                   _brightness, _contrast, alphaAmount;
+    gui                     gui;
     
 private:
     
