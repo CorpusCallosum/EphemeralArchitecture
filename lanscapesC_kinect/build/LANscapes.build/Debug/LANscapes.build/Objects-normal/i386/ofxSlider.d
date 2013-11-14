@@ -1,7 +1,7 @@
 dependencies: \
-  /Users/gabriellalevine/Documents/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapesC_kinect/ofxGui/src/ofxSlider.cpp \
-  /Users/gabriellalevine/Documents/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapesC_kinect/ofxGui/src/ofxSlider.h \
-  /Users/gabriellalevine/Documents/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapesC_kinect/ofxGui/src/ofxBaseGui.h \
+  /Volumes/HD2/OpenFrameworks/of_v0.8.0_osx_release/apps/LANscapes/lanscapesC_kinect/ofxGui/src/ofxSlider.cpp \
+  /Volumes/HD2/OpenFrameworks/of_v0.8.0_osx_release/apps/LANscapes/lanscapesC_kinect/ofxGui/src/ofxSlider.h \
+  /Volumes/HD2/OpenFrameworks/of_v0.8.0_osx_release/apps/LANscapes/lanscapesC_kinect/ofxGui/src/ofxBaseGui.h \
   ../../../libs/openFrameworks/utils/ofConstants.h \
   ../../../libs/glew/include/GL/glew.h \
   ../../../libs/tess2/include/tesselator.h \

@@ -7,8 +7,8 @@ void lanscapes::setup(){
     //setup vars default values
     fullscreen = false;
     bDrawVideo = true;
-    bWireframe = true;
-    bFaces = true;
+    bWireframe = false;  //draw wireframe of main mesh?
+    bFaces = true;      //draw faces of main mesh?
     //Set this to FALSE to use webcam
     useKinect = false;
     

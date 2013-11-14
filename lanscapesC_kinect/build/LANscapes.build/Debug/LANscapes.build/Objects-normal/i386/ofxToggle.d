@@ -1,6 +1,6 @@
 dependencies: \
-  /Users/gabriellalevine/Documents/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapesC_kinect/ofxGui/src/ofxToggle.cpp \
-  /Users/gabriellalevine/Documents/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapesC_kinect/ofxGui/src/ofxToggle.h \
+  /Volumes/HD2/OpenFrameworks/of_v0.8.0_osx_release/apps/LANscapes/lanscapesC_kinect/ofxGui/src/ofxToggle.cpp \
+  /Volumes/HD2/OpenFrameworks/of_v0.8.0_osx_release/apps/LANscapes/lanscapesC_kinect/ofxGui/src/ofxToggle.h \
   ../../../libs/openFrameworks/types/ofParameter.h \
   ../../../libs/openFrameworks/events/ofEvents.h \
   ../../../libs/openFrameworks/utils/ofConstants.h \
@@ -57,7 +57,7 @@ dependencies: \
   ../../../libs/poco/include/Poco/File.h \
   ../../../libs/poco/include/Poco/File_UNIX.h \
   ../../../libs/poco/include/Poco/Path.h \
-  /Users/gabriellalevine/Documents/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapesC_kinect/ofxGui/src/ofxBaseGui.h \
+  /Volumes/HD2/OpenFrameworks/of_v0.8.0_osx_release/apps/LANscapes/lanscapesC_kinect/ofxGui/src/ofxBaseGui.h \
   ../../../libs/openFrameworks/types/ofBaseTypes.h \
   ../../../libs/openFrameworks/types/ofRectangle.h \
   ../../../libs/openFrameworks/3d/ofMesh.h \

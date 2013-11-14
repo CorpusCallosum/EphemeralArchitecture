@@ -29,7 +29,7 @@ public:
     ofxCvGrayscaleImage meshImage;
     
 	float extrusionAmount;
-	ofVboMesh mainMesh;
+	ofVboMesh mainMesh, wireframeMesh;
     bool    bDrawWireframe, bDrawFaces;
     int width, height;
     
