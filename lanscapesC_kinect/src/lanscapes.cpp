@@ -10,7 +10,7 @@ void lanscapes::setup(){
     bWireframe = true;  // w draw wireframe mesh
     bFaces = true;      // e draw faces of main mesh
     //Set this to FALSE to use webcam
-    useKinect = false;
+    useKinect = true;
     
     rotX = -160;
     rotY = 0;
@@ -53,7 +53,19 @@ void lanscapes::setup(){
     mainMesh.setup( width, height, extrusionAmount, true, true );// ( width, height, extrusion amount, draw wireframe, draw faces );
     processImage.setup( width, height, 1, 50, modifiedImage ); // (width, height, low threshold for movement, high threshold for movement);
     
+    //setup camera starting position
+    //move the camera around the mesh
+	ofVec3f camDirection( 0, 0, 1 );
+	ofVec3f centre( width / 2.f, height / 2.f, 128 / 2.f ); //255 / 2.f );
+    ofVec3f camDirectionRotated = camDirection.rotated( rotX, rotY, rotZ );
+	ofVec3f camPosition = centre + camDirectionRotated * extrusionAmount;
+    camPosition += ofVec3f( transX, transY, transZ );
+	
+	cam.setPosition( camPosition );
+	cam.lookAt( centre + ofVec3f( 0, -35, 0 ));
     
+    // this sets the camera's distance from the object
+	cam.setDistance(100);
 }
 
 //--------------------------------------------------------------
@@ -64,10 +76,6 @@ void lanscapes::update(){
         ofHideCursor();
     }
 	ofBackground( 0 );
-   
-    
-
-
     
     
     if ( useKinect ) {
@@ -100,16 +108,6 @@ void lanscapes::update(){
         }
     }
 
-	
-	//move the camera around the mesh
-	ofVec3f camDirection( 0, 0, 1 );
-	ofVec3f centre( width / 2.f, height / 2.f, 128 / 2.f ); //255 / 2.f );
-    ofVec3f camDirectionRotated = camDirection.rotated( rotX, rotY, rotZ );
-	ofVec3f camPosition = centre + camDirectionRotated * extrusionAmount;
-    camPosition += ofVec3f( transX, transY, transZ );
-	
-	cam.setPosition( camPosition );
-	cam.lookAt( centre + ofVec3f( 0, -35, 0 ));
     
     //SAVE the mesh every hour
     int hour = ofGetHours();

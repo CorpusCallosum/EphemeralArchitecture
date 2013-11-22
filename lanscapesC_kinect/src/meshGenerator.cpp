@@ -88,6 +88,8 @@ ofVboMesh meshGenerator::update( ofxCvGrayscaleImage img ){
 //--------------------------------------------------------------
 void meshGenerator::draw( bool wireframe, bool faces ) {
     
+     ofTranslate(-width/2, -height/2, 0);   // move the coordinate system to position x 100
+    
     bDrawWireframe = wireframe;
     bDrawFaces = faces;
     
