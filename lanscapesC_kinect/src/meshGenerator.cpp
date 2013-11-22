@@ -92,14 +92,15 @@ void meshGenerator::draw( bool wireframe, bool faces ) {
     bDrawFaces = faces;
     
     if ( bDrawWireframe ) {
-        mainMesh.drawWireframe();
+        //draw the wireframe mesh
+        wireframeMesh.drawWireframe();
     }
     if ( bDrawFaces ) {
         mainMesh.drawFaces();
     }
     
-    //draw the wireframe mesh
-    wireframeMesh.drawWireframe();
+    
+    
 }
 
 //Export PLY mesh data file, with color

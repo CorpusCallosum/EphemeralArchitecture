@@ -21,7 +21,8 @@ public:
     void                setup( int, int, int, int, ofxCvGrayscaleImage );
     void update(float, float, float);
 
-    ofxCvGrayscaleImage getProcessedImage( ofxCvGrayscaleImage );
+    ofxCvGrayscaleImage getProcessedImage( ofxCvGrayscaleImage, ofxCvGrayscaleImage );
+
     
     //constructor
     processImage();
@@ -31,14 +32,13 @@ public:
     int                     imgWidth, imgHeight;
     int                     moveThreshLow, moveThreshHigh;
     ofxCvGrayscaleImage     kinectSource;
-    ofxCvGrayscaleImage     lastKinect;
     ofxCvGrayscaleImage     modifiedImage;
+    ofxCvGrayscaleImage     backgroundImage;
     
-    vector<ofxCvGrayscaleImage> lastImages; //will use this to compare incoming pixels vs smoothed average of previous frames
     
     unsigned char *         sourcePixels;
-    unsigned char *         lastPixels;
     unsigned char *         modifiedPixels;
+    unsigned char *         backgroundPixels;
     vector <int>            difference;
     
     float                   _brightness, _contrast, alphaAmount;
