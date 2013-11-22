@@ -28,7 +28,7 @@ void processImage::setup( int w, int h, int low, int high, ofxCvGrayscaleImage b
     backgroundPixels = background.getPixels();
     difference.resize( imgWidth * imgHeight );
     
-    alphaAmount = .02;
+    alphaAmount = .009;
     _brightness = 0.0;
     _contrast = 0.0;
     
@@ -56,7 +56,6 @@ ofxCvGrayscaleImage processImage::getProcessedImage( ofxCvGrayscaleImage img, of
     
     modifiedPixels = modifiedImage.getPixels();
     
-    //background.mirror( true, true ); // mirror( bool bFlipVertically, bool bFlipHorizontally )
     //background.brightnessContrast( _brightness, _contrast );
     backgroundPixels = background.getPixels();
 
