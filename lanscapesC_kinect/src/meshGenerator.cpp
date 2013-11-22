@@ -51,7 +51,10 @@ void meshGenerator::setup( int w, int h, float extrusion, bool wireframe, bool f
     
     currentColor.setup( width, height );
     
-    wireframeMesh.disableColors();
+   // wireframeMesh.disableColors();
+    
+    //make a copy of this mesh
+    wireframeMesh = mainMesh;
 }
 
 //--------------------------------------------------------------
@@ -60,27 +63,47 @@ ofVboMesh meshGenerator::update( ofxCvGrayscaleImage img ){
     meshImage = img;
     
     colorGrid = currentColor.getCurrentColor( meshImage );
+    
+     //make a copy of this mesh
+    //wireframeMesh = mainMesh;
+
 
     //this determines how far we extrude the mesh
     for ( int i = 0; i < width * height; i ++ ) {
         
         //colorGrid[ i ] = currentColor.getCurrentColor();
         
-            float b = meshImage.getPixels()[ i ] / 255.f; //b & w image
-            
-            //now we get the vertex at this position
-            //we extrude the mesh based on it's brightness
-            ofVec3f tmpVec = mainMesh.getVertex( i );
-            tmpVec.z = b * extrusionAmount;
-            
-            mainMesh.setVertex( i, tmpVec );
-            mainMesh.setColor( i, colorGrid[ i ] );
+        float b = meshImage.getPixels()[ i ] / 255.f; //b & w image
+        
+        //now we get the vertex at this position
+        //we extrude the mesh based on it's brightness
+        ofVec3f tmpVec = mainMesh.getVertex( i );
+        tmpVec.z = b * extrusionAmount;
+        
+        mainMesh.setVertex( i, tmpVec );
+        wireframeMesh.setVertex( i, tmpVec );
+        
+        //set the mesh color
+        ofColor c = colorGrid[ i ];
+        mainMesh.setColor( i, c );
+        
+        //set the wireframe color
+        c.setBrightness(255);
+       // c.setSaturation(100);
+        wireframeMesh.setColor(i, c);
+        
     
     }
     
     //make a copy of this mesh
-    wireframeMesh = mainMesh;
-    wireframeMesh.clearColors();
+  //  wireframeMesh = mainMesh;
+   // wireframeMesh.clearColors();
+    
+  /*  ofColor c = ofColor::white;
+    c.a = 100;
+    wireframeMesh.setColorForIndices(0,wireframeMesh.getNumIndices(),c);
+    
+    for (i=0; i<)*/
     
     return mainMesh;
 }

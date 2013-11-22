@@ -48,7 +48,8 @@ void currentColor::setup( int w, int h ) {
 }
 
 //--------------------------------------------------------------
-//ofColor currentColor::getCurrentColor() {
+//I think this returns a vector of colors that is the current vector of
+//colors of the entire mesh
 vector<ofColor> currentColor::getCurrentColor( ofxCvGrayscaleImage img) {
     
     meshImage = img;
