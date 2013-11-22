@@ -5,28 +5,27 @@
 void lanscapes::setup(){
     
     //setup vars default values
-    fullscreen = false;
-    bDrawVideo = true;
-    bWireframe = false;  //draw wireframe of main mesh?
-    bFaces = true;      //draw faces of main mesh?
+    fullscreen = false; // f 
+    bDrawVideo = true;  // v
+    bWireframe = true;  // w draw wireframe mesh
+    bFaces = true;      // e draw faces of main mesh
     //Set this to FALSE to use webcam
     useKinect = false;
     
-    rotX = -240;
+    rotX = -160;
     rotY = 0;
     rotZ = 0;
     transX = 0;
-    transY = -15;
+    transY = -75;
     transZ = 90;
     
-    width =  320 / 2;
-    height = 240 / 2;
-    extrusionAmount = 200.0 / 2;
+    width =  80;
+    height = 60;
+    extrusionAmount = 80.0;
     
     previousHour = ofGetHours();
     
     if ( useKinect ) {
-        //kinect.setRegistration(false);
         kinect.init( false, false );
         kinect.open();		// opens first available kinect
     }
@@ -41,15 +40,17 @@ void lanscapes::setup(){
     kinectImage.allocate( kinect.width, kinect.height );
     
     snapShot.allocate( width, height, OF_IMAGE_GRAYSCALE );
-    background.allocate( width, height, OF_IMAGE_GRAYSCALE );
-    background.loadImage( "background.jpg" );
+    background.allocate( width, height );
+    snapShot.loadImage( "background.jpg" );
+    snapShotPix = snapShot.getPixels();
+    background.setFromPixels( snapShotPix, width, height );
     
     modifiedImage.setFromPixels( background.getPixels(), width, height );
     
     
     mainMesh.setup( width, height, extrusionAmount, true, true );// ( width, height, extrusion amount, draw wireframe, draw faces );
     
-    processImage.setup( width, height, 2, 30, modifiedImage ); // (width, height, low threshold for movement, high threshold for movement);
+    processImage.setup( width, height, 1, 50, modifiedImage ); // (width, height, low threshold for movement, high threshold for movement);
     
     
     gui.setup();
@@ -73,7 +74,7 @@ void lanscapes::update(){
             // load grayscale depth image from the kinect source
             kinectImage.setFromPixels( kinect.getDepthPixels(), kinect.width, kinect.height);
             kinectImage.resize( width, height );
-            modifiedImage = processImage.getProcessedImage( kinectImage );
+            modifiedImage = processImage.getProcessedImage( kinectImage, background );
             
             mainMesh.update( modifiedImage );
             //kinectImage.flagImageChanged();
@@ -90,7 +91,7 @@ void lanscapes::update(){
             
             colorImg.setFromPixels( vidGrabber.getPixels(), width, height );
             grayImage = colorImg;
-            modifiedImage = processImage.getProcessedImage( grayImage );
+            modifiedImage = processImage.getProcessedImage( grayImage, background );
             mainMesh.update( modifiedImage );
             
         }
@@ -100,13 +101,13 @@ void lanscapes::update(){
 	
 	//move the camera around the mesh
 	ofVec3f camDirection( 0, 0, 1 );
-	ofVec3f centre( width / 2.f, height / 2.f, 255 / 2.f );
+	ofVec3f centre( width / 2.f, height / 2.f, 128 / 2.f ); //255 / 2.f );
     ofVec3f camDirectionRotated = camDirection.rotated( rotX, rotY, rotZ );
 	ofVec3f camPosition = centre + camDirectionRotated * extrusionAmount;
     camPosition += ofVec3f( transX, transY, transZ );
 	
 	cam.setPosition( camPosition );
-	cam.lookAt( centre + ofVec3f( 0, -70, 0 ));
+	cam.lookAt( centre + ofVec3f( 0, -35, 0 ));
     
     //SAVE the mesh every hour
     int hour = ofGetHours();
@@ -126,15 +127,17 @@ void lanscapes::draw(){
     if ( bDrawVideo ) {
         
         if ( useKinect ) {
-            kinectImage.draw( 20, 20 );
-            modifiedImage.draw( 320, 20 );
+            kinectImage.draw( 20, 20, 320, 240 );
+            modifiedImage.draw( 20 + 320, 20, 320, 240 );
+            background.draw( 20 + 2 * 320, 20, 320, 240 );
         }
         
         else {
             
-            colorImg.draw( 20, 20);
-            grayImage.draw( 320, 20);
-            modifiedImage.draw( 700, 20 );
+            colorImg.draw( 20, 20, 320, 240 );
+            grayImage.draw( 20 + 320, 20, 320, 240 );
+            modifiedImage.draw( 20 + 2 * 320, 20, 320, 240 );
+            background.draw( 20 + 3 * 320, 20, 320, 240 );
             
         }
         
@@ -248,9 +251,15 @@ void lanscapes::keyPressed(int key){
             mainMesh.save();
 			break;
 		case 'b':
-            unsigned char * snapShotPix = modifiedImage.getPixels();
+            if ( useKinect ) {
+                snapShotPix = kinectImage.getPixels();
+            }
+            else {
+                snapShotPix = grayImage.getPixels();
+            }
             snapShot.setFromPixels( snapShotPix, width, height, OF_IMAGE_GRAYSCALE );
             snapShot.saveImage( "background.jpg" );
+            background.setFromPixels( snapShotPix, width, height );
             break;
 
 	}

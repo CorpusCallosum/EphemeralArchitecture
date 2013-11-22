@@ -14,7 +14,7 @@ processImage::processImage()
     
 }
 
-void processImage::setup( int w, int h, int low, int high, ofxCvGrayscaleImage modified ) {
+void processImage::setup( int w, int h, int low, int high, ofxCvGrayscaleImage background ) {
     
     imgWidth = w;
     imgHeight = h;
@@ -22,50 +22,39 @@ void processImage::setup( int w, int h, int low, int high, ofxCvGrayscaleImage m
     moveThreshHigh = high;
     kinectSource.allocate( imgWidth, imgHeight );
     kinectSource.set( 0.0 );//initialize all pixels black
-    lastKinect.allocate( imgWidth, imgHeight );
-    lastKinect.set( 0.0 );//initialize all pixels black
     modifiedImage.allocate( imgWidth, imgHeight );
-    modifiedImage = modified;
+    modifiedImage = background;
+    
+    backgroundPixels = background.getPixels();
     difference.resize( imgWidth * imgHeight );
     
     alphaAmount = .02;
-    _brightness = 0.2;
-    _contrast = 0.2;
+    _brightness = 0.0;
+    _contrast = 0.0;
     
-    lastImages.resize( 10 );
-    
-    for ( int i = 0; i < lastImages.size(); i ++ ) {
-        lastImages[ i ].allocate( imgWidth, imgHeight );
-    }
     
 }
 
-ofxCvGrayscaleImage processImage::getProcessedImage( ofxCvGrayscaleImage img ) {
+ofxCvGrayscaleImage processImage::getProcessedImage( ofxCvGrayscaleImage img, ofxCvGrayscaleImage background ) {
     
     
     kinectSource = img;
-    kinectSource.mirror( true, true ); // mirror( bool bFlipVertically, bool bFlipHorizontally )
-    kinectSource.brightnessContrast( _brightness, _contrast );
-    
+    //kinectSource.mirror( true, true ); // mirror( bool bFlipVertically, bool bFlipHorizontally )
+    //kinectSource.brightnessContrast( _brightness, _contrast );
     sourcePixels = kinectSource.getPixels();
-    lastPixels = lastKinect.getPixels();
+    
     modifiedPixels = modifiedImage.getPixels();
+    
+    //background.mirror( true, true ); // mirror( bool bFlipVertically, bool bFlipHorizontally )
+    //background.brightnessContrast( _brightness, _contrast );
+    backgroundPixels = background.getPixels();
+
         
     for ( int i = 0; i < imgWidth; i ++ ) {
         for ( int j = 0; j < imgHeight; j ++ ) {
             int loc = i + j * imgWidth;
             difference[ loc ] = sourcePixels[ loc ] - modifiedPixels[ loc ];
-            
-            if ( abs( sourcePixels[ loc ] - lastPixels[ loc ] ) > moveThreshHigh ){ //if the pixel is very different than in the last frame from the kinect
-                modifiedPixels[ loc ] = modifiedPixels[ loc ]; //keep the ond one
-            }
-            
-            else if ( abs( sourcePixels[ loc ] - lastPixels[ loc ] ) < moveThreshLow && abs( sourcePixels[ loc ] - modifiedPixels [ loc ] ) > 120 ){ //if the pixel is the same as the last incoming, but very different from in the image used to generate the mesh
-                modifiedPixels[ loc ] = modifiedPixels[ loc ]; //keep the old one
-            }
-            
-            
-            else {
+            if ( abs( sourcePixels[ loc ] - backgroundPixels[ loc ] ) > moveThreshLow ) { //if the incoming pixel is different enough from the background image
                 difference[ loc ] = sourcePixels[ loc ] - modifiedPixels[ loc ];
                 float add = difference[ loc ] * alphaAmount;
                 float modifiedPixel = modifiedPixels[ loc ];
@@ -80,21 +69,6 @@ ofxCvGrayscaleImage processImage::getProcessedImage( ofxCvGrayscaleImage img ) {
     }
     
     
-    
-    /*for ( int i = 0; i < lastImages.size() - 1; i ++ ) { // working on averaging the previous frames 
-        lastImages[ i ] = lastImages[ i + 1 ];
-    }
-    lastImages[ lastImages.size() ] = kinectSource;
-    
-    vector<unsigned char *> lastImagePix[ lastImages.size() ];
-    unsigned char * averagePix;
-    for ( int i = 0; i < imgWidth * imgHeight; i ++ ) {
-        for ( int j = 0; j < lastImages.size(); j ++ ) {
-            averagePix[ i ] += lastImages[ i ][ j ];
-        }
-    }*/
-    
-    lastKinect = kinectSource;
     modifiedImage.setFromPixels( modifiedPixels, imgWidth, imgHeight );
    
     return modifiedImage;
