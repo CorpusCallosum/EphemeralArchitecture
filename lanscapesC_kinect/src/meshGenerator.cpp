@@ -44,14 +44,11 @@ void meshGenerator::setup( int w, int h, float extrusion, bool wireframe, bool f
     
     //this determines how much we push the meshes out
 	extrusionAmount = extrusion;
-    
-    
+
     bDrawWireframe = wireframe;
     bDrawFaces = faces;
     
     currentColor.setup( width, height );
-    
-   // wireframeMesh.disableColors();
     
     //make a copy of this mesh
     wireframeMesh = mainMesh;
@@ -63,10 +60,6 @@ ofVboMesh meshGenerator::update( ofxCvGrayscaleImage img ){
     meshImage = img;
     
     colorGrid = currentColor.getCurrentColor( meshImage );
-    
-     //make a copy of this mesh
-    //wireframeMesh = mainMesh;
-
 
     //this determines how far we extrude the mesh
     for ( int i = 0; i < width * height; i ++ ) {
@@ -94,16 +87,6 @@ ofVboMesh meshGenerator::update( ofxCvGrayscaleImage img ){
         
     
     }
-    
-    //make a copy of this mesh
-  //  wireframeMesh = mainMesh;
-   // wireframeMesh.clearColors();
-    
-  /*  ofColor c = ofColor::white;
-    c.a = 100;
-    wireframeMesh.setColorForIndices(0,wireframeMesh.getNumIndices(),c);
-    
-    for (i=0; i<)*/
     
     return mainMesh;
 }
