@@ -5,6 +5,8 @@
 void lanscapes::setup(){
     
     //setup vars default values
+    //PRESS B TO CAPTURE BACKGROUND//
+    
     fullscreen = false; // f 
     bDrawVideo = true;  // v
     bWireframe = true;  // w draw wireframe mesh
