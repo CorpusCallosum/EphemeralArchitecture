@@ -56,7 +56,7 @@ void meshGenerator::setup( int w, int h, float extrusion, bool wireframe, bool f
 }
 
 //--------------------------------------------------------------
-ofVboMesh meshGenerator::update( ofxCvGrayscaleImage img ){
+ofVboMesh meshGenerator::update( ofxCvGrayscaleImage img, float extrusion ){
     img.resize(width, height);
     meshImage = img;
     
@@ -72,6 +72,7 @@ ofVboMesh meshGenerator::update( ofxCvGrayscaleImage img ){
         //now we get the vertex at this position
         //we extrude the mesh based on it's brightness
         ofVec3f tmpVec = mainMesh.getVertex( i );
+        extrusionAmount = extrusion;
         tmpVec.z = b * extrusionAmount;
         
         mainMesh.setVertex( i, tmpVec );

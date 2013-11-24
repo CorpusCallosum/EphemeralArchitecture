@@ -20,6 +20,7 @@ void gui::setup(){
     gui_panel.add(contrast.set("contrast", 0.2 , 0.0, 1));
     gui_panel.add(extrusion.set("extrusion", 200, 0, 500));
     gui_panel.add(alphaValue.set("alphaValue", 0.05, 0.01, 0.1));
+    gui_panel.add(rot_x.set("rot_x", -140,-360,360));
     //gui_panel.add(buttonTest.setup(");
 
     bHide = false;
@@ -27,7 +28,6 @@ void gui::setup(){
 
 void gui::update(){
     
-   // if (ofxBaseGui.mouseDragged(0,0)) {cout<<"true"<<endl;}
 }
 
 void gui::draw(){
@@ -62,5 +62,8 @@ float gui::getAlpha(){
     
 }
 
+int gui::getX(){
+    return rot_x;
+}
 
 

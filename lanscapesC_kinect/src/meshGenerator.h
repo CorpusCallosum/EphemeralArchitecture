@@ -19,7 +19,7 @@ public:
     
     //methods
 	void setup( int, int, float, bool, bool );
-    ofVboMesh update( ofxCvGrayscaleImage );
+    ofVboMesh update( ofxCvGrayscaleImage , float);
 	void draw( bool, bool );
     void save();
     void setZOffset(int);

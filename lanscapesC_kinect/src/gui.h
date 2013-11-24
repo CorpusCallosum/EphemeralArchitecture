@@ -30,11 +30,13 @@ public:
     ofParameter<float> contrast;
     ofParameter<float> alphaValue;
 	ofParameter<float> extrusion;
+    ofParameter<int> rot_x;
     
 //    ofEvent<ofMouseEventArgs>mousePress;
 //    ofEvent<ofMouseEventArgs>mouseRelease;
     
     float b,c,e,g;
+    int x;
 
 
     //ofxFloatSlider brightness, contrast, extrusion, growthFactor;
@@ -44,6 +46,7 @@ public:
     float getContrast();;
     float getExtrusion();
     float getAlpha();
+    int getX();
     void mousePressed();
     
     

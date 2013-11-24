@@ -28,7 +28,7 @@ void lanscapes::setup(){
     useKinect = false;
     
     
-    rotX = -160;
+    rotX = gui.getX();// -160;
     rotY = 0;
     rotZ = 0;
     transX = 0;
@@ -110,7 +110,7 @@ void lanscapes::update(){
             modifiedImage = processImage.getProcessedImage( kinectImage, background );
             
             
-            mainMesh.update( modifiedImage );
+            mainMesh.update( modifiedImage , extrusionAmount);
             //kinectImage.flagImageChanged();
             
         }
@@ -126,7 +126,7 @@ void lanscapes::update(){
             colorImg.setFromPixels( vidGrabber.getPixels(), width, height );
             grayImage = colorImg;
             modifiedImage = processImage.getProcessedImage( grayImage, background );
-            mainMesh.update( modifiedImage );
+            mainMesh.update( modifiedImage , extrusionAmount);
             
         }
     }
@@ -144,13 +144,15 @@ void lanscapes::update(){
         previousHour = hour;
     }
     
-    
+    //get  data from gui
     float b = gui.getBrightness();
     float c = gui.getContrast();
     float e  = gui.getExtrusion();
     float a = gui.getAlpha();
+    int x = gui.getX();
     
     extrusionAmount=e;
+    rotX = x;
     //cout<<extrusionAmount<<endl;
     
     processImage.update(b,c,a);
