@@ -21,8 +21,8 @@ void lanscapes::setup(){
     transY = -75;
     transZ = 90;
     
-    width =  640;
-    height = 480;
+    width =  80;
+    height = 60;
     extrusionAmount = 80.0;
     
     previousHour = ofGetHours();
@@ -52,26 +52,10 @@ void lanscapes::setup(){
     modifiedImage.setFromPixels( background.getPixels(), width, height );
     
     
-<<<<<<< HEAD
     mainMesh.setup( width, height, extrusionAmount, true, true );// ( width, height, extrusion amount, draw wireframe, draw faces );
-=======
-    mainMesh.setup( 80, 60, extrusionAmount, true, true );// ( width, height, extrusion amount, draw wireframe, draw faces );
->>>>>>> 851ae5dff276f40a1d7965308f46e945019036d7
     processImage.setup( width, height, 5, 50, modifiedImage ); // (width, height, low threshold for movement, high threshold for movement);
     
-    //setup camera starting position
-    //move the camera around the mesh
-	ofVec3f camDirection( 0, 0, 1 );
-	ofVec3f centre( width / 2.f, height / 2.f, 128 / 2.f );
-    ofVec3f camDirectionRotated = camDirection.rotated( rotX, rotY, rotZ );
-	ofVec3f camPosition = centre + camDirectionRotated * extrusionAmount;
-    camPosition += ofVec3f( transX, transY, transZ );
-	
-	cam.setPosition( camPosition );
-	cam.lookAt( centre + ofVec3f( 0, -35, 0 ));
     
-    // this sets the camera's distance from the object
-	cam.setDistance(100);
 }
 
 //--------------------------------------------------------------
@@ -82,6 +66,10 @@ void lanscapes::update(){
         ofHideCursor();
     }
 	ofBackground( 0 );
+   
+    
+
+
     
     
     if ( useKinect ) {
@@ -90,9 +78,8 @@ void lanscapes::update(){
             
             // load grayscale depth image from the kinect source
             kinectImage.setFromPixels( kinect.getDepthPixels(), kinect.width, kinect.height);
-//            kinectImage.resize( width, height );
+            kinectImage.resize( width, height );
             modifiedImage = processImage.getProcessedImage( kinectImage, background );
-            
             
             mainMesh.update( modifiedImage );
             //kinectImage.flagImageChanged();
@@ -115,6 +102,16 @@ void lanscapes::update(){
         }
     }
 
+	
+	//move the camera around the mesh
+	ofVec3f camDirection( 0, 0, 1 );
+	ofVec3f centre( width / 2.f, height / 2.f, 128 / 2.f ); //255 / 2.f );
+    ofVec3f camDirectionRotated = camDirection.rotated( rotX, rotY, rotZ );
+	ofVec3f camPosition = centre + camDirectionRotated * extrusionAmount;
+    camPosition += ofVec3f( transX, transY, transZ );
+	
+	cam.setPosition( camPosition );
+	cam.lookAt( centre + ofVec3f( 0, -35, 0 ));
     
     //SAVE the mesh every hour
     int hour = ofGetHours();
@@ -122,8 +119,9 @@ void lanscapes::update(){
         mainMesh.save();
         previousHour = hour;
     }
-    processImage.update();
-    gui.update();
+        gui.update();
+  //processImage.update(gui.brightness, gui.contrast, gui.extrusion);
+    
 }
 
 //--------------------------------------------------------------
@@ -273,12 +271,6 @@ void lanscapes::keyPressed(int key){
             snapShot.setFromPixels( snapShotPix, width, height, OF_IMAGE_GRAYSCALE );
             snapShot.saveImage( "background.jpg" );
             background.setFromPixels( snapShotPix, width, height );
-            break;
-        case OF_KEY_UP:
-            mainMesh.zOffset -= 1;
-            break;
-        case OF_KEY_DOWN:
-            mainMesh.zOffset += 1;
             break;
 
 	}

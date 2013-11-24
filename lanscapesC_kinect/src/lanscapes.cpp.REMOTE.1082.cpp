@@ -5,8 +5,6 @@
 void lanscapes::setup(){
     
     //setup vars default values
-    //PRESS B TO CAPTURE BACKGROUND//
-    
     fullscreen = false; // f 
     bDrawVideo = true;  // v
     bWireframe = true;  // w draw wireframe mesh
@@ -52,11 +50,7 @@ void lanscapes::setup(){
     modifiedImage.setFromPixels( background.getPixels(), width, height );
     
     
-<<<<<<< HEAD
-    mainMesh.setup( width, height, extrusionAmount, true, true );// ( width, height, extrusion amount, draw wireframe, draw faces );
-=======
     mainMesh.setup( 80, 60, extrusionAmount, true, true );// ( width, height, extrusion amount, draw wireframe, draw faces );
->>>>>>> 851ae5dff276f40a1d7965308f46e945019036d7
     processImage.setup( width, height, 5, 50, modifiedImage ); // (width, height, low threshold for movement, high threshold for movement);
     
     //setup camera starting position

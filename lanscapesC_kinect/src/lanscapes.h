@@ -39,7 +39,9 @@ public:
     processImage            processImage;
     gui                     gui;
     
-    ofCamera                cam;
+ //   ofCamera                cam;
+    ofEasyCam cam; // add mouse controls for camera movement
+
     
     int                     rotX, rotY, rotZ, transX, transY, transZ, width, height;
     float                   extrusionAmount;

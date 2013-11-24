@@ -13,6 +13,7 @@ void meshGenerator::setup( int w, int h, float extrusion, bool wireframe, bool f
 
     width = w;
     height = h;
+    zOffset = 0;
     
     colorGrid.resize( width * height );
     
@@ -44,19 +45,19 @@ void meshGenerator::setup( int w, int h, float extrusion, bool wireframe, bool f
     
     //this determines how much we push the meshes out
 	extrusionAmount = extrusion;
-    
-    
+
     bDrawWireframe = wireframe;
     bDrawFaces = faces;
     
     currentColor.setup( width, height );
     
-    wireframeMesh.disableColors();
+    //make a copy of this mesh
+    wireframeMesh = mainMesh;
 }
 
 //--------------------------------------------------------------
 ofVboMesh meshGenerator::update( ofxCvGrayscaleImage img ){
-    
+    img.resize(width, height);
     meshImage = img;
     
     colorGrid = currentColor.getCurrentColor( meshImage );
@@ -66,27 +67,35 @@ ofVboMesh meshGenerator::update( ofxCvGrayscaleImage img ){
         
         //colorGrid[ i ] = currentColor.getCurrentColor();
         
-            float b = meshImage.getPixels()[ i ] / 255.f; //b & w image
-            
-            //now we get the vertex at this position
-            //we extrude the mesh based on it's brightness
-            ofVec3f tmpVec = mainMesh.getVertex( i );
-            tmpVec.z = b * extrusionAmount;
-            
-            mainMesh.setVertex( i, tmpVec );
-            mainMesh.setColor( i, colorGrid[ i ] );
+        float b = meshImage.getPixels()[ i ] / 255.f; //b & w image
+        
+        //now we get the vertex at this position
+        //we extrude the mesh based on it's brightness
+        ofVec3f tmpVec = mainMesh.getVertex( i );
+        tmpVec.z = b * extrusionAmount;
+        
+        mainMesh.setVertex( i, tmpVec );
+        wireframeMesh.setVertex( i, tmpVec );
+        
+        //set the mesh color
+        ofColor c = colorGrid[ i ];
+        mainMesh.setColor( i, c );
+        
+        //set the wireframe color
+        c.setBrightness(255);
+        c.setSaturation(200);
+        wireframeMesh.setColor(i, c);
+        
     
     }
-    
-    //make a copy of this mesh
-    wireframeMesh = mainMesh;
-    wireframeMesh.clearColors();
     
     return mainMesh;
 }
 
 //--------------------------------------------------------------
 void meshGenerator::draw( bool wireframe, bool faces ) {
+    
+    ofTranslate(-width/2, -height/2, zOffset);
     
     bDrawWireframe = wireframe;
     bDrawFaces = faces;
@@ -108,8 +117,10 @@ void meshGenerator::save(){
     mainMesh.save("export/"+ofGetTimestampString()+".ply");
 }
 
-
-
+//get/set
+void meshGenerator::setZOffset(int z) {
+    zOffset = z;
+}
 
 
 

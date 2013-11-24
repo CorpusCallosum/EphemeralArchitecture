@@ -21,6 +21,10 @@ void gui::setup(){
     gui_panel.add(extrusion.set("extrusion", 200, 0, 500));
     gui_panel.add(growthFactor.set("growthFactor", 0.05, 0.01, 0.1));
     //gui_panel.add(buttonTest.setup(");
+<<<<<<< HEAD
+=======
+    
+>>>>>>> a24e75a0a55be1f0b72af7d94749d4d22c688571
 
     bHide = false;
 }
