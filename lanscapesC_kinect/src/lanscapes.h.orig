@@ -8,7 +8,7 @@
 #include "meshGenerator.h"
 #include "processImage.h"
 #include "gui.h"
-
+#include "ofxXmlSettings.h"
 
 
 class lanscapes : public ofBaseApp{
@@ -18,6 +18,7 @@ public:
     void update();
     void draw();
     void keyPressed( int );
+    void updateZOffset();
     
     
     ofVideoGrabber          vidGrabber;
@@ -28,25 +29,34 @@ public:
     ofxCvGrayscaleImage     modifiedImage;
     ofxCvGrayscaleImage     kinectImage;
     
+    ofImage                 snapShot;
+    ofxCvGrayscaleImage     background;
+    unsigned char *         snapShotPix;
+    
     bool                    fullscreen, bDrawVideo, bWireframe, bFaces;
     bool                    useKinect;
+    
+    float b,c,e,a;
     
     meshGenerator           mainMesh;
     processImage            processImage;
     gui                     gui;
     
-    ofCamera                cam;
+    ofVec3f camDirectionRotated;
+       
+    ofEasyCam cam; // add mouse controls for camera movement
+    
     
     int                     rotX, rotY, rotZ, transX, transY, transZ, width, height;
     float                   extrusionAmount;
     
-<<<<<<< HEAD
-    
-};
-
-
-=======
     int                     previousHour;
     
+<<<<<<< HEAD
+=======
+    ofxXmlSettings          XML;
+    
+    string                  message;
+>>>>>>> 20f3e7a36e53efca58a118eecc07e9641ef6a808
+    
 };
->>>>>>> 1a6fdd72a0fe47a444511aa063d0f5df54855815

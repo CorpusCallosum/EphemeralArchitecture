@@ -3,8 +3,24 @@
 
 //--------------------------------------------------------------
 void lanscapes::setup(){
+    //load settings xml data file
+    //-----------
+	//the string is printed at the top of the app
+	//to give the user some feedback
+	message = "loading settings.xml";
+    
+	//we load our settings file
+	//if it doesn't exist we can still make one
+	//by hitting the 's' key
+	if( XML.loadFile("settings.xml") ){
+		message = "settings.xml loaded!";
+	}else{
+		message = "unable to load settings.xml check data/ folder";
+	}
     
     //setup vars default values
+    //PRESS B TO CAPTURE BACKGROUND//
+    
     fullscreen = false; // f 
     bDrawVideo = true;  // v
     bWireframe = true;  // w draw wireframe mesh
@@ -53,6 +69,9 @@ void lanscapes::setup(){
     
     mainMesh.setup( 80, 60, extrusionAmount, true, true );// ( width, height, extrusion amount, draw wireframe, draw faces );
     processImage.setup( width, height, 5, 50, modifiedImage ); // (width, height, low threshold for movement, high threshold for movement);
+    
+    mainMesh.zOffset = XML.getValue("zOffset", 0);
+
     
     //setup camera starting position
     //move the camera around the mesh
@@ -236,14 +255,6 @@ void lanscapes::keyPressed(int key){
             transY -= 10;
             break;
             
-        case '5':
-            transZ += 10;
-            break;
-            
-        case '6':
-            transZ -= 10;
-            break;
-            
         case '7':
             extrusionAmount += 10;
             break;
@@ -293,12 +304,24 @@ void lanscapes::keyPressed(int key){
             break;
         case OF_KEY_UP:
             mainMesh.zOffset -= 1;
+            updateZOffset();
             break;
         case OF_KEY_DOWN:
             mainMesh.zOffset += 1;
+            updateZOffset();
             break;
-
+        case 'z':
+            XML.save("settings.xml");
+            break;
 	}
+    
 }
+
+void lanscapes::updateZOffset(){
+    //set xml
+    XML.setValue("zOffset", mainMesh.zOffset);
+}
+
+
 
 

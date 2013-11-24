@@ -8,7 +8,7 @@
 #include "meshGenerator.h"
 #include "processImage.h"
 #include "gui.h"
-
+#include "ofxXmlSettings.h"
 
 
 class lanscapes : public ofBaseApp{
@@ -18,6 +18,7 @@ public:
     void update();
     void draw();
     void keyPressed( int );
+    void updateZOffset();
     
     
     ofVideoGrabber          vidGrabber;
@@ -51,5 +52,8 @@ public:
     
     int                     previousHour;
     
+    ofxXmlSettings          XML;
+    
+    string                  message;
     
 };
