@@ -82,8 +82,8 @@ ofVboMesh meshGenerator::update( ofxCvGrayscaleImage img ){
         mainMesh.setColor( i, c );
         
         //set the wireframe color
-        c.setBrightness(255);
-        c.setSaturation(200);
+        c.setBrightness(wireframeBrightness);
+        c.setSaturation(wireframeSaturation);
         wireframeMesh.setColor(i, c);
         
     
@@ -118,9 +118,9 @@ void meshGenerator::save(){
 }
 
 //get/set
-void meshGenerator::setZOffset(int z) {
+/*void meshGenerator::setZOffset(int z) {
     zOffset = z;
-}
+}*/
 
 
 

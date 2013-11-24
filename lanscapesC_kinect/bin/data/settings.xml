@@ -6,3 +6,7 @@
     <group />
 </group>
 <zOffset>-23</zOffset>
+<wireframe>
+	<brightness>255</brightness>
+	<saturation>150</saturation>
+</wireframe>

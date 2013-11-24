@@ -20,7 +20,6 @@ void lanscapes::setup(){
     
     //setup vars default values
     //PRESS B TO CAPTURE BACKGROUND//
-    
     fullscreen = false; // f 
     bDrawVideo = true;  // v
     bWireframe = true;  // w draw wireframe mesh
@@ -71,6 +70,8 @@ void lanscapes::setup(){
     processImage.setup( width, height, 5, 50, modifiedImage ); // (width, height, low threshold for movement, high threshold for movement);
     
     mainMesh.zOffset = XML.getValue("zOffset", 0);
+    mainMesh.wireframeBrightness = XML.getValue("wireframe:brightness", 255);
+    mainMesh.wireframeSaturation = XML.getValue("wireframe:saturation", 100);
 
     
     //setup camera starting position

@@ -31,7 +31,7 @@ public:
 	float extrusionAmount;
 	ofVboMesh mainMesh, wireframeMesh;
     bool    bDrawWireframe, bDrawFaces;
-    int width, height, zOffset;
+    int width, height, zOffset, wireframeBrightness, wireframeSaturation;
     
     vector<ofColor> colorGrid;
     
