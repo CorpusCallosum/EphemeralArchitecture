@@ -28,18 +28,13 @@ void processImage::setup( int w, int h, int low, int high, ofxCvGrayscaleImage b
     backgroundPixels = background.getPixels();
     difference.resize( imgWidth * imgHeight );
     
-    //alphaAmount = .02;
-    
-   // _contrast = 0.0;
-    
-   // _brightness=gui.getBrightness();
    
     
     
 }
 
 void processImage::update(float _b, float _c, float _a){
-      _brightness = _b;
+    _brightness = _b;
     _contrast = _c;
     alphaAmount = _a;
    

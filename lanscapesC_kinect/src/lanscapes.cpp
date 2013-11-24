@@ -28,7 +28,7 @@ void lanscapes::setup(){
     useKinect = false;
     
     
-    rotX = gui.getX();// -160;
+    rotX = gui.getX();
     rotY = 0;
     rotZ = 0;
     transX = 0;
@@ -37,7 +37,7 @@ void lanscapes::setup(){
     
     width =  640;
     height = 480;
-    extrusionAmount = 80.0;
+    extrusionAmount = gui.getExtrusion();
     
     previousHour = ofGetHours();
     gui.setup();
@@ -106,9 +106,8 @@ void lanscapes::update(){
             
             // load grayscale depth image from the kinect source
             kinectImage.setFromPixels( kinect.getDepthPixels(), kinect.width, kinect.height);
-//            kinectImage.resize( width, height );
+            //            kinectImage.resize( width, height );
             modifiedImage = processImage.getProcessedImage( kinectImage, background );
-            
             
             mainMesh.update( modifiedImage , extrusionAmount);
             //kinectImage.flagImageChanged();
@@ -131,11 +130,6 @@ void lanscapes::update(){
         }
     }
 
-    //rotate the camera
-   //cam.rotate(0, rotX, 0,0);
-    //cout<<rotX<<endl;
-    
-    //ofRotateX(rotX);
     
     //SAVE the mesh every hour
     int hour = ofGetHours();
@@ -147,13 +141,9 @@ void lanscapes::update(){
     //get  data from gui
     float b = gui.getBrightness();
     float c = gui.getContrast();
-    float e  = gui.getExtrusion();
+    extrusionAmount  = gui.getExtrusion();
     float a = gui.getAlpha();
-    int x = gui.getX();
-    
-    extrusionAmount=e;
-    rotX = x;
-    //cout<<extrusionAmount<<endl;
+    rotX = gui.getX();
     
     processImage.update(b,c,a);
     gui.update();
@@ -195,8 +185,8 @@ void lanscapes::draw(){
 	ofEnableDepthTest();
     
 	cam.begin();
+    //rotate the camera
     ofRotateX(rotX);
-    
     mainMesh.draw( bWireframe, bFaces );
 	cam.end();
     

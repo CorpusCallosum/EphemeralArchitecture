@@ -13,8 +13,7 @@
 #include <iostream>
 #include "ofMain.h"
 #include "ofxGui.h"
-#include "ofxBaseGui.h"
-#include "ofEasyCam.h"
+
 
 
 
@@ -23,8 +22,15 @@ class gui :  public ofBaseApp{
 public:
     void setup();
     void draw();    
-    void update();
 	bool bHide;
+    
+    ofxPanel gui_panel;
+    float getBrightness();
+    float getContrast();
+    float getExtrusion();
+    float getAlpha();
+    int getX();
+    void mousePressed();
     
     ofParameter<float> brightness;
     ofParameter<float> contrast;
@@ -32,23 +38,9 @@ public:
 	ofParameter<float> extrusion;
     ofParameter<int> rot_x;
     
-//    ofEvent<ofMouseEventArgs>mousePress;
-//    ofEvent<ofMouseEventArgs>mouseRelease;
-    
     float b,c,e,g;
     int x;
 
-
-    //ofxFloatSlider brightness, contrast, extrusion, growthFactor;
-	
-	ofxPanel gui_panel;
-    float getBrightness();
-    float getContrast();;
-    float getExtrusion();
-    float getAlpha();
-    int getX();
-    void mousePressed();
-    
     
     
 };
