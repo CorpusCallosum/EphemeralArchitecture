@@ -19,7 +19,7 @@ public:
     
     //methods
     void                setup( int, int, int, int, ofxCvGrayscaleImage );
-    void update(float, float, float);
+    void update();
 
     ofxCvGrayscaleImage getProcessedImage( ofxCvGrayscaleImage, ofxCvGrayscaleImage );
 
@@ -34,6 +34,7 @@ public:
     ofxCvGrayscaleImage     kinectSource;
     ofxCvGrayscaleImage     modifiedImage;
     ofxCvGrayscaleImage     backgroundImage;
+    
     
     
     unsigned char *         sourcePixels;

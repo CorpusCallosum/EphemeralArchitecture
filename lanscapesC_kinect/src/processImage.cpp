@@ -29,18 +29,20 @@ void processImage::setup( int w, int h, int low, int high, ofxCvGrayscaleImage b
     difference.resize( imgWidth * imgHeight );
     
     alphaAmount = .02;
-    _brightness = 0.0;
+    
     _contrast = 0.0;
+    
+    _brightness=gui.getBrightness();
+    //cout<< _brightness << endl;
     
     
 }
 
-void processImage::update(float b, float c, float e){
+void processImage::update(){
+    _brightness = gui.getBrightness();
+    cout<< _brightness << endl;
     
-    _brightness = b;
-    cout<<b<<" is brightness"<<endl;
-    _contrast = c;
-    alphaAmount = e;
+   
     
 }
 
@@ -86,3 +88,5 @@ ofxCvGrayscaleImage processImage::getProcessedImage( ofxCvGrayscaleImage img, of
     
     
 }
+
+
