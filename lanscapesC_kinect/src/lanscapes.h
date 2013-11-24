@@ -35,6 +35,8 @@ public:
     bool                    fullscreen, bDrawVideo, bWireframe, bFaces;
     bool                    useKinect;
     
+    float b,c,e,a;
+    
     meshGenerator           mainMesh;
     processImage            processImage;
     gui                     gui;

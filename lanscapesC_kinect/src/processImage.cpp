@@ -28,20 +28,20 @@ void processImage::setup( int w, int h, int low, int high, ofxCvGrayscaleImage b
     backgroundPixels = background.getPixels();
     difference.resize( imgWidth * imgHeight );
     
-    alphaAmount = .02;
+    //alphaAmount = .02;
     
-    _contrast = 0.0;
+   // _contrast = 0.0;
     
-    _brightness=gui.getBrightness();
-    //cout<< _brightness << endl;
+   // _brightness=gui.getBrightness();
+   
     
     
 }
 
-void processImage::update(){
-    _brightness = gui.getBrightness();
-    cout<< _brightness << endl;
-    
+void processImage::update(float _b, float _c, float _a){
+      _brightness = _b;
+    _contrast = _c;
+    alphaAmount = _a;
    
     
 }
@@ -53,13 +53,13 @@ ofxCvGrayscaleImage processImage::getProcessedImage( ofxCvGrayscaleImage img, of
     
     kinectSource = img;
     //kinectSource.mirror( true, true ); // mirror( bool bFlipVertically, bool bFlipHorizontally )
-    //kinectSource.brightnessContrast( _brightness, _contrast );
+    kinectSource.brightnessContrast( _brightness, _contrast );
     sourcePixels = kinectSource.getPixels();
     
     modifiedPixels = modifiedImage.getPixels();
     
     //background.mirror( true, true ); // mirror( bool bFlipVertically, bool bFlipHorizontally )
-    //background.brightnessContrast( _brightness, _contrast );
+    background.brightnessContrast( _brightness, _contrast );
     backgroundPixels = background.getPixels();
 
         

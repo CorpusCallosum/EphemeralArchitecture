@@ -26,8 +26,8 @@ public:
     
     ofParameter<float> brightness;
     ofParameter<float> contrast;
-    ofParameter<float> extrusion;
-	ofParameter<float> growthFactor;
+    ofParameter<float> alphaValue;
+	ofParameter<float> extrusion;
     
     float b,c,e,g;
 
@@ -36,7 +36,9 @@ public:
 	
 	ofxPanel gui_panel;
     float getBrightness();
-
+    float getContrast();;
+    float getExtrusion();
+    float getAlpha();
     
 };
  
