@@ -13,6 +13,8 @@
 #include <iostream>
 #include "ofMain.h"
 #include "ofxGui.h"
+#include "ofxBaseGui.h"
+#include "ofEasyCam.h"
 
 
 
@@ -29,6 +31,9 @@ public:
     ofParameter<float> alphaValue;
 	ofParameter<float> extrusion;
     
+//    ofEvent<ofMouseEventArgs>mousePress;
+//    ofEvent<ofMouseEventArgs>mouseRelease;
+    
     float b,c,e,g;
 
 
@@ -39,6 +44,9 @@ public:
     float getContrast();;
     float getExtrusion();
     float getAlpha();
+    void mousePressed();
+    
+    
     
 };
  

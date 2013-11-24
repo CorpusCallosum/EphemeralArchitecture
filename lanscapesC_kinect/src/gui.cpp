@@ -26,6 +26,8 @@ void gui::setup(){
 }
 
 void gui::update(){
+    
+   // if (ofxBaseGui.mouseDragged(0,0)) {cout<<"true"<<endl;}
 }
 
 void gui::draw(){
@@ -59,3 +61,6 @@ float gui::getAlpha(){
     return alphaValue;
     
 }
+
+
+

@@ -58,7 +58,7 @@ void lanscapes::setup(){
     //move the camera around the mesh
 	ofVec3f camDirection( 0, 0, 1 );
 	ofVec3f centre( width / 2.f, height / 2.f, 128 / 2.f );
-    ofVec3f camDirectionRotated = camDirection.rotated( rotX, rotY, rotZ );
+    camDirectionRotated = camDirection.rotated( rotX, rotY, rotZ );
 	ofVec3f camPosition = centre + camDirectionRotated * extrusionAmount;
     camPosition += ofVec3f( transX, transY, transZ );
 	
@@ -67,6 +67,7 @@ void lanscapes::setup(){
     
     // this sets the camera's distance from the object
 	cam.setDistance(100);
+    cam.disableMouseInput();
 }
 
 //--------------------------------------------------------------
@@ -110,6 +111,11 @@ void lanscapes::update(){
         }
     }
 
+    //rotate the camera
+   //cam.rotate(0, rotX, 0,0);
+    //cout<<rotX<<endl;
+    
+    //ofRotateX(rotX);
     
     //SAVE the mesh every hour
     int hour = ofGetHours();
@@ -125,12 +131,13 @@ void lanscapes::update(){
     float a = gui.getAlpha();
     
     extrusionAmount=e;
-    cout<<extrusionAmount<<endl;
+    //cout<<extrusionAmount<<endl;
     
     processImage.update(b,c,a);
     gui.update();
     
     
+
 }
 
 //--------------------------------------------------------------
@@ -166,6 +173,8 @@ void lanscapes::draw(){
 	ofEnableDepthTest();
     
 	cam.begin();
+    ofRotateX(rotX);
+    
     mainMesh.draw( bWireframe, bFaces );
 	cam.end();
     
@@ -188,6 +197,7 @@ void lanscapes::keyPressed(int key){
             
         case '=':
             rotX += 10;
+            cout<<rotX<<endl;
             break;
             
         case '-':
