@@ -28,11 +28,14 @@ public:
     ofParameter<float> contrast;
     ofParameter<float> extrusion;
 	ofParameter<float> growthFactor;
+    
+    float b,c,e,g;
 
 
     //ofxFloatSlider brightness, contrast, extrusion, growthFactor;
 	
 	ofxPanel gui_panel;
+    float getBrightness();
 
     
 };

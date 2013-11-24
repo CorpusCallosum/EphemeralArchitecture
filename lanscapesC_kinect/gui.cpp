@@ -13,7 +13,6 @@
 
 void gui::setup(){
     ofSetVerticalSync(true);
-
     
     gui_panel.setup();
     
@@ -24,14 +23,11 @@ void gui::setup(){
     //gui_panel.add(buttonTest.setup(");
     
 
-    
-
     bHide = false;
 }
 
 void gui::update(){
-    
-    
+      
 }
 
 void gui::draw(){
@@ -39,4 +35,11 @@ void gui::draw(){
         gui_panel.draw();
         //cout<<brightness<<"  is brightness"<<endl;
     }
+}
+
+float gui::getBrightness(){
+   
+    cout<<brightness<<"is brightness _";
+    return brightness;
+    
 }

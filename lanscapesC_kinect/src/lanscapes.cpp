@@ -115,9 +115,8 @@ void lanscapes::update(){
         mainMesh.save();
         previousHour = hour;
     }
-        gui.update();
-    //processImage.update(gui.brightness, gui.contrast, gui.extrusion);
-    
+    processImage.update();
+    gui.update();
 }
 
 //--------------------------------------------------------------
