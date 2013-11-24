@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		169d3c72fde6c5590a1616f5 /* ofxCvFloatImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7b6a03390302d5a2c9f0e4ab /* ofxCvFloatImage.cpp */; };
 		1d5f3298c2fa073628012944 /* ofxCvContourFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = c76de5c29bdbd2caa1dd0021 /* ofxCvContourFinder.cpp */; };
+		2328AEA918429AB600B09134 /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2328AEA218429AB600B09134 /* tinyxml.cpp */; };
+		2328AEAA18429AB600B09134 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2328AEA418429AB600B09134 /* tinyxmlerror.cpp */; };
+		2328AEAB18429AB600B09134 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2328AEA518429AB600B09134 /* tinyxmlparser.cpp */; };
+		2328AEAC18429AB600B09134 /* ofxXmlSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2328AEA718429AB600B09134 /* ofxXmlSettings.cpp */; };
 		250a95ba26587be85db0a353 /* ofxCvColorImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ce9c7160245b19131dae6128 /* ofxCvColorImage.cpp */; };
 		255a7b680dc81e543c875794 /* usb_libusb10.c in Sources */ = {isa = PBXBuildFile; fileRef = 28f9707464ba3ff98e05096c /* usb_libusb10.c */; };
 		49beeb2dfa5319d55aa6899f /* tilt.c in Sources */ = {isa = PBXBuildFile; fileRef = bf2f2aa872288d30f53983ef /* tilt.c */; };
@@ -95,6 +99,12 @@
 		0cf0aa3895d28e97d8a1e4a9 /* ground_truth.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ground_truth.h; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/flann/ground_truth.h; sourceTree = SOURCE_ROOT; };
 		114b872696817cc33990fc83 /* imgproc.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = imgproc.hpp; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/imgproc/imgproc.hpp; sourceTree = SOURCE_ROOT; };
 		1e95efd35ed9c5d97f2f015e /* timer.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = timer.h; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/flann/timer.h; sourceTree = SOURCE_ROOT; };
+		2328AEA218429AB600B09134 /* tinyxml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml.cpp; sourceTree = "<group>"; };
+		2328AEA318429AB600B09134 /* tinyxml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinyxml.h; sourceTree = "<group>"; };
+		2328AEA418429AB600B09134 /* tinyxmlerror.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlerror.cpp; sourceTree = "<group>"; };
+		2328AEA518429AB600B09134 /* tinyxmlparser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlparser.cpp; sourceTree = "<group>"; };
+		2328AEA718429AB600B09134 /* ofxXmlSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxXmlSettings.cpp; sourceTree = "<group>"; };
+		2328AEA818429AB600B09134 /* ofxXmlSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxXmlSettings.h; sourceTree = "<group>"; };
 		241aaf7769d555e4ecd57e17 /* cameras.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = cameras.h; path = ../../../addons/ofxKinect/libs/libfreenect/src/cameras.h; sourceTree = SOURCE_ROOT; };
 		28f9707464ba3ff98e05096c /* usb_libusb10.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 30; name = usb_libusb10.c; path = ../../../addons/ofxKinect/libs/libfreenect/src/usb_libusb10.c; sourceTree = SOURCE_ROOT; };
 		2e411f99e3ab7154484b4f96 /* kmeans_index.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = kmeans_index.h; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/flann/kmeans_index.h; sourceTree = SOURCE_ROOT; };
@@ -378,6 +388,35 @@
 			name = flann;
 			sourceTree = "<group>";
 		};
+		2328AEA018429AB600B09134 /* ofxXmlSettings */ = {
+			isa = PBXGroup;
+			children = (
+				2328AEA118429AB600B09134 /* libs */,
+				2328AEA618429AB600B09134 /* src */,
+			);
+			path = ofxXmlSettings;
+			sourceTree = "<group>";
+		};
+		2328AEA118429AB600B09134 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				2328AEA218429AB600B09134 /* tinyxml.cpp */,
+				2328AEA318429AB600B09134 /* tinyxml.h */,
+				2328AEA418429AB600B09134 /* tinyxmlerror.cpp */,
+				2328AEA518429AB600B09134 /* tinyxmlparser.cpp */,
+			);
+			path = libs;
+			sourceTree = "<group>";
+		};
+		2328AEA618429AB600B09134 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				2328AEA718429AB600B09134 /* ofxXmlSettings.cpp */,
+				2328AEA818429AB600B09134 /* ofxXmlSettings.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
 		2c171637c399a50881f147e9 /* libusb-1.0 */ = {
 			isa = PBXGroup;
 			children = (
@@ -500,6 +539,7 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				2328AEA018429AB600B09134 /* ofxXmlSettings */,
 				F89BB84D183466DC008E644E /* ofxGui */,
 				9683228c705ca3ff4f2ea945 /* ofxKinect */,
 				a0b90d3b0adb9c1716816714 /* ofxOpenCv */,
@@ -845,6 +885,7 @@
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* lanscapes.cpp in Sources */,
 				686b0df6249b52e1a85b39ec /* ofxKinect.cpp in Sources */,
+				2328AEAA18429AB600B09134 /* tinyxmlerror.cpp in Sources */,
 				f4135eefc911e9ed211fb6f9 /* core.c in Sources */,
 				255a7b680dc81e543c875794 /* usb_libusb10.c in Sources */,
 				d31f5c1b140c59b2af1533a8 /* registration.c in Sources */,
@@ -854,6 +895,7 @@
 				250a95ba26587be85db0a353 /* ofxCvColorImage.cpp in Sources */,
 				169d3c72fde6c5590a1616f5 /* ofxCvFloatImage.cpp in Sources */,
 				d3301f6a0b43bb293ed97c1d /* ofxCvShortImage.cpp in Sources */,
+				2328AEAC18429AB600B09134 /* ofxXmlSettings.cpp in Sources */,
 				1d5f3298c2fa073628012944 /* ofxCvContourFinder.cpp in Sources */,
 				e212c821d1064b92dd953a42 /* ofxCvHaarFinder.cpp in Sources */,
 				63020f16c7e8ded980111241 /* ofxCvImage.cpp in Sources */,
@@ -867,7 +909,9 @@
 				F89BB863183466DC008E644E /* ofxLabel.cpp in Sources */,
 				F89BB864183466DC008E644E /* ofxPanel.cpp in Sources */,
 				F89BB865183466DC008E644E /* ofxSlider.cpp in Sources */,
+				2328AEA918429AB600B09134 /* tinyxml.cpp in Sources */,
 				F89BB866183466DC008E644E /* ofxSliderGroup.cpp in Sources */,
+				2328AEAB18429AB600B09134 /* tinyxmlparser.cpp in Sources */,
 				F89BB867183466DC008E644E /* ofxToggle.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
