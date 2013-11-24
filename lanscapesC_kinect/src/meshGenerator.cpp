@@ -13,7 +13,8 @@ void meshGenerator::setup( int w, int h, float extrusion, bool wireframe, bool f
 
     width = w;
     height = h;
-    zOffset = 0;
+    zOffset = -4;
+    yOffset = -23;
     
     colorGrid.resize( width * height );
     
@@ -95,7 +96,7 @@ ofVboMesh meshGenerator::update( ofxCvGrayscaleImage img ){
 //--------------------------------------------------------------
 void meshGenerator::draw( bool wireframe, bool faces ) {
     
-    ofTranslate(-width/2, -height/2, zOffset);
+    ofTranslate(-width/2, -height/2 + yOffset, zOffset);
     
     bDrawWireframe = wireframe;
     bDrawFaces = faces;
@@ -118,9 +119,11 @@ void meshGenerator::save(){
 }
 
 //get/set
-void meshGenerator::setZOffset(int z) {
+void meshGenerator::setOffsets(int z, int y) {
     zOffset = z;
+    yOffset = y;
 }
+
 
 
 

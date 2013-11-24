@@ -16,10 +16,10 @@ void gui::setup(){
     
     gui_panel.setup();
     
-    gui_panel.add(brightness.set("brightness", 0.2, 0.0, 1));
-    gui_panel.add(contrast.set("contrast", 0.2 , 0.0, 1));
-    gui_panel.add(extrusion.set("extrusion", 200, 0, 500));
-    gui_panel.add(alphaValue.set("alphaValue", 0.05, 0.01, 0.1));
+    gui_panel.add(brightness.set("brightness", 0.1, 0.0, 1));
+    gui_panel.add(contrast.set("contrast", 0.1, 0.0, 1));
+    gui_panel.add(extrusion.set("extrusion", 80, 0, 100));
+    gui_panel.add(alphaValue.set("alphaValue", 0.02, 0.001, 0.1));
     //gui_panel.add(buttonTest.setup(");
 
     bHide = false;

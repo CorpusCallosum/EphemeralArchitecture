@@ -12,7 +12,7 @@ void lanscapes::setup(){
     bWireframe = true;  // w draw wireframe mesh
     bFaces = true;      // e draw faces of main mesh
     //Set this to FALSE to use webcam
-    useKinect = false;
+    useKinect = true;
     
     
     rotX = -160;
@@ -53,8 +53,8 @@ void lanscapes::setup(){
     modifiedImage.setFromPixels( background.getPixels(), width, height );
     
     
-    mainMesh.setup( 80, 60, extrusionAmount, true, true );// ( width, height, extrusion amount, draw wireframe, draw faces );
-    processImage.setup( width, height, 5, 50, modifiedImage ); // (width, height, low threshold for movement, high threshold for movement);
+    mainMesh.setup( 64, 48, extrusionAmount, true, true );// ( width, height, extrusion amount, draw wireframe, draw faces );
+    processImage.setup( width, height, 10, 10, modifiedImage ); // (width, height, low threshold for movement, flicker);
     
     //setup camera starting position
     //move the camera around the mesh
@@ -87,12 +87,9 @@ void lanscapes::update(){
             
             // load grayscale depth image from the kinect source
             kinectImage.setFromPixels( kinect.getDepthPixels(), kinect.width, kinect.height);
-//            kinectImage.resize( width, height );
             modifiedImage = processImage.getProcessedImage( kinectImage, background );
-            
-            
             mainMesh.update( modifiedImage );
-            //kinectImage.flagImageChanged();
+          
             
         }
     }
@@ -127,11 +124,10 @@ void lanscapes::update(){
     float a = gui.getAlpha();
     
     extrusionAmount=e;
-    cout<<extrusionAmount<<endl;
+    //cout<<extrusionAmount<<endl;
     
-    processImage.update(b,c,a);
+    processImage.update( b, c, a );
     gui.update();
-    
     
 }
 
@@ -267,6 +263,7 @@ void lanscapes::keyPressed(int key){
         case 'p':
             cout << "( transX, transY, transZ ): ( " << transX << ", " << transY << ", " << transZ << " )" << endl;
             cout << "( rotX, rotY, rotZ ): ( " << rotX << ", " << rotY << ", " << rotZ << " )" << endl;
+            cout << "( yOffset, zOffset ): ( " << mainMesh.yOffset << ", " << mainMesh.zOffset << " )" << endl;
 			break;
         case 's':
             //save the mesh and color data
@@ -284,10 +281,16 @@ void lanscapes::keyPressed(int key){
             background.setFromPixels( snapShotPix, width, height );
             break;
         case OF_KEY_UP:
-            mainMesh.zOffset -= 1;
+            mainMesh.zOffset += 1;
             break;
         case OF_KEY_DOWN:
-            mainMesh.zOffset += 1;
+            mainMesh.zOffset -= 1;
+            break;
+        case OF_KEY_LEFT:
+            mainMesh.yOffset += 1;
+            break;
+        case OF_KEY_RIGHT:
+            mainMesh.yOffset -= 1;
             break;
 
 	}

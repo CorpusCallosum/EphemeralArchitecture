@@ -30,7 +30,7 @@ public:
     //variables
     
     int                     imgWidth, imgHeight;
-    int                     moveThreshLow, moveThreshHigh;
+    int                     moveThreshLow, flickerThreshold;
     ofxCvGrayscaleImage     kinectSource;
     ofxCvGrayscaleImage     modifiedImage;
     ofxCvGrayscaleImage     backgroundImage;
