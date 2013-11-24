@@ -145,7 +145,7 @@ void lanscapes::update(){
     rotX = gui.getX();
     
     processImage.update(b,c,a);
-    gui.update();
+    
     
 }
 
