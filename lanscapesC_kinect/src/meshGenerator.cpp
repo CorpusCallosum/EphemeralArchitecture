@@ -13,6 +13,7 @@ void meshGenerator::setup( int w, int h, float extrusion, bool wireframe, bool f
 
     width = w;
     height = h;
+    zOffset = 0;
     
     colorGrid.resize( width * height );
     
@@ -56,7 +57,7 @@ void meshGenerator::setup( int w, int h, float extrusion, bool wireframe, bool f
 
 //--------------------------------------------------------------
 ofVboMesh meshGenerator::update( ofxCvGrayscaleImage img ){
-    
+    img.resize(width, height);
     meshImage = img;
     
     colorGrid = currentColor.getCurrentColor( meshImage );
@@ -82,7 +83,7 @@ ofVboMesh meshGenerator::update( ofxCvGrayscaleImage img ){
         
         //set the wireframe color
         c.setBrightness(255);
-       // c.setSaturation(100);
+        c.setSaturation(200);
         wireframeMesh.setColor(i, c);
         
     
@@ -94,7 +95,7 @@ ofVboMesh meshGenerator::update( ofxCvGrayscaleImage img ){
 //--------------------------------------------------------------
 void meshGenerator::draw( bool wireframe, bool faces ) {
     
-     ofTranslate(-width/2, -height/2, 0);   // move the coordinate system to position x 100
+    ofTranslate(-width/2, -height/2, zOffset);
     
     bDrawWireframe = wireframe;
     bDrawFaces = faces;
@@ -116,8 +117,10 @@ void meshGenerator::save(){
     mainMesh.save("export/"+ofGetTimestampString()+".ply");
 }
 
-
-
+//get/set
+void meshGenerator::setZOffset(int z) {
+    zOffset = z;
+}
 
 
 
