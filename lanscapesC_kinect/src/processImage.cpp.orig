@@ -28,6 +28,12 @@ void processImage::setup( int w, int h, int low, int flicker, ofxCvGrayscaleImag
     backgroundPixels = background.getPixels();
     difference.resize( imgWidth * imgHeight );
     
+<<<<<<< HEAD
+=======
+    //alphaAmount = .02;
+    // _contrast = 0.0;
+    // _brightness=gui.getBrightness();
+>>>>>>> f8691df76c44fb8ef5782f2107049847aa8a6786
    
     
     
