@@ -10,7 +10,7 @@ void lanscapes::setup(){
     bWireframe = true;  // w draw wireframe mesh
     bFaces = true;      // e draw faces of main mesh
     //Set this to FALSE to use webcam
-    useKinect = true;
+    useKinect = false;
     
     rotX = -160;
     rotY = 0;
@@ -116,7 +116,7 @@ void lanscapes::update(){
         previousHour = hour;
     }
         gui.update();
-  //processImage.update(gui.brightness, gui.contrast, gui.extrusion);
+    //processImage.update(gui.brightness, gui.contrast, gui.extrusion);
     
 }
 

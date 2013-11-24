@@ -82,7 +82,7 @@ ofVboMesh meshGenerator::update( ofxCvGrayscaleImage img ){
         
         //set the wireframe color
         c.setBrightness(255);
-       // c.setSaturation(100);
+        c.setSaturation(200);
         wireframeMesh.setColor(i, c);
         
     
