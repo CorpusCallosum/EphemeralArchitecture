@@ -14,6 +14,7 @@ void lanscapes::setup(){
     //Set this to FALSE to use webcam
     useKinect = false;
     
+    
     rotX = -160;
     rotY = 0;
     rotZ = 0;
@@ -21,9 +22,11 @@ void lanscapes::setup(){
     transY = -75;
     transZ = 90;
     
+
     width =  640;
     height = 480;
     extrusionAmount = 80.0;
+
     
     previousHour = ofGetHours();
     gui.setup();
@@ -52,11 +55,7 @@ void lanscapes::setup(){
     modifiedImage.setFromPixels( background.getPixels(), width, height );
     
     
-<<<<<<< HEAD
-    mainMesh.setup( width, height, extrusionAmount, true, true );// ( width, height, extrusion amount, draw wireframe, draw faces );
-=======
     mainMesh.setup( 80, 60, extrusionAmount, true, true );// ( width, height, extrusion amount, draw wireframe, draw faces );
->>>>>>> 851ae5dff276f40a1d7965308f46e945019036d7
     processImage.setup( width, height, 5, 50, modifiedImage ); // (width, height, low threshold for movement, high threshold for movement);
     
     //setup camera starting position
@@ -122,8 +121,20 @@ void lanscapes::update(){
         mainMesh.save();
         previousHour = hour;
     }
-    processImage.update();
+    
+    
+    float b = gui.getBrightness();
+    float c = gui.getContrast();
+    float e  = gui.getExtrusion();
+    float a = gui.getAlpha();
+    
+    extrusionAmount=e;
+    cout<<extrusionAmount<<endl;
+    
+    processImage.update(b,c,a);
     gui.update();
+    
+    
 }
 
 //--------------------------------------------------------------
