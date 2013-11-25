@@ -30,14 +30,16 @@ public:
     float getExtrusion();
     float getAlpha();
     int getX();
-    void mousePressed();
-    
+    bool isWireOn();
     ofParameter<float> brightness;
     ofParameter<float> contrast;
     ofParameter<float> alphaValue;
 	ofParameter<float> extrusion;
     ofParameter<int> rot_x;
     
+	ofxToggle wireframe;
+
+
     float b,c,e,g;
     int x;
 

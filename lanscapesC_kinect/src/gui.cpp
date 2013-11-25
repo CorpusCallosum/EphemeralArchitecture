@@ -21,8 +21,12 @@ void gui::setup(){
     gui_panel.add(extrusion.set("extrusion", 65, 0, 500));
     gui_panel.add(alphaValue.set("alphaValue", 0.05, 0.01, 0.1));
     gui_panel.add(rot_x.set("rot_x", -20,-360,360));
+    gui_panel.add(wireframe.setup("wireframe", true));
+
+
     
     bHide = false;
+    
 }
 
 
@@ -55,4 +59,7 @@ int gui::getX(){
     return rot_x;
 }
 
+bool gui::isWireOn(){
+    return wireframe;
+}
 
