@@ -21,8 +21,8 @@ void lanscapes::setup(){
     //setup vars default values
     //PRESS B TO CAPTURE BACKGROUND//
     fullscreen = false; // f 
-    bDrawVideo = false;  // v
-    bWireframe = true;  // w draw wireframe mesh
+    bDrawVideo = gui.drawVideo();  // v
+    bWireframe = gui.isWireOn();  // w draw wireframe mesh
     bFaces = true;      // e draw faces of main mesh
     //Set this to FALSE to use webcam
     useKinect = false;
