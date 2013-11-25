@@ -148,6 +148,7 @@ void lanscapes::update(){
     
     //wireframe
     bWireframe = gui.isWireOn();
+    bDrawVideo = gui.drawVideo();
     
 }
 

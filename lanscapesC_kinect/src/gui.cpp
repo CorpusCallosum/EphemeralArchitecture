@@ -22,6 +22,7 @@ void gui::setup(){
     gui_panel.add(alphaValue.set("alphaValue", 0.05, 0.01, 0.1));
     gui_panel.add(rot_x.set("rot_x", -20,-360,360));
     gui_panel.add(wireframe.setup("wireframe", true));
+    gui_panel.add(video.setup("vdieo", false));
 
 
     
@@ -63,3 +64,7 @@ bool gui::isWireOn(){
     return wireframe;
 }
 
+bool gui::drawVideo(){
+    
+    return video;
+}

@@ -31,6 +31,7 @@ public:
     float getAlpha();
     int getX();
     bool isWireOn();
+    bool drawVideo();
     ofParameter<float> brightness;
     ofParameter<float> contrast;
     ofParameter<float> alphaValue;
@@ -38,6 +39,8 @@ public:
     ofParameter<int> rot_x;
     
 	ofxToggle wireframe;
+    ofxToggle video;
+
 
 
     float b,c,e,g;
