@@ -11,7 +11,6 @@
 
 #include "ofMain.h"
 #include "ofxOpenCv.h"
-#include "gui.h"
 
 class processImage : public ofBaseApp {
     
@@ -30,7 +29,7 @@ public:
     //variables
     
     int                     imgWidth, imgHeight;
-    int                     moveThreshLow, moveThreshHigh;
+    int                     moveThreshLow, flickerThreshold;
     ofxCvGrayscaleImage     kinectSource;
     ofxCvGrayscaleImage     modifiedImage;
     ofxCvGrayscaleImage     backgroundImage;
@@ -43,7 +42,6 @@ public:
     vector <int>            difference;
     
     float                   _brightness, _contrast, alphaAmount;
-    gui                     gui;
     
 private:
     

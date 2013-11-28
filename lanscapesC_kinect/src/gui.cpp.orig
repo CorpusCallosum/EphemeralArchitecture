@@ -16,17 +16,23 @@ void gui::setup(){
     
     gui_panel.setup();
     
+<<<<<<< HEAD
     gui_panel.add(brightness.set("brightness", 0.2, 0.0, 1));
     gui_panel.add(contrast.set("contrast", 0.2 , 0.0, 1));
     gui_panel.add(extrusion.set("extrusion", 65, 0, 500));
     gui_panel.add(alphaValue.set("alphaValue", 0.05, 0.01, 0.1));
     gui_panel.add(rot_x.set("rot_x", -20,-360,360));
-    gui_panel.add(wireframe.setup("wireframe", true));
-
-
     
+=======
+    gui_panel.add(brightness.set("brightness", 0.1, 0.0, 1));
+    gui_panel.add(contrast.set("contrast", 0.1 , 0.0, 1));
+    gui_panel.add(extrusion.set("extrusion", 80, 0, 500));
+    gui_panel.add(alphaValue.set("alphaValue", 0.02, 0.01, 0.1));
+    gui_panel.add(rot_x.set("rot_x", -140,-360,360));
+    //gui_panel.add(buttonTest.setup(");
+
+>>>>>>> f8691df76c44fb8ef5782f2107049847aa8a6786
     bHide = false;
-    
 }
 
 
@@ -59,7 +65,4 @@ int gui::getX(){
     return rot_x;
 }
 
-bool gui::isWireOn(){
-    return wireframe;
-}
 

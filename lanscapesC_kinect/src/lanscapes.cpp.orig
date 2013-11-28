@@ -21,7 +21,7 @@ void lanscapes::setup(){
     //setup vars default values
     //PRESS B TO CAPTURE BACKGROUND//
     fullscreen = false; // f 
-    bDrawVideo = false;  // v
+    bDrawVideo = true;  // v
     bWireframe = true;  // w draw wireframe mesh
     bFaces = true;      // e draw faces of main mesh
     //Set this to FALSE to use webcam
@@ -106,6 +106,10 @@ void lanscapes::update(){
             
             // load grayscale depth image from the kinect source
             kinectImage.setFromPixels( kinect.getDepthPixels(), kinect.width, kinect.height);
+<<<<<<< HEAD
+            //            kinectImage.resize( width, height );
+=======
+>>>>>>> f8691df76c44fb8ef5782f2107049847aa8a6786
             modifiedImage = processImage.getProcessedImage( kinectImage, background );
             
             mainMesh.update( modifiedImage , extrusionAmount);
@@ -144,10 +148,8 @@ void lanscapes::update(){
     float a = gui.getAlpha();
     rotX = gui.getX();
     
-    processImage.update(b,c,a);
-    
-    //wireframe
-    bWireframe = gui.isWireOn();
+    processImage.update( b, c, a );
+    gui.update();
     
 }
 

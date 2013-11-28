@@ -79,7 +79,7 @@ vector<ofColor> currentColor::getCurrentColor( ofxCvGrayscaleImage img) {
     unsigned char * meshPix = meshImage.getPixels();
     unsigned char * lastPix = lastMeshImage.getPixels();
     for ( int i = 0; i < width * height; i ++ ) {
-        if ( abs( meshPix[ i ] - lastPix[ i ] ) > 1 ) {
+        if ( abs( meshPix[ i ] - lastPix[ i ] ) > 0 ) {
             colorGrid [ i ] = currentColor;
         }
     }
