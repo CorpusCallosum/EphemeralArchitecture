@@ -65,6 +65,5 @@ bool gui::isWireOn(){
 }
 
 bool gui::drawVideo(){
-    
     return video;
 }
