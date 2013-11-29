@@ -3,44 +3,47 @@
 
 //--------------------------------------------------------------
 void lanscapes::setup(){
+    //load settings xml data file
+    //-----------
+	//the string is printed at the top of the app
+	//to give the user some feedback
+	message = "loading settings.xml";
     
-<<<<<<< HEAD
-    fullscreen = false; //"f"
-    bDrawVideo = true;  // "v"
-    bWireframe = true; // "w"
-    bFaces = true;     // "e"
-    useKinect = true;
-=======
+	//we load our settings file
+	//if it doesn't exist we can still make one
+	//by hitting the 's' key
+	if( XML.loadFile("settings.xml") ){
+		message = "settings.xml loaded!";
+	}else{
+		message = "unable to load settings.xml check data/ folder";
+	}
+    
     //setup vars default values
-    fullscreen = false;
-    bDrawVideo = true;
-    bWireframe = false;  //draw wireframe of main mesh?
-    bFaces = true;      //draw faces of main mesh?
+    //PRESS B TO CAPTURE BACKGROUND//
+    fullscreen = false; // f 
+    bDrawVideo = true;  // v
+    bWireframe = true;  // w draw wireframe mesh
+    bFaces = true;      // e draw faces of main mesh
     //Set this to FALSE to use webcam
     useKinect = false;
->>>>>>> d46db5276d785e8a7fc735d937ac9038511dc2ce
     
-    rotX = -240;
+    
+    rotX = gui.getX();
     rotY = 0;
     rotZ = 0;
     transX = 0;
-    transY = -15;
+    transY = -75;
     transZ = 90;
     
-<<<<<<< HEAD
-    width =  320 / 2;
-    height = 240 / 2;
-    extrusionAmount = 200.0 / 2;
-=======
-    width = 320/2;
-    height = 240/2;
-    extrusionAmount = 200.0;
->>>>>>> d46db5276d785e8a7fc735d937ac9038511dc2ce
+    width =  640;
+    height = 480;
+    extrusionAmount = gui.getExtrusion();
     
     previousHour = ofGetHours();
+    gui.setup();
+
     
     if ( useKinect ) {
-        //kinect.setRegistration(false);
         kinect.init( false, false );
         kinect.open();		// opens first available kinect
     }
@@ -55,19 +58,36 @@ void lanscapes::setup(){
     kinectImage.allocate( kinect.width, kinect.height );
     
     snapShot.allocate( width, height, OF_IMAGE_GRAYSCALE );
-    background.allocate( width, height, OF_IMAGE_GRAYSCALE );
-    background.loadImage( "background.jpg" );
+    background.allocate( width, height );
+    snapShot.loadImage( "background.jpg" );
+    snapShotPix = snapShot.getPixels();
+    background.setFromPixels( snapShotPix, width, height );
     
     modifiedImage.setFromPixels( background.getPixels(), width, height );
     
     
-    mainMesh.setup( width, height, extrusionAmount, true, true );// ( width, height, extrusion amount, draw wireframe, draw faces );
+    mainMesh.setup( 64, 48, extrusionAmount, true, true );// ( width, height, extrusion amount, draw wireframe, draw faces );
+    processImage.setup( width, height, 10, 10, modifiedImage ); // (width, height, low threshold for movement, flicker);
     
-    processImage.setup( width, height, 2, 30, modifiedImage ); // (width, height, low threshold for movement, high threshold for movement);
+    mainMesh.zOffset = XML.getValue("zOffset", 0);
+    mainMesh.wireframeBrightness = XML.getValue("wireframe:brightness", 255);
+    mainMesh.wireframeSaturation = XML.getValue("wireframe:saturation", 100);
+
     
-    
-    gui.setup();
+    //setup camera starting position
+    //move the camera around the mesh
+	ofVec3f camDirection( 0, 0, 1 );
+	ofVec3f centre( width / 2.f, height / 2.f, 128 / 2.f );
+    camDirectionRotated = camDirection.rotated( rotX, rotY, rotZ );
+	ofVec3f camPosition = centre + camDirectionRotated * extrusionAmount;
+    camPosition += ofVec3f( transX, transY, transZ );
 	
+	cam.setPosition( camPosition );
+	cam.lookAt( centre + ofVec3f( 0, -35, 0 ));
+    
+    // this sets the camera's distance from the object
+	cam.setDistance(100);
+    cam.disableMouseInput();
 }
 
 //--------------------------------------------------------------
@@ -86,10 +106,13 @@ void lanscapes::update(){
             
             // load grayscale depth image from the kinect source
             kinectImage.setFromPixels( kinect.getDepthPixels(), kinect.width, kinect.height);
-            kinectImage.resize( width, height );
-            modifiedImage = processImage.getProcessedImage( kinectImage );
+<<<<<<< HEAD
+            //            kinectImage.resize( width, height );
+=======
+>>>>>>> f8691df76c44fb8ef5782f2107049847aa8a6786
+            modifiedImage = processImage.getProcessedImage( kinectImage, background );
             
-            mainMesh.update( modifiedImage );
+            mainMesh.update( modifiedImage , extrusionAmount);
             //kinectImage.flagImageChanged();
             
         }
@@ -104,23 +127,12 @@ void lanscapes::update(){
             
             colorImg.setFromPixels( vidGrabber.getPixels(), width, height );
             grayImage = colorImg;
-            modifiedImage = processImage.getProcessedImage( grayImage );
-            mainMesh.update( modifiedImage );
+            modifiedImage = processImage.getProcessedImage( grayImage, background );
+            mainMesh.update( modifiedImage , extrusionAmount);
             
         }
     }
 
-    gui.update();
-	
-	//move the camera around the mesh
-	ofVec3f camDirection( 0, 0, 1 );
-	ofVec3f centre( width / 2.f, height / 2.f, 255 / 2.f );
-    ofVec3f camDirectionRotated = camDirection.rotated( rotX, rotY, rotZ );
-	ofVec3f camPosition = centre + camDirectionRotated * extrusionAmount;
-    camPosition += ofVec3f( transX, transY, transZ );
-	
-	cam.setPosition( camPosition );
-	cam.lookAt( centre + ofVec3f( 0, -70, 0 ));
     
     //SAVE the mesh every hour
     int hour = ofGetHours();
@@ -128,6 +140,17 @@ void lanscapes::update(){
         mainMesh.save();
         previousHour = hour;
     }
+    
+    //get  data from gui
+    float b = gui.getBrightness();
+    float c = gui.getContrast();
+    extrusionAmount  = gui.getExtrusion();
+    float a = gui.getAlpha();
+    rotX = gui.getX();
+    
+    processImage.update( b, c, a );
+    gui.update();
+    
 }
 
 //--------------------------------------------------------------
@@ -140,26 +163,31 @@ void lanscapes::draw(){
     if ( bDrawVideo ) {
         
         if ( useKinect ) {
-            kinectImage.draw( 20, 20 );
-            modifiedImage.draw( 320, 20 );
+            kinectImage.draw( 20, 20, 320, 240 );
+            modifiedImage.draw( 20 + 320, 20, 320, 240 );
+            background.draw( 20 + 2 * 320, 20, 320, 240 );
         }
         
         else {
             
-            colorImg.draw( 20, 20);
-            grayImage.draw( 320, 20);
-            modifiedImage.draw( 700, 20 );
+            colorImg.draw( 20, 20, 320, 240 );
+            grayImage.draw( 20 + 320, 20, 320, 240 );
+            modifiedImage.draw( 20 + 2 * 320, 20, 320, 240 );
+            background.draw( 20 + 3 * 320, 20, 320, 240 );
             
         }
         
                 
     }
     
-   	
+    gui.draw();
+
 	//but we want to enable it to show the mesh
 	ofEnableDepthTest();
     
 	cam.begin();
+    //rotate the camera
+    ofRotateX(rotX);
     mainMesh.draw( bWireframe, bFaces );
 	cam.end();
     
@@ -170,7 +198,6 @@ void lanscapes::draw(){
         string msg = "fps: " + ofToString(ofGetFrameRate(), 2);
         ofDrawBitmapString(msg, 10, 20);
     }
-    gui.draw();
 }
 
 //--------------------------------------------------------------
@@ -221,14 +248,6 @@ void lanscapes::keyPressed(int key){
             transY -= 10;
             break;
             
-        case '5':
-            transZ += 10;
-            break;
-            
-        case '6':
-            transZ -= 10;
-            break;
-            
         case '7':
             extrusionAmount += 10;
             break;
@@ -253,23 +272,57 @@ void lanscapes::keyPressed(int key){
             useKinect = !useKinect;
             break;
             
+        case 'g':
+            gui.bHide = !gui.bHide;
+            break;
+            
         case 'p':
             cout << "( transX, transY, transZ ): ( " << transX << ", " << transY << ", " << transZ << " )" << endl;
             cout << "( rotX, rotY, rotZ ): ( " << rotX << ", " << rotY << ", " << rotZ << " )" << endl;
-<<<<<<< HEAD
-            break;  
-            
-        case 'b':
-            unsigned char * snapShotPix = modifiedImage.getPixels();
-            snapShot.setFromPixels( snapShotPix, width, height, OF_IMAGE_GRAYSCALE );
-            snapShot.saveImage( "background.jpg" );
-            break;
-=======
+            cout << "( yOffset, zOffset ): ( " << mainMesh.yOffset << ", " << mainMesh.zOffset << " )" << endl;
+			break;
         case 's':
             //save the mesh and color data
             mainMesh.save();
->>>>>>> d46db5276d785e8a7fc735d937ac9038511dc2ce
+			break;
+		case 'b':
+            if ( useKinect ) {
+                snapShotPix = kinectImage.getPixels();
+            }
+            else {
+                snapShotPix = grayImage.getPixels();
+            }
+            snapShot.setFromPixels( snapShotPix, width, height, OF_IMAGE_GRAYSCALE );
+            snapShot.saveImage( "background.jpg" );
+            background.setFromPixels( snapShotPix, width, height );
+            break;
+        case OF_KEY_UP:
+            mainMesh.zOffset -= 1;
+            updateZOffset();
+            break;
+        case OF_KEY_DOWN:
+            mainMesh.zOffset += 1;
+            updateZOffset();
+            break;
+        case OF_KEY_LEFT:
+            mainMesh.yOffset += 1;
+            break;
+        case OF_KEY_RIGHT:
+            mainMesh.yOffset -= 1;
+            break;
+ 		case 'z':
+            XML.save("settings.xml");
+            break;
+
 	}
+    
 }
+
+void lanscapes::updateZOffset(){
+    //set xml
+    XML.setValue("zOffset", mainMesh.zOffset);
+}
+
+
 
 

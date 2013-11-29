@@ -13,7 +13,8 @@ void meshGenerator::setup( int w, int h, float extrusion, bool wireframe, bool f
 
     width = w;
     height = h;
-    zOffset = 0;
+    zOffset = -4;
+    yOffset = -23;
     
     colorGrid.resize( width * height );
     
@@ -56,7 +57,7 @@ void meshGenerator::setup( int w, int h, float extrusion, bool wireframe, bool f
 }
 
 //--------------------------------------------------------------
-ofVboMesh meshGenerator::update( ofxCvGrayscaleImage img ){
+ofVboMesh meshGenerator::update( ofxCvGrayscaleImage img, float extrusion ){
     img.resize(width, height);
     meshImage = img;
     
@@ -72,6 +73,7 @@ ofVboMesh meshGenerator::update( ofxCvGrayscaleImage img ){
         //now we get the vertex at this position
         //we extrude the mesh based on it's brightness
         ofVec3f tmpVec = mainMesh.getVertex( i );
+        extrusionAmount = extrusion;
         tmpVec.z = b * extrusionAmount;
         
         mainMesh.setVertex( i, tmpVec );
@@ -82,8 +84,8 @@ ofVboMesh meshGenerator::update( ofxCvGrayscaleImage img ){
         mainMesh.setColor( i, c );
         
         //set the wireframe color
-        c.setBrightness(255);
-       // c.setSaturation(100);
+        c.setBrightness(wireframeBrightness);
+        c.setSaturation(wireframeSaturation);
         wireframeMesh.setColor(i, c);
         
     
@@ -95,7 +97,7 @@ ofVboMesh meshGenerator::update( ofxCvGrayscaleImage img ){
 //--------------------------------------------------------------
 void meshGenerator::draw( bool wireframe, bool faces ) {
     
-    ofTranslate(-width/2, -height/2, zOffset);
+    ofTranslate(-width/2, -height/2 + yOffset, zOffset);
     
     bDrawWireframe = wireframe;
     bDrawFaces = faces;
@@ -117,10 +119,7 @@ void meshGenerator::save(){
     mainMesh.save("export/"+ofGetTimestampString()+".ply");
 }
 
-//get/set
-void meshGenerator::setZOffset(int z) {
-    zOffset = z;
-}
+
 
 
 

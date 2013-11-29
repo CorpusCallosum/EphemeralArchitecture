@@ -14,12 +14,12 @@ processImage::processImage()
     
 }
 
-void processImage::setup( int w, int h, int low, int high, ofxCvGrayscaleImage background ) {
+void processImage::setup( int w, int h, int low, int flicker, ofxCvGrayscaleImage background ) {
     
     imgWidth = w;
     imgHeight = h;
     moveThreshLow = low;
-    moveThreshHigh = high;
+    flickerThreshold = flicker;
     kinectSource.allocate( imgWidth, imgHeight );
     kinectSource.set( 0.0 );//initialize all pixels black
     modifiedImage.allocate( imgWidth, imgHeight );
@@ -28,20 +28,15 @@ void processImage::setup( int w, int h, int low, int high, ofxCvGrayscaleImage b
     backgroundPixels = background.getPixels();
     difference.resize( imgWidth * imgHeight );
     
-    alphaAmount = .02;
-    
-    _contrast = 0.0;
-    
-    _brightness=gui.getBrightness();
-    //cout<< _brightness << endl;
+   
     
     
 }
 
-void processImage::update(){
-    _brightness = gui.getBrightness();
-    cout<< _brightness << endl;
-    
+void processImage::update(float _b, float _c, float _a){
+    _brightness = _b;
+    _contrast = _c;
+    alphaAmount = _a;
    
     
 }
@@ -53,23 +48,30 @@ ofxCvGrayscaleImage processImage::getProcessedImage( ofxCvGrayscaleImage img, of
     
     kinectSource = img;
     //kinectSource.mirror( true, true ); // mirror( bool bFlipVertically, bool bFlipHorizontally )
-    //kinectSource.brightnessContrast( _brightness, _contrast );
+    kinectSource.brightnessContrast( _brightness, _contrast );
+    kinectSource.blurGaussian( 3 );
     sourcePixels = kinectSource.getPixels();
     
     modifiedPixels = modifiedImage.getPixels();
     
     //background.mirror( true, true ); // mirror( bool bFlipVertically, bool bFlipHorizontally )
-    //background.brightnessContrast( _brightness, _contrast );
+    background.brightnessContrast( _brightness, _contrast );
+    background.blurGaussian( 3 );
     backgroundPixels = background.getPixels();
 
-        
+    float add;
     for ( int i = 0; i < imgWidth; i ++ ) {
         for ( int j = 0; j < imgHeight; j ++ ) {
             int loc = i + j * imgWidth;
             difference[ loc ] = sourcePixels[ loc ] - modifiedPixels[ loc ];
-            if ( abs( sourcePixels[ loc ] - backgroundPixels[ loc ] ) > moveThreshLow ) { //if the incoming pixel is different enough from the background image
+            if ( abs( sourcePixels[ loc ] - backgroundPixels[ loc ] ) > moveThreshLow && sourcePixels[ loc ] > flickerThreshold ) { //if the incoming pixel is different enough from the background image
                 difference[ loc ] = sourcePixels[ loc ] - modifiedPixels[ loc ];
-                float add = difference[ loc ] * alphaAmount;
+                if ( difference[ loc ] < 0 ) {
+                    add = difference[ loc ] * 0.08;
+                }
+                else{
+                    add = difference[ loc ] * alphaAmount;
+                }
                 float modifiedPixel = modifiedPixels[ loc ];
                 if ( add + modifiedPixel > 255.0 )
                     modifiedPixels[ loc ] = 255;
