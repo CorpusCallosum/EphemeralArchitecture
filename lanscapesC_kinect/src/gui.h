@@ -22,7 +22,7 @@ class gui :  public ofBaseApp{
 public:
     void setup();
     void draw();    
-	bool bHide; //hide or show gui
+	bool hidden; //hide or show gui
     //set the initial gui parameters
     void setBrightness(float);
     void setContrast(float);
@@ -31,7 +31,8 @@ public:
     void setRotX(int);
     void setzOffset(int);
     void setyOffset(int);
-
+    void hide();
+    void show();
 
     ofxPanel gui_panel;//initialize the gui panel
     

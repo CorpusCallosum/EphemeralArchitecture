@@ -1,12 +1,13 @@
-<brightness>0.239999995</brightness>
-<contrast>0.294999987</contrast>
-<extrusion>65.000000000</extrusion>
-<growthFactor>0.05</growthFactor>
-<zOffset>-14</zOffset>
-<wireframe>
-    <brightness>255</brightness>
-    <saturation>150</saturation>
-</wireframe>
-<AlphaValue>0.070300005</AlphaValue>
-<rot_x>-165</rot_x>
-<yOffset>-12</yOffset>
+<group>
+	<brightness>0.2</brightness>
+	<contrast>0.2</contrast>
+	<extrusion>25</extrusion>
+	<alphaValue>0.07705</alphaValue>
+	<rot_x>0</rot_x>
+	<zOffset>30</zOffset>
+	<yOffset>-12</yOffset>
+	<wireframe>1</wireframe>
+	<faces>1</faces>
+	<video>0</video>
+<group/>
+</group>

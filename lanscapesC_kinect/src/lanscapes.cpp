@@ -18,15 +18,17 @@ void lanscapes::setup(){
 		message = "unable to load settings.xml check data/ folder";
 	}
     
+    ofSetFullscreen( true );
+    
     //setup gui and initial values from xml
     gui.setup();
-    gui.setBrightness(XML.getValue("brightness", .2));
-    gui.setContrast(XML.getValue("contrast", .2));
-    gui.setExtrusion(XML.getValue("extrusion", .2));
-    gui.setAlphaValue(XML.getValue("AlphaValue", .2));
-    gui.setRotX(XML.getValue("rot_x", 20));
-    gui.setzOffset(XML.getValue("zOffset", 20));
-    gui.setyOffset(XML.getValue("yOffset", 20));
+    gui.setBrightness(XML.getValue("group:brightness", .2));
+    gui.setContrast(XML.getValue("group:contrast", .2));
+    gui.setExtrusion(XML.getValue("group:extrusion", .2));
+    gui.setAlphaValue(XML.getValue("group:AlphaValue", .2));
+    gui.setRotX(XML.getValue("group:rot_x", 20));
+    gui.setzOffset(XML.getValue("group:zOffset", 20));
+    gui.setyOffset(XML.getValue("group:yOffset", 20));
 
     
     
@@ -110,17 +112,8 @@ void lanscapes::setup(){
 
 //--------------------------------------------------------------
 void lanscapes::update(){
-    ofSetFullscreen( fullscreen );
-    if ( fullscreen && !gui.bHide) {
-        ofHideCursor();
-    }
-    else
-    {
-        ofShowCursor();
-    }
 
 	ofBackground( 0 );
-    
     
     if ( useKinect ) {
         kinect.update();
@@ -233,6 +226,7 @@ void lanscapes::keyPressed(int key){
 	switch (key){
 		case 'f':
 			fullscreen = !fullscreen;
+            ofSetFullscreen( fullscreen );
 			break;
             
         case '=':
@@ -300,7 +294,12 @@ void lanscapes::keyPressed(int key){
             break;
             
         case 'g':
-            gui.bHide = !gui.bHide;
+            if(gui.hidden){
+                gui.show();
+            }
+            else{
+                gui.hide();
+            }
             break;
             
         case 'p':
