@@ -18,26 +18,24 @@ void lanscapes::setup(){
 		message = "unable to load settings.xml check data/ folder";
 	}
     
+    ofSetFullscreen( true );
+    
     //setup gui and initial values from xml
     gui.setup();
-    gui.setBrightness(XML.getValue("brightness", .2));
-    gui.setContrast(XML.getValue("contrast", .2));
-    gui.setExtrusion(XML.getValue("extrusion", .2));
-    gui.setAlphaValue(XML.getValue("AlphaValue", .2));
-    gui.setRotX(XML.getValue("rot_x", 20));
-    gui.setzOffset(XML.getValue("zOffset", 20));
-    gui.setyOffset(XML.getValue("yOffset", 20));
+    gui.setBrightness(XML.getValue("group:brightness", .2));
+    gui.setContrast(XML.getValue("group:contrast", .2));
+    gui.setExtrusion(XML.getValue("group:extrusion", .2));
+    gui.setAlphaValue(XML.getValue("group:AlphaValue", .2));
+    gui.setRotX(XML.getValue("group:rot_x", 20));
+    gui.setzOffset(XML.getValue("group:zOffset", 20));
+    gui.setyOffset(XML.getValue("group:yOffset", 20));
 
     
     
     
     //setup vars default values
     //PRESS B TO CAPTURE BACKGROUND//
-<<<<<<< HEAD
-    fullscreen = false; // f
-=======
     fullscreen = true; // f
->>>>>>> 79de34f4aa1957ca2146438ef0ebf59ce3b807a6
     bDrawVideo = gui.drawVideo();  // v , should be false
     bWireframe = gui.isWireOn();  // w draw wireframe mesh, should be true
     bFaces = gui.drawFaces();// true;      // e draw faces of main mesh
@@ -58,12 +56,8 @@ void lanscapes::setup(){
     extrusionAmount = gui.getExtrusion();
     
     previousHour = ofGetHours();
-<<<<<<< HEAD
-    gui.setup();
-    
-=======
 
->>>>>>> 79de34f4aa1957ca2146438ef0ebf59ce3b807a6
+    
     
     if ( useKinect ) {
         kinect.init( false, false );
@@ -119,26 +113,14 @@ void lanscapes::setup(){
 
 //----------------------------------------------------------
 void lanscapes::update(){
-    ofSetFullscreen( fullscreen );
-<<<<<<< HEAD
-    
-    if ( fullscreen ) {
-        ofHideCursor();
-    }
-=======
-    if ( fullscreen && !gui.bHide) {
-        ofHideCursor();
-    }
-    else
-    {
-        ofShowCursor();
-    }
 
 	ofBackground( 0 );
->>>>>>> 79de34f4aa1957ca2146438ef0ebf59ce3b807a6
     
+<<<<<<< HEAD
     ofBackground( 0 );
     
+=======
+>>>>>>> 676adc79974fd16249786383dff3cd744d756273
     if ( useKinect ) {
         kinect.update();
         if(kinect.isFrameNew()) {
@@ -246,6 +228,7 @@ void lanscapes::keyPressed(int key){
 	switch (key){
             case 'f':
 			fullscreen = !fullscreen;
+            ofSetFullscreen( fullscreen );
 			break;
             
             case '=':
@@ -312,8 +295,18 @@ void lanscapes::keyPressed(int key){
             useKinect = !useKinect;
             break;
             
+<<<<<<< HEAD
             case 'g':
             gui.bHide = !gui.bHide;
+=======
+        case 'g':
+            if(gui.hidden){
+                gui.show();
+            }
+            else{
+                gui.hide();
+            }
+>>>>>>> 676adc79974fd16249786383dff3cd744d756273
             break;
             
             case 'p':
@@ -348,13 +341,8 @@ void lanscapes::keyPressed(int key){
             case OF_KEY_RIGHT:
             mainMesh.yOffset -= 1;
             break;
-<<<<<<< HEAD
-            case 'z':
-            XML.save("settings.xml");
-=======
  		case 'x':
             saveXML();
->>>>>>> 79de34f4aa1957ca2146438ef0ebf59ce3b807a6
             break;
             
 	}

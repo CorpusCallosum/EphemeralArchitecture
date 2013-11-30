@@ -27,8 +27,8 @@ void gui::setup(){
     gui_panel.add(faces.setup("faces", true));
     gui_panel.add(video.setup("video", false));
     
-    bHide = false;
-    
+    hidden = true;
+    ofHideCursor();
 }
 
 //set the parameters
@@ -54,9 +54,19 @@ void gui::setzOffset(int z){
 }
 
 void gui::draw(){
-    if(bHide){
+    if(!hidden){
         gui_panel.draw();
     }
+}
+
+void gui::show(){
+    ofShowCursor();
+    hidden = false;
+}
+
+void gui::hide(){
+    ofHideCursor();
+    hidden = true;
 }
 
 float gui::getBrightness(){
