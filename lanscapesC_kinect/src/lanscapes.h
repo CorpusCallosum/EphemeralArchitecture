@@ -19,6 +19,7 @@ public:
     void draw();
     void keyPressed( int );
     void updateZOffset();
+    void saveXML();
     
     
     ofVideoGrabber          vidGrabber;

@@ -1,12 +1,13 @@
-<group>
-    <brightness>0.2</brightness>
-    <contrast>0.2</contrast>
-    <extrusion>200</extrusion>
-    <growthFactor>0.05</growthFactor>
-    <group />
-</group>
-<zOffset>-50</zOffset>
+<brightness>0.239999995</brightness>
+<contrast>0.294999987</contrast>
+<extrusion>65.000000000</extrusion>
+<growthFactor>0.05</growthFactor>
+<zOffset>-20</zOffset>
 <wireframe>
     <brightness>255</brightness>
     <saturation>150</saturation>
 </wireframe>
+<AlphaValue>0.045100003</AlphaValue>
+<rot_x>-25</rot_x>
+<zOff>-36</zOff>
+<yOff>-18</yOff>

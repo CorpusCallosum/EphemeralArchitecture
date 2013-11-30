@@ -18,6 +18,19 @@ void lanscapes::setup(){
 		message = "unable to load settings.xml check data/ folder";
 	}
     
+    //setup gui and initial values from xml
+    gui.setup();
+    gui.setBrightness(XML.getValue("brightness", .2));
+    gui.setBrightness(XML.getValue("contrast", .2));
+    gui.setBrightness(XML.getValue("extrusion", .2));
+    gui.setBrightness(XML.getValue("alphaValue", .2));
+    gui.setBrightness(XML.getValue("rot_x", 20));
+    gui.setBrightness(XML.getValue("zOff", 20));
+    gui.setBrightness(XML.getValue("yOff", 20));
+
+    
+    
+    
     //setup vars default values
     //PRESS B TO CAPTURE BACKGROUND//
     fullscreen = true; // f
@@ -40,7 +53,6 @@ void lanscapes::setup(){
     extrusionAmount = gui.getExtrusion();
     
     previousHour = ofGetHours();
-    gui.setup();
 
     
     if ( useKinect ) {
@@ -324,8 +336,8 @@ void lanscapes::keyPressed(int key){
         case OF_KEY_RIGHT:
             mainMesh.yOffset -= 1;
             break;
- 		case 'z':
-            XML.save("settings.xml");
+ 		case 'x':
+            saveXML();
             break;
 
 	}
@@ -335,6 +347,20 @@ void lanscapes::keyPressed(int key){
 void lanscapes::updateZOffset(){
     //set xml
     XML.setValue("zOffset", mainMesh.zOffset);
+}
+
+void lanscapes::saveXML(){
+    XML.setValue("brightness", gui.getBrightness());
+    XML.setValue("contrast", gui.getContrast());
+    XML.setValue("extrusion", gui.getExtrusion());
+    XML.setValue("AlphaValue", gui.getAlpha());
+    XML.setValue("rot_x", gui.getX());
+    XML.setValue("zOff", gui.getzOff());
+    XML.setValue("yOff", gui.getyOff());
+
+
+   // XML.setValue("zOffset", mainMesh.zOffset);
+    XML.save("settings.xml");
 }
 
 

@@ -16,7 +16,7 @@ void gui::setup(){
     
     gui_panel.setup();
     
-    gui_panel.add(brightness.set("brightness", 0.2, 0.0, 1));
+    gui_panel.add(brightness.set("brightness", 0.3, 0.0, 1));
     gui_panel.add(contrast.set("contrast", 0.2 , 0.0, 1));
     gui_panel.add(extrusion.set("extrusion", 65, 0, 500));
     gui_panel.add(alphaValue.set("alphaValue", 0.05, 0.01, 0.1));
@@ -27,14 +27,31 @@ void gui::setup(){
     gui_panel.add(faces.setup("faces", true));
     gui_panel.add(video.setup("video", false));
     
-
-
-
-    
     bHide = false;
     
 }
 
+//set the parameters
+void gui::setBrightness(float b){
+    brightness.set(b);
+}
+void gui::setContrast(float c){
+    contrast.set(c);
+}
+void gui::setExtrusion(float e){
+    extrusion.set(e);
+}
+void gui::setAlphaValue(float a){
+    alphaValue.set(a);
+}
+void gui::setRotX(int r){
+    rot_x.set(r);
+}
+void gui::setzOff(int z){
+    zOff.set(z);
+}void gui::setyOff(int y){
+    yOff.set(y);
+}
 
 void gui::draw(){
     if(bHide){
