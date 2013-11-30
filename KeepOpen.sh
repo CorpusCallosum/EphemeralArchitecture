@@ -1,8 +1,8 @@
 #!/bin/sh
 if [ $(ps ax | grep -v grep | grep "LANscapesDebug.app" | wc -l) -eq 0 ]
 then
-       echo "LANscalpes not running. opening..."
-       open /Applications/LANscapesDebug.app
+echo "landscapes not running. opening…"
+open /Users/AndreaMacMini/Documents/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapesC_kinect/bin/LANscapesDebug.app
 else
-    echo "LANscapes running"
+echo "LANscapes running"
 fi

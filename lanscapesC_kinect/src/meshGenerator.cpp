@@ -74,8 +74,8 @@ ofVboMesh meshGenerator::update( ofxCvGrayscaleImage img, float extrusion ){
         //we extrude the mesh based on it's brightness
         ofVec3f tmpVec = mainMesh.getVertex( i );
         extrusionAmount = extrusion;
-        tmpVec.z = b * extrusionAmount;
-        
+        //extrude using negative value to pull the mesh UP
+        tmpVec.z = -b * extrusionAmount;
         mainMesh.setVertex( i, tmpVec );
         wireframeMesh.setVertex( i, tmpVec );
         
