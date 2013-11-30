@@ -18,17 +18,31 @@ void lanscapes::setup(){
 		message = "unable to load settings.xml check data/ folder";
 	}
     
+    //setup gui and initial values from xml
+    gui.setup();
+    gui.setBrightness(XML.getValue("brightness", .2));
+    gui.setContrast(XML.getValue("contrast", .2));
+    gui.setExtrusion(XML.getValue("extrusion", .2));
+    gui.setAlphaValue(XML.getValue("AlphaValue", .2));
+    gui.setRotX(XML.getValue("rot_x", 20));
+    gui.setzOffset(XML.getValue("zOffset", 20));
+    gui.setyOffset(XML.getValue("yOffset", 20));
+
+    
+    
+    
     //setup vars default values
     //PRESS B TO CAPTURE BACKGROUND//
-    fullscreen = false; // f
+    fullscreen = true; // f
     bDrawVideo = gui.drawVideo();  // v , should be false
     bWireframe = gui.isWireOn();  // w draw wireframe mesh, should be true
-    bFaces = true;      // e draw faces of main mesh
+    bFaces = gui.drawFaces();// true;      // e draw faces of main mesh
     //Set this to FALSE to use webcam
     useKinect = true;
     
     
-    rotX = gui.getX();
+    rotX = gui.getX();//set RotX value from the gui
+    
     rotY = 0;
     rotZ = 0;
     transX = 0;
@@ -40,7 +54,7 @@ void lanscapes::setup(){
     extrusionAmount = gui.getExtrusion();
     
     previousHour = ofGetHours();
-    gui.setup();
+
     
     
     if ( useKinect ) {
@@ -69,7 +83,12 @@ void lanscapes::setup(){
     mainMesh.setup( 64, 48, extrusionAmount, true, true );// ( width, height, extrusion amount, draw wireframe, draw faces );
     processImage.setup( width, height, 10, 10, modifiedImage ); // (width, height, low threshold for movement, flicker);
     
+    //set values from the xml file
     mainMesh.zOffset = XML.getValue("zOffset", 0);
+    mainMesh.yOffset = XML.getValue("yOffset", 0);
+
+    
+    
     mainMesh.wireframeBrightness = XML.getValue("wireframe:brightness", 255);
     mainMesh.wireframeSaturation = XML.getValue("wireframe:saturation", 100);
     
@@ -92,12 +111,16 @@ void lanscapes::setup(){
 
 //----------------------------------------------------------
 void lanscapes::update(){
-    
     ofSetFullscreen( fullscreen );
-    
-    if ( fullscreen ) {
+    if ( fullscreen && !gui.bHide) {
         ofHideCursor();
     }
+    else
+    {
+        ofShowCursor();
+    }
+
+	ofBackground( 0 );
     
     ofBackground( 0 );
     
@@ -146,6 +169,12 @@ void lanscapes::update(){
     //wireframe
     bWireframe = gui.isWireOn();
     bDrawVideo = gui.drawVideo();
+    bFaces = gui.drawFaces();//   e draw faces of main mesh
+    mainMesh.yOffset = gui.getyOffset();
+    mainMesh.zOffset = gui.getzOffset();
+
+
+
     
 }
 
@@ -294,11 +323,9 @@ void lanscapes::keyPressed(int key){
             break;
             case OF_KEY_UP:
             mainMesh.zOffset -= 1;
-            updateZOffset();
             break;
             case OF_KEY_DOWN:
             mainMesh.zOffset += 1;
-            updateZOffset();
             break;
             case OF_KEY_LEFT:
             mainMesh.yOffset += 1;
@@ -306,17 +333,26 @@ void lanscapes::keyPressed(int key){
             case OF_KEY_RIGHT:
             mainMesh.yOffset -= 1;
             break;
-            case 'z':
-            XML.save("settings.xml");
+ 		case 'x':
+            saveXML();
             break;
             
 	}
     
 }
 
-void lanscapes::updateZOffset(){
-    //set xml
-    XML.setValue("zOffset", mainMesh.zOffset);
+void lanscapes::saveXML(){
+    XML.setValue("brightness", gui.getBrightness());
+    XML.setValue("contrast", gui.getContrast());
+    XML.setValue("extrusion", gui.getExtrusion());
+    XML.setValue("AlphaValue", gui.getAlpha());
+    XML.setValue("rot_x", gui.getX());
+    XML.setValue("zOffset", gui.getzOffset());
+    XML.setValue("yOffset", gui.getyOffset());
+
+
+   // XML.setValue("zOffset", mainMesh.zOffset);
+    XML.save("settings.xml");
 }
 
 
