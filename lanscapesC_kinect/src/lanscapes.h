@@ -18,7 +18,6 @@ public:
     void update();
     void draw();
     void keyPressed( int );
-    void updateZOffset();
     void saveXML();
     
     

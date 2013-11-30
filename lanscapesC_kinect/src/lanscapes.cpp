@@ -23,7 +23,7 @@ void lanscapes::setup(){
     gui.setBrightness(XML.getValue("brightness", .2));
     gui.setContrast(XML.getValue("contrast", .2));
     gui.setExtrusion(XML.getValue("extrusion", .2));
-    gui.setAlphaValue(XML.getValue("alphaValue", .2));
+    gui.setAlphaValue(XML.getValue("AlphaValue", .2));
     gui.setRotX(XML.getValue("rot_x", 20));
     gui.setzOffset(XML.getValue("zOffset", 20));
     gui.setyOffset(XML.getValue("yOffset", 20));
@@ -326,11 +326,9 @@ void lanscapes::keyPressed(int key){
             break;
         case OF_KEY_UP:
             mainMesh.zOffset -= 1;
-            updateZOffset();
             break;
         case OF_KEY_DOWN:
             mainMesh.zOffset += 1;
-            updateZOffset();
             break;
         case OF_KEY_LEFT:
             mainMesh.yOffset += 1;
@@ -344,11 +342,6 @@ void lanscapes::keyPressed(int key){
 
 	}
     
-}
-
-void lanscapes::updateZOffset(){
-    //set xml
-    XML.setValue("zOffset", mainMesh.zOffset);
 }
 
 void lanscapes::saveXML(){
