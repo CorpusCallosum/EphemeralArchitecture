@@ -2,12 +2,13 @@
 <contrast>0.294999987</contrast>
 <extrusion>65.000000000</extrusion>
 <growthFactor>0.05</growthFactor>
-<zOffset>-20</zOffset>
+<zOffset>-12</zOffset>
 <wireframe>
     <brightness>255</brightness>
     <saturation>150</saturation>
 </wireframe>
-<AlphaValue>0.045100003</AlphaValue>
-<rot_x>-25</rot_x>
+<AlphaValue>0.200000003</AlphaValue>
+<rot_x>-32</rot_x>
 <zOff>-36</zOff>
 <yOff>-18</yOff>
+<yOffset>-12</yOffset>

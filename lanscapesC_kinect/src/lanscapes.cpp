@@ -21,12 +21,12 @@ void lanscapes::setup(){
     //setup gui and initial values from xml
     gui.setup();
     gui.setBrightness(XML.getValue("brightness", .2));
-    gui.setBrightness(XML.getValue("contrast", .2));
-    gui.setBrightness(XML.getValue("extrusion", .2));
-    gui.setBrightness(XML.getValue("alphaValue", .2));
-    gui.setBrightness(XML.getValue("rot_x", 20));
-    gui.setBrightness(XML.getValue("zOff", 20));
-    gui.setBrightness(XML.getValue("yOff", 20));
+    gui.setContrast(XML.getValue("contrast", .2));
+    gui.setExtrusion(XML.getValue("extrusion", .2));
+    gui.setAlphaValue(XML.getValue("alphaValue", .2));
+    gui.setRotX(XML.getValue("rot_x", 20));
+    gui.setzOffset(XML.getValue("zOffset", 20));
+    gui.setyOffset(XML.getValue("yOffset", 20));
 
     
     
@@ -41,7 +41,8 @@ void lanscapes::setup(){
     useKinect = false;
     
     
-    rotX = gui.getX();
+    rotX = gui.getX();//set RotX value from the gui
+    
     rotY = 0;
     rotZ = 0;
     transX = 0;
@@ -83,7 +84,8 @@ void lanscapes::setup(){
     
     //set values from the xml file
     mainMesh.zOffset = XML.getValue("zOffset", 0);
-    mainMesh.yOffset = gui.getyOff();
+    mainMesh.yOffset = XML.getValue("yOffset", 0);
+
     
     
     mainMesh.wireframeBrightness = XML.getValue("wireframe:brightness", 255);
@@ -171,8 +173,8 @@ void lanscapes::update(){
     bWireframe = gui.isWireOn();
     bDrawVideo = gui.drawVideo();
     bFaces = gui.drawFaces();//   e draw faces of main mesh
-    mainMesh.yOffset = gui.getyOff();
-    mainMesh.zOffset = gui.getzOff();
+    mainMesh.yOffset = gui.getyOffset();
+    mainMesh.zOffset = gui.getzOffset();
 
 
 
@@ -355,8 +357,8 @@ void lanscapes::saveXML(){
     XML.setValue("extrusion", gui.getExtrusion());
     XML.setValue("AlphaValue", gui.getAlpha());
     XML.setValue("rot_x", gui.getX());
-    XML.setValue("zOff", gui.getzOff());
-    XML.setValue("yOff", gui.getyOff());
+    XML.setValue("zOffset", gui.getzOffset());
+    XML.setValue("yOffset", gui.getyOffset());
 
 
    // XML.setValue("zOffset", mainMesh.zOffset);

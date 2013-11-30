@@ -29,8 +29,8 @@ public:
     void setExtrusion(float);
     void setAlphaValue(float);
     void setRotX(int);
-    void setzOff(int);
-    void setyOff(int);
+    void setzOffset(int);
+    void setyOffset(int);
 
 
     ofxPanel gui_panel;//initialize the gui panel
@@ -41,8 +41,8 @@ public:
     float getExtrusion();
     float getAlpha();
     int getX();
-    int getyOff();
-    int getzOff();
+    int getyOffset();
+    int getzOffset();
     bool isWireOn();
     bool drawVideo();
     bool drawFaces();
@@ -53,8 +53,8 @@ public:
     ofParameter<float> alphaValue;
 	ofParameter<float> extrusion;
     ofParameter<int> rot_x;
-    ofParameter<int> zOff;
-    ofParameter<int> yOff;
+    ofParameter<int> zOffset;
+    ofParameter<int> yOffset;
 
     
 	ofxToggle wireframe;
