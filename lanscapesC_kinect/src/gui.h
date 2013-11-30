@@ -30,16 +30,23 @@ public:
     float getExtrusion();
     float getAlpha();
     int getX();
+    int getyOff();
+    int getzOff();
     bool isWireOn();
     bool drawVideo();
+    bool drawFaces();
     ofParameter<float> brightness;
     ofParameter<float> contrast;
     ofParameter<float> alphaValue;
 	ofParameter<float> extrusion;
     ofParameter<int> rot_x;
+    ofParameter<int> zOff;
+    ofParameter<int> yOff;
+
     
 	ofxToggle wireframe;
     ofxToggle video;
+    ofxToggle faces;
 
 
 

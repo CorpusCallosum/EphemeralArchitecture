@@ -5,8 +5,8 @@
     <growthFactor>0.05</growthFactor>
     <group />
 </group>
-<zOffset>-23</zOffset>
+<zOffset>-50</zOffset>
 <wireframe>
-	<brightness>255</brightness>
-	<saturation>150</saturation>
+    <brightness>255</brightness>
+    <saturation>150</saturation>
 </wireframe>

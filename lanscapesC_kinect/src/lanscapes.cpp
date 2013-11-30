@@ -20,10 +20,10 @@ void lanscapes::setup(){
     
     //setup vars default values
     //PRESS B TO CAPTURE BACKGROUND//
-    fullscreen = false; // f 
+    fullscreen = true; // f
     bDrawVideo = gui.drawVideo();  // v , should be false
     bWireframe = gui.isWireOn();  // w draw wireframe mesh, should be true
-    bFaces = true;      // e draw faces of main mesh
+    bFaces = gui.drawFaces();// true;      // e draw faces of main mesh
     //Set this to FALSE to use webcam
     useKinect = false;
     
@@ -69,7 +69,11 @@ void lanscapes::setup(){
     mainMesh.setup( 64, 48, extrusionAmount, true, true );// ( width, height, extrusion amount, draw wireframe, draw faces );
     processImage.setup( width, height, 10, 10, modifiedImage ); // (width, height, low threshold for movement, flicker);
     
+    //set values from the xml file
     mainMesh.zOffset = XML.getValue("zOffset", 0);
+    mainMesh.yOffset = gui.getyOff();
+    
+    
     mainMesh.wireframeBrightness = XML.getValue("wireframe:brightness", 255);
     mainMesh.wireframeSaturation = XML.getValue("wireframe:saturation", 100);
 
@@ -92,11 +96,16 @@ void lanscapes::setup(){
 
 //--------------------------------------------------------------
 void lanscapes::update(){
-    
     ofSetFullscreen( fullscreen );
     if ( fullscreen ) {
+        if (!gui.bHide){
         ofHideCursor();
+        }
+        else{ofShowCursor();}
+
     }
+    else{ofShowCursor();}
+
 	ofBackground( 0 );
     
     
@@ -149,6 +158,12 @@ void lanscapes::update(){
     //wireframe
     bWireframe = gui.isWireOn();
     bDrawVideo = gui.drawVideo();
+    bFaces = gui.drawFaces();//   e draw faces of main mesh
+    mainMesh.yOffset = gui.getyOff();
+    mainMesh.zOffset = gui.getzOff();
+
+
+
     
 }
 
