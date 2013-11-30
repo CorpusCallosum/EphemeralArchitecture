@@ -111,14 +111,13 @@ void lanscapes::setup(){
 //--------------------------------------------------------------
 void lanscapes::update(){
     ofSetFullscreen( fullscreen );
-    if ( fullscreen ) {
-        if (!gui.bHide){
+    if ( fullscreen && !gui.bHide) {
         ofHideCursor();
-        }
-        else{ofShowCursor();}
-
     }
-    else{ofShowCursor();}
+    else
+    {
+        ofShowCursor();
+    }
 
 	ofBackground( 0 );
     
