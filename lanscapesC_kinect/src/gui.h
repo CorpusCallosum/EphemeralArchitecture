@@ -28,6 +28,8 @@ public:
     void setContrast(float);
     void setExtrusion(float);
     void setAlphaValue(float);
+    void setMovementThreshold(int);
+    void setFlickerThreshold(int);
     void setRotX(int);
     void setzOffset(int);
     void setyOffset(int);
@@ -41,18 +43,23 @@ public:
     float getContrast();
     float getExtrusion();
     float getAlpha();
+    int getMovementThreshold();
+    int getFlickerThreshold();
     int getX();
     int getyOffset();
     int getzOffset();
     bool isWireOn();
     bool drawVideo();
     bool drawFaces();
+    bool colorWireframe();
     
     //functions
     ofParameter<float> brightness;
     ofParameter<float> contrast;
     ofParameter<float> alphaValue;
 	ofParameter<float> extrusion;
+    ofParameter<int> movementThreshold;
+    ofParameter<int> flickerThreshold;
     ofParameter<int> rot_x;
     ofParameter<int> zOffset;
     ofParameter<int> yOffset;
@@ -61,6 +68,7 @@ public:
 	ofxToggle wireframe;
     ofxToggle video;
     ofxToggle faces;
+    ofxToggle bColorWireframe;
 
     
     

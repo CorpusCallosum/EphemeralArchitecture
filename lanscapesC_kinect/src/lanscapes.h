@@ -33,7 +33,7 @@ public:
     ofxCvGrayscaleImage     background;
     unsigned char *         snapShotPix;
     
-    bool                    fullscreen, bDrawVideo, bWireframe, bFaces;
+    bool                    fullscreen, bDrawVideo, bWireframe, bFaces, bColorWireframe;
     bool                    useKinect;
     
     float b,c,e,a;

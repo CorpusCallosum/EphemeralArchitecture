@@ -33,10 +33,12 @@ void processImage::setup( int w, int h, int low, int flicker, ofxCvGrayscaleImag
     
 }
 
-void processImage::update(float _b, float _c, float _a){
+void processImage::update(float _b, float _c, float _a, int m, int t){
     _brightness = _b;
     _contrast = _c;
     alphaAmount = _a;
+    moveThreshLow = m;
+    flickerThreshold = t;
    
     
 }
@@ -49,14 +51,18 @@ ofxCvGrayscaleImage processImage::getProcessedImage( ofxCvGrayscaleImage img, of
     kinectSource = img;
     //kinectSource.mirror( true, true ); // mirror( bool bFlipVertically, bool bFlipHorizontally )
     kinectSource.brightnessContrast( _brightness, _contrast );
-    kinectSource.blurGaussian( 3 );
+    //kinectSource.blurGaussian( 3 );
+    kinectSource.blur( 3 );
+    kinectSource.dilate();
     sourcePixels = kinectSource.getPixels();
     
     modifiedPixels = modifiedImage.getPixels();
     
     //background.mirror( true, true ); // mirror( bool bFlipVertically, bool bFlipHorizontally )
     background.brightnessContrast( _brightness, _contrast );
-    background.blurGaussian( 3 );
+    //background.blurGaussian( 3 );
+    background.blur( 3 );
+    background.dilate();
     backgroundPixels = background.getPixels();
 
     float add;

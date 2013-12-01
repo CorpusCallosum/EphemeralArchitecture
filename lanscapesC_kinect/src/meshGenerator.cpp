@@ -54,15 +54,37 @@ void meshGenerator::setup( int w, int h, float extrusion, bool wireframe, bool f
     
     //make a copy of this mesh
     wireframeMesh = mainMesh;
+    
+    noiseImage.allocate( width, height, OF_IMAGE_GRAYSCALE );
+    
 }
 
 //--------------------------------------------------------------
-ofVboMesh meshGenerator::update( ofxCvGrayscaleImage img, float extrusion ){
+ofVboMesh meshGenerator::update( ofxCvGrayscaleImage img, float extrusion, bool colorWireframe ){
     img.resize(width, height);
     meshImage = img;
+    bColorWireframe = colorWireframe;
     
     colorGrid = currentColor.getCurrentColor( meshImage );
-
+    
+    //perlin noise image update
+    for ( int y = 0; y < height; y ++ ) {
+        for ( int x = 0; x < width; x ++ ) {
+            
+            float a = x * .1;
+            float b = y * .1;
+            float c = ofGetFrameNum() / 20.0;
+            
+            float noise = ofNoise( a, b, c ) * 255;
+            float color = noise < 150  ? ofMap( noise, 0, 150, 150, 200 ) : 200;
+            
+            noiseImage.getPixels()[ y * width + x ] = color;
+        }
+    }
+    noiseImage.reloadTexture();
+    unsigned char * noisePixels = noiseImage.getPixels();
+    
+    
     //this determines how far we extrude the mesh
     for ( int i = 0; i < width * height; i ++ ) {
         
@@ -84,12 +106,20 @@ ofVboMesh meshGenerator::update( ofxCvGrayscaleImage img, float extrusion ){
         mainMesh.setColor( i, c );
         
         //set the wireframe color
-        c.setBrightness(wireframeBrightness);
-        c.setSaturation(wireframeSaturation);
-        wireframeMesh.setColor(i, c);
+        if ( bColorWireframe ) {
+            c.setBrightness(wireframeBrightness);
+            c.setSaturation(wireframeSaturation);
+            wireframeMesh.setColor(i, c);
+        }
+        else {
+            ofColor whiteNoise = noisePixels[ i ];
+            wireframeMesh.setColor( i, whiteNoise );
+        }
         
     
     }
+    
+    
     
     return mainMesh;
 }
