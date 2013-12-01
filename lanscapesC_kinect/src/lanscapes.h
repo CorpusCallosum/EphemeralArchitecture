@@ -27,7 +27,7 @@ public:
     ofxCvColorImage			colorImg;
     ofxCvGrayscaleImage 	grayImage;
     ofxCvGrayscaleImage     modifiedImage;
-    ofxCvGrayscaleImage     kinectImage;
+    ofxCvGrayscaleImage     kinectImage, croppedImg;
     
     ofImage                 snapShot;
     ofxCvGrayscaleImage     background;
