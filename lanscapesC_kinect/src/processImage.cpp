@@ -57,6 +57,7 @@ ofxCvGrayscaleImage processImage::getProcessedImage( ofxCvGrayscaleImage img, of
     //background.mirror( true, true ); // mirror( bool bFlipVertically, bool bFlipHorizontally )
     background.brightnessContrast( _brightness, _contrast );
     background.blurGaussian( 3 );
+    background.dilate();
     backgroundPixels = background.getPixels();
 
     float add;
