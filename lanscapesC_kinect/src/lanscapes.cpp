@@ -28,6 +28,7 @@ void lanscapes::setup(){
     gui.setAlphaValue(XML.getValue("group:AlphaValue", .2));
     gui.setRotX(XML.getValue("group:rot_x", 20));
     gui.setzOffset(XML.getValue("group:zOffset", 20));
+    gui.setxOffset(XML.getValue("group:xOffset", 20));
     gui.setyOffset(XML.getValue("group:yOffset", 20));
 
     
@@ -40,7 +41,7 @@ void lanscapes::setup(){
     bWireframe = gui.isWireOn();  // w draw wireframe mesh, should be true
     bFaces = gui.drawFaces();// true;      // e draw faces of main mesh
     //Set this to FALSE to use webcam
-    useKinect = true;
+    useKinect = false;
     
     
     rotX = gui.getX();//set RotX value from the gui
@@ -86,6 +87,7 @@ void lanscapes::setup(){
     processImage.setup( width, height, 10, 10, modifiedImage ); // (width, height, low threshold for movement, flicker);
     
     //set values from the xml file
+    mainMesh.xOffset = XML.getValue("xOffset", 0);
     mainMesh.zOffset = XML.getValue("zOffset", 0);
     mainMesh.yOffset = XML.getValue("yOffset", 0);
 
@@ -164,6 +166,8 @@ void lanscapes::update(){
     bFaces = gui.drawFaces();//   e draw faces of main mesh
     mainMesh.yOffset = gui.getyOffset();
     mainMesh.zOffset = gui.getzOffset();
+    mainMesh.xOffset = gui.getxOffset();
+
 
 
 
@@ -302,7 +306,7 @@ void lanscapes::keyPressed(int key){
             case 'p':
             cout << "( transX, transY, transZ ): ( " << transX << ", " << transY << ", " << transZ << " )" << endl;
             cout << "( rotX, rotY, rotZ ): ( " << rotX << ", " << rotY << ", " << rotZ << " )" << endl;
-            cout << "( yOffset, zOffset ): ( " << mainMesh.yOffset << ", " << mainMesh.zOffset << " )" << endl;
+            cout << "( yOffset, zOffset ): ( " << mainMesh.yOffset << ", " << mainMesh.zOffset << ", "<<mainMesh.xOffset<<" )" << endl;
 			break;
             case 's':
             //save the mesh and color data
@@ -346,6 +350,7 @@ void lanscapes::saveXML(){
     XML.setValue("AlphaValue", gui.getAlpha());
     XML.setValue("rot_x", gui.getX());
     XML.setValue("zOffset", gui.getzOffset());
+    XML.setValue("xOffset", gui.getxOffset());
     XML.setValue("yOffset", gui.getyOffset());
 
 

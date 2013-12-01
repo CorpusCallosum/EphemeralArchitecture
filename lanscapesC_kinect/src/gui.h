@@ -29,6 +29,7 @@ public:
     void setExtrusion(float);
     void setAlphaValue(float);
     void setRotX(int);
+    void setxOffset(int);
     void setzOffset(int);
     void setyOffset(int);
     void hide();
@@ -43,6 +44,7 @@ public:
     float getAlpha();
     int getX();
     int getyOffset();
+    int getxOffset();
     int getzOffset();
     bool isWireOn();
     bool drawVideo();
@@ -55,6 +57,7 @@ public:
 	ofParameter<float> extrusion;
     ofParameter<int> rot_x;
     ofParameter<int> zOffset;
+    ofParameter<int> xOffset;
     ofParameter<int> yOffset;
 
     
