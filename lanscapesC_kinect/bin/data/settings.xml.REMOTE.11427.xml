@@ -10,7 +10,5 @@
 	<faces>1</faces>
 	<video>0</video>
 <group/>
-	<movementThreshold>18</movementThreshold>
-	<flickerThreshold>10</flickerThreshold>
-	<xOffset>-4</xOffset>
+<xOffset>-4</xOffset>
 </group>

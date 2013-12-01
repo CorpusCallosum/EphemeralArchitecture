@@ -31,6 +31,7 @@ public:
     void setMovementThreshold(int);
     void setFlickerThreshold(int);
     void setRotX(int);
+    void setxOffset(int);
     void setzOffset(int);
     void setyOffset(int);
     void hide();
@@ -47,6 +48,7 @@ public:
     int getFlickerThreshold();
     int getX();
     int getyOffset();
+    int getxOffset();
     int getzOffset();
     bool isWireOn();
     bool drawVideo();
@@ -62,6 +64,7 @@ public:
     ofParameter<int> flickerThreshold;
     ofParameter<int> rot_x;
     ofParameter<int> zOffset;
+    ofParameter<int> xOffset;
     ofParameter<int> yOffset;
 
     

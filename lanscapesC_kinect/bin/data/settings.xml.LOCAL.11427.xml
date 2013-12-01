@@ -1,16 +1,15 @@
 <group>
 	<brightness>0.2</brightness>
-	<contrast>0.2</contrast>
-	<extrusion>25</extrusion>
+	<contrast>0</contrast>
+	<extrusion>50</extrusion>
 	<alphaValue>0.2</alphaValue>
-	<rot_x>0</rot_x>
+	<rot_x>-212</rot_x>
 	<zOffset>30</zOffset>
-	<yOffset>-12</yOffset>
+	<yOffset>8</yOffset>
 	<wireframe>1</wireframe>
 	<faces>1</faces>
-	<video>0</video>
+	<video>1</video>
 <group/>
-	<movementThreshold>18</movementThreshold>
+<movementThreshold>18</movementThreshold>
 	<flickerThreshold>10</flickerThreshold>
-	<xOffset>-4</xOffset>
 </group>

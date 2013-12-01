@@ -24,6 +24,7 @@ void gui::setup(){
     gui_panel.add(flickerThreshold.set("flickerThreshold", 10, 0, 100 ));
     gui_panel.add(rot_x.set("rot_x", -20,-360,360));
     gui_panel.add(zOffset.set("zOffset", -20, -200,200));
+    gui_panel.add(xOffset.set("xOffset", -20, -200,200));
     gui_panel.add(yOffset.set("yOffset", -20, -200,200));
     gui_panel.add(wireframe.setup("wireframe", true));
     gui_panel.add(faces.setup("faces", true));
@@ -58,7 +59,11 @@ void gui::setRotX(int r){
 }
 void gui::setzOffset(int z){
     zOffset.set(z);
-}void gui::setyOffset(int y){
+}
+void gui::setxOffset(int x){
+    xOffset.set(x);
+}
+void gui::setyOffset(int y){
     yOffset.set(y);
 }
 
@@ -113,6 +118,9 @@ int gui::getyOffset(){
 }
 int gui::getzOffset(){
     return zOffset;
+}
+int gui::getxOffset(){
+    return xOffset;
 }
 
 bool gui::isWireOn(){

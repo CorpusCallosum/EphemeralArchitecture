@@ -2,7 +2,7 @@
 	<brightness>0.2</brightness>
 	<contrast>0.2</contrast>
 	<extrusion>25</extrusion>
-	<alphaValue>0.2</alphaValue>
+	<alphaValue>0.07705</alphaValue>
 	<rot_x>0</rot_x>
 	<zOffset>30</zOffset>
 	<yOffset>-12</yOffset>
@@ -10,7 +10,4 @@
 	<faces>1</faces>
 	<video>0</video>
 <group/>
-	<movementThreshold>18</movementThreshold>
-	<flickerThreshold>10</flickerThreshold>
-	<xOffset>-4</xOffset>
 </group>

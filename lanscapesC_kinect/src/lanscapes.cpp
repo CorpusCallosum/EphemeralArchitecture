@@ -26,13 +26,12 @@ void lanscapes::setup(){
     gui.setContrast(XML.getValue("group:contrast", .2));
     gui.setExtrusion(XML.getValue("group:extrusion", .2));
     gui.setAlphaValue(XML.getValue("group:AlphaValue", .2));
+ 	gui.setMovementThreshold(XML.getValue("group:movementThreshold", 10));
+    gui.setFlickerThreshold(XML.getValue("group:flickerThreshold", 10));
     gui.setRotX(XML.getValue("group:rot_x", 20));
     gui.setzOffset(XML.getValue("group:zOffset", 20));
+    gui.setxOffset(XML.getValue("group:xOffset", 20));
     gui.setyOffset(XML.getValue("group:yOffset", 20));
-    gui.setMovementThreshold(XML.getValue("group:movementThreshold", 10));
-    gui.setFlickerThreshold(XML.getValue("group:flickerThreshold", 10));
-
-    
     
     
     //setup vars default values
@@ -43,7 +42,7 @@ void lanscapes::setup(){
     bFaces = gui.drawFaces();// true;      // e draw faces of main mesh
     bColorWireframe = gui.colorWireframe();
     //Set this to FALSE to use webcam
-    useKinect = false;
+    useKinect = true;
     
     
     rotX = gui.getX();//set RotX value from the gui
@@ -54,7 +53,7 @@ void lanscapes::setup(){
     transY = -75;
     transZ = 90;
     
-    width =  640;
+    width =  600;
     height = 480;
     extrusionAmount = gui.getExtrusion();
     
@@ -74,7 +73,11 @@ void lanscapes::setup(){
     colorImg.allocate( width, height );
     grayImage.allocate( width, height );
     modifiedImage.allocate( width, height );
+    cout<<"kinect.width: "<<kinect.width<<endl;
+    cout<<"kinect.height: "<<kinect.height<<endl;
     kinectImage.allocate( kinect.width, kinect.height );
+    kinectImage.setROI(0, 0, width, height);
+    croppedImg.allocate(width, height);
     
     snapShot.allocate( width, height, OF_IMAGE_GRAYSCALE );
     background.allocate( width, height );
@@ -89,14 +92,11 @@ void lanscapes::setup(){
     processImage.setup( width, height, 10, 10, modifiedImage ); // (width, height, low threshold for movement, flicker);
     
     //set values from the xml file
+    mainMesh.xOffset = XML.getValue("xOffset", 0);
     mainMesh.zOffset = XML.getValue("zOffset", 0);
     mainMesh.yOffset = XML.getValue("yOffset", 0);
-
-    
-    
     mainMesh.wireframeBrightness = XML.getValue("wireframe:brightness", 255);
     mainMesh.wireframeSaturation = XML.getValue("wireframe:saturation", 100);
-    
     
     //setup camera starting position
     //move the camera around the mesh
@@ -124,10 +124,11 @@ void lanscapes::update(){
         if(kinect.isFrameNew()) {
             // load grayscale depth image from the kinect source
             kinectImage.setFromPixels( kinect.getDepthPixels(),kinect.width, kinect.height);
-            //mirror the image
-            kinectImage.mirror(false, true);
-            modifiedImage = processImage.getProcessedImage( kinectImage, background );
-            mainMesh.update( modifiedImage , extrusionAmount, bColorWireframe);
+            croppedImg.scaleIntoMe(kinectImage);
+            //mirror the image  - causese black line :(
+            //kinectImage.mirror(false, true);
+            modifiedImage = processImage.getProcessedImage( croppedImg, background );
+            mainMesh.update( modifiedImage , extrusionAmount, bColorWireframe );
 
         }
     }
@@ -169,6 +170,7 @@ void lanscapes::update(){
     bFaces = gui.drawFaces();//   e draw faces of main mesh
     mainMesh.yOffset = gui.getyOffset();
     mainMesh.zOffset = gui.getzOffset();
+    mainMesh.xOffset = gui.getxOffset();
 
 
 
@@ -185,9 +187,12 @@ void lanscapes::draw(){
     if ( bDrawVideo ) {
         
         if ( useKinect ) {
-            kinectImage.draw( 20, 20, 320, 240 );
-            modifiedImage.draw( 20 + 320, 20, 320, 240 );
-            background.draw( 20 + 2 * 320, 20, 320, 240 );
+            int margin = 20;
+            int w = 320;
+            int h = 230;
+            kinectImage.draw( margin, 20, w, h );
+            modifiedImage.draw( 20 + w+margin, margin, w, h );
+            background.draw( 20 + (w+margin)*2, margin, w, h );
         }
         
         else {
@@ -307,22 +312,22 @@ void lanscapes::keyPressed(int key){
             case 'p':
             cout << "( transX, transY, transZ ): ( " << transX << ", " << transY << ", " << transZ << " )" << endl;
             cout << "( rotX, rotY, rotZ ): ( " << rotX << ", " << rotY << ", " << rotZ << " )" << endl;
-            cout << "( yOffset, zOffset ): ( " << mainMesh.yOffset << ", " << mainMesh.zOffset << " )" << endl;
+            cout << "( yOffset, zOffset ): ( " << mainMesh.yOffset << ", " << mainMesh.zOffset << ", "<<mainMesh.xOffset<<" )" << endl;
 			break;
             case 's':
             //save the mesh and color data
             mainMesh.save();
 			break;
             case 'b':
-            if ( useKinect ) {
-                snapShotPix = kinectImage.getPixels();
-            }
-            else {
-                snapShotPix = grayImage.getPixels();
-            }
-            snapShot.setFromPixels( snapShotPix, width, height, OF_IMAGE_GRAYSCALE );
-            snapShot.saveImage( "background.jpg" );
-            background.setFromPixels( snapShotPix, width, height );
+                if ( useKinect ) {
+                    snapShotPix = croppedImg.getPixels();
+                }
+                else {
+                    snapShotPix = grayImage.getPixels();
+                }
+                snapShot.setFromPixels( snapShotPix, width, height, OF_IMAGE_GRAYSCALE );
+                snapShot.saveImage( "background.jpg" );
+                background.setFromPixels( snapShotPix, width, height );
             break;
             case OF_KEY_UP:
             mainMesh.zOffset -= 1;
@@ -336,28 +341,11 @@ void lanscapes::keyPressed(int key){
             case OF_KEY_RIGHT:
             mainMesh.yOffset -= 1;
             break;
- 		case 'x':
-            saveXML();
-            break;
             
 	}
     
 }
 
-void lanscapes::saveXML(){
-    XML.setValue("brightness", gui.getBrightness());
-    XML.setValue("contrast", gui.getContrast());
-    XML.setValue("extrusion", gui.getExtrusion());
-    XML.setValue("AlphaValue", gui.getAlpha());
-    XML.setValue("rot_x", gui.getX());
-    XML.setValue("zOffset", gui.getzOffset());
-    XML.setValue("yOffset", gui.getyOffset());
-    XML.setValue("movementThreshold", gui.getMovementThreshold());
-    XML.setValue("flickerThreshold", gui.getMovementThreshold());
-
-   // XML.setValue("zOffset", mainMesh.zOffset);
-    XML.save("settings.xml");
-}
 
 
 

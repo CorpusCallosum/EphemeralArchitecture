@@ -30,13 +30,6 @@ void lanscapes::setup(){
     gui.setzOffset(XML.getValue("group:zOffset", 20));
     gui.setxOffset(XML.getValue("group:xOffset", 20));
     gui.setyOffset(XML.getValue("group:yOffset", 20));
-<<<<<<< HEAD
-    gui.setMovementThreshold(XML.getValue("group:movementThreshold", 10));
-    gui.setFlickerThreshold(XML.getValue("group:flickerThreshold", 10));
-
-    
-=======
->>>>>>> 87c5b5dd3733755c5bc241bf155c33323f2c12af
     
     
     //setup vars default values
@@ -45,9 +38,8 @@ void lanscapes::setup(){
     bDrawVideo = gui.drawVideo();  // v , should be false
     bWireframe = gui.isWireOn();  // w draw wireframe mesh, should be true
     bFaces = gui.drawFaces();// true;      // e draw faces of main mesh
-    bColorWireframe = gui.colorWireframe();
     //Set this to FALSE to use webcam
-    useKinect = false;
+    useKinect = true;
     
     
     rotX = gui.getX();//set RotX value from the gui
@@ -129,18 +121,11 @@ void lanscapes::update(){
         if(kinect.isFrameNew()) {
             // load grayscale depth image from the kinect source
             kinectImage.setFromPixels( kinect.getDepthPixels(),kinect.width, kinect.height);
-<<<<<<< HEAD
-            //mirror the image
-            kinectImage.mirror(false, true);
-            modifiedImage = processImage.getProcessedImage( kinectImage, background );
-            mainMesh.update( modifiedImage , extrusionAmount, bColorWireframe);
-=======
             croppedImg.scaleIntoMe(kinectImage);
             //mirror the image  - causese black line :(
             //kinectImage.mirror(false, true);
             modifiedImage = processImage.getProcessedImage( croppedImg, background );
             mainMesh.update( modifiedImage , extrusionAmount);
->>>>>>> 87c5b5dd3733755c5bc241bf155c33323f2c12af
 
         }
     }
@@ -153,7 +138,7 @@ void lanscapes::update(){
             colorImg.setFromPixels( vidGrabber.getPixels(), width, height );
             grayImage = colorImg;
             modifiedImage = processImage.getProcessedImage( grayImage, background );
-            mainMesh.update( modifiedImage , extrusionAmount, bColorWireframe);
+            mainMesh.update( modifiedImage , extrusionAmount);
         }
         
     }
@@ -171,14 +156,12 @@ void lanscapes::update(){
     extrusionAmount  = gui.getExtrusion();
     float a = gui.getAlpha();
     rotX = gui.getX();
-    int m = gui.getMovementThreshold();
-    int t = gui.getFlickerThreshold();
-    processImage.update( b, c, a, m, t);
+    
+    processImage.update(b,c,a);
     
     //wireframe
     bWireframe = gui.isWireOn();
     bDrawVideo = gui.drawVideo();
-    bColorWireframe = gui.colorWireframe();
     bFaces = gui.drawFaces();//   e draw faces of main mesh
     mainMesh.yOffset = gui.getyOffset();
     mainMesh.zOffset = gui.getzOffset();
@@ -359,23 +342,6 @@ void lanscapes::keyPressed(int key){
     
 }
 
-<<<<<<< HEAD
-void lanscapes::saveXML(){
-    XML.setValue("brightness", gui.getBrightness());
-    XML.setValue("contrast", gui.getContrast());
-    XML.setValue("extrusion", gui.getExtrusion());
-    XML.setValue("AlphaValue", gui.getAlpha());
-    XML.setValue("rot_x", gui.getX());
-    XML.setValue("zOffset", gui.getzOffset());
-    XML.setValue("yOffset", gui.getyOffset());
-    XML.setValue("movementThreshold", gui.getMovementThreshold());
-    XML.setValue("flickerThreshold", gui.getMovementThreshold());
-
-   // XML.setValue("zOffset", mainMesh.zOffset);
-    XML.save("settings.xml");
-}
-=======
->>>>>>> 87c5b5dd3733755c5bc241bf155c33323f2c12af
 
 
 

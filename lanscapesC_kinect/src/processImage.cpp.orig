@@ -28,21 +28,17 @@ void processImage::setup( int w, int h, int low, int flicker, ofxCvGrayscaleImag
     backgroundPixels = background.getPixels();
     difference.resize( imgWidth * imgHeight );
     
-<<<<<<< HEAD
-=======
-    //alphaAmount = .02;
-    // _contrast = 0.0;
-    // _brightness=gui.getBrightness();
->>>>>>> f8691df76c44fb8ef5782f2107049847aa8a6786
    
     
     
 }
 
-void processImage::update(float _b, float _c, float _a){
+void processImage::update(float _b, float _c, float _a, int m, int t){
     _brightness = _b;
     _contrast = _c;
     alphaAmount = _a;
+    moveThreshLow = m;
+    flickerThreshold = t;
    
     
 }
@@ -55,14 +51,22 @@ ofxCvGrayscaleImage processImage::getProcessedImage( ofxCvGrayscaleImage img, of
     kinectSource = img;
     //kinectSource.mirror( true, true ); // mirror( bool bFlipVertically, bool bFlipHorizontally )
     kinectSource.brightnessContrast( _brightness, _contrast );
-    kinectSource.blurGaussian( 3 );
+    //kinectSource.blurGaussian( 3 );
+    kinectSource.blur( 3 );
+    kinectSource.dilate();
     sourcePixels = kinectSource.getPixels();
     
     modifiedPixels = modifiedImage.getPixels();
     
     //background.mirror( true, true ); // mirror( bool bFlipVertically, bool bFlipHorizontally )
     background.brightnessContrast( _brightness, _contrast );
+<<<<<<< HEAD
+    //background.blurGaussian( 3 );
+    background.blur( 3 );
+=======
     background.blurGaussian( 3 );
+>>>>>>> 87c5b5dd3733755c5bc241bf155c33323f2c12af
+    background.dilate();
     backgroundPixels = background.getPixels();
 
     float add;
