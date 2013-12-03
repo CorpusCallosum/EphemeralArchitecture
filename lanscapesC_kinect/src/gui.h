@@ -55,7 +55,7 @@ public:
     bool drawFaces();
     bool colorWireframe();
     
-    //functions
+    //parameters
     ofParameter<float> brightness;
     ofParameter<float> contrast;
     ofParameter<float> alphaValue;
@@ -66,15 +66,13 @@ public:
     ofParameter<int> zOffset;
     ofParameter<int> xOffset;
     ofParameter<int> yOffset;
-
     
 	ofxToggle wireframe;
     ofxToggle video;
     ofxToggle faces;
     ofxToggle bColorWireframe;
-
-    
-    
+    ofxToggle mirrorH;
+    ofxToggle mirrorV;
 };
  
 

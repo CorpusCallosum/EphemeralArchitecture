@@ -8,9 +8,12 @@
 	<yOffset>-12</yOffset>
 	<wireframe>1</wireframe>
 	<faces>1</faces>
-	<video>0</video>
-<group/>
+	<video>1</video>
 	<movementThreshold>18</movementThreshold>
 	<flickerThreshold>10</flickerThreshold>
 	<xOffset>-4</xOffset>
+	<colored_wireframe>1</colored_wireframe>
+	<mirror_horizontally>0</mirror_horizontally>
+	<mirror_vertically>1</mirror_vertically>
+<group/>
 </group>
