@@ -21,13 +21,17 @@ void currentColor::setup( int w, int h ) {
     colorTime = 0;
     colorDuration = 1000 * 20; //how long each color lasts in ms
     
-    colorPalette.resize( 5 );
+    colorPalette.resize( 6 );
     
-    colorPalette[ 0 ] = ofColor( 21, 70, 228 ); //0, 227, 221 );   //ice blue
-    colorPalette[ 1 ] = ofColor( 64, 52, 95 ); //21, 55, 232 );      //dark blue
-    colorPalette[ 2 ] = ofColor( 200, 23, 178 ); //88, 4, 180 );     //purple
-    colorPalette[ 3 ] = ofColor( 203, 103, 10 ); //170, 0, 170 );   //magenta
-    colorPalette[ 4 ] = ofColor( 101, 252, 99 ); //230, 230, 230 );  //white
+    colorPalette[ 0 ] = ofColor(  237, 237, 237 ); //79, 211, 73 ); // 101, 252, 99 ); //green
+
+    colorPalette[ 1 ] = ofColor( 28, 255, 238 ); //14, 229, 184 ); //21, 70, 228 );   //ice blue green
+    colorPalette[ 2 ] = ofColor( 40, 45, 250 ); //64, 52, 95 );    //blue
+    colorPalette[ 3 ] = ofColor( 232, 0, 219 ); // 203, 103, 10 );  //magenta
+    colorPalette[ 4 ] = ofColor( 0, 0, 0 );   // 200, 23, 178 );   //
+
+
+
     
     lastColor = 0;
     nextColor = 1;

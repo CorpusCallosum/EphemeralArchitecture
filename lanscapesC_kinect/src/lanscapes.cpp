@@ -25,7 +25,7 @@ void lanscapes::setup(){
     gui.setBrightness(XML.getValue("group:brightness", .2));
     gui.setContrast(XML.getValue("group:contrast", .2));
     gui.setExtrusion(XML.getValue("group:extrusion", .2));
-    gui.setAlphaValue(XML.getValue("group:AlphaValue", .2));
+    gui.setAlphaValue(XML.getValue("group:alphaValue", .2));
  	gui.setMovementThreshold(XML.getValue("group:movementThreshold", 10));
     gui.setFlickerThreshold(XML.getValue("group:flickerThreshold", 10));
     gui.setRotX(XML.getValue("group:rot_x", 20));
@@ -70,15 +70,23 @@ void lanscapes::setup(){
         vidGrabber.initGrabber( width, height );
     }
 	
+    //webcam images
     colorImg.allocate( width, height );
     grayImage.allocate( width, height );
+    
+    //image used to draw mesh
     modifiedImage.allocate( width, height );
-    cout<<"kinect.width: "<<kinect.width<<endl;
-    cout<<"kinect.height: "<<kinect.height<<endl;
     kinectImage.allocate( kinect.width, kinect.height );
+    
+    //thresholding
+    nearThreshold = 255;
+    farThreshold = 60;
+    
+    //croping
     kinectImage.setROI(0, 0, width, height);
     croppedImg.allocate(width, height);
     
+    //reference image
     snapShot.allocate( width, height, OF_IMAGE_GRAYSCALE );
     background.allocate( width, height );
     snapShot.loadImage( "background.jpg" );
@@ -125,6 +133,22 @@ void lanscapes::update(){
         if(kinect.isFrameNew()) {
             // load grayscale depth image from the kinect source
             kinectImage.setFromPixels( kinect.getDepthPixels(),kinect.width, kinect.height);
+            
+            /*kinectThreshNear = kinectImage;
+			kinectThreshFar = kinectImage;
+			kinectThreshNear.threshold(nearThreshold, true);
+			kinectThreshFar.threshold(farThreshold);
+			cvAnd(kinectThreshNear.getCvImage(), kinectThreshFar.getCvImage(), kinectImage.getCvImage(), NULL);*/
+            
+            unsigned char * pix = kinectImage.getPixels();
+			
+			int numPixels = kinectImage.getWidth() * kinectImage.getHeight();
+			for(int i = 0; i < numPixels; i++) {
+				if(pix[i] > nearThreshold || pix[i] < farThreshold) {
+					pix[i] = 0;
+				}
+			}
+            
             croppedImg.scaleIntoMe(kinectImage);
             //mirror the image  - causese black line :(
             //kinectImage.mirror(false, true);
@@ -237,13 +261,32 @@ void lanscapes::keyPressed(int key){
             ofSetFullscreen( fullscreen );
 			break;
             
-            case '=':
-            rotX += 10;
-            break;
-            
-            case '-':
-            rotX -= 10;
-            break;
+        case '>':
+		case '.':
+			farThreshold ++;
+			if (farThreshold > 255) farThreshold = 255;
+            cout<< farThreshold<< endl;
+			break;
+			
+		case '<':
+		case ',':
+			farThreshold --;
+			if (farThreshold < 0) farThreshold = 0;
+            cout<< farThreshold<< endl;
+			break;
+			
+		case '+':
+		case '=':
+			nearThreshold ++;
+			if (nearThreshold > 255) nearThreshold = 255;
+            cout<< nearThreshold<< endl;
+			break;
+			
+		case '-':
+			nearThreshold --;
+			if (nearThreshold < 0) nearThreshold = 0;
+            cout<< nearThreshold<< endl;
+			break;
             
             case ']':
             rotY += 10;
@@ -251,38 +294,6 @@ void lanscapes::keyPressed(int key){
             
             case '[':
             rotY -= 10;
-            break;
-            
-            case '.':
-            rotZ += 10;
-            break;
-            
-            case ',':
-            rotZ -= 10;
-            break;
-            
-            case '1':
-            transX += 10;
-            break;
-            
-            case '2':
-            transX -= 10;
-            break;
-            
-            case '3':
-            transY += 10;
-            break;
-            
-            case '4':
-            transY -= 10;
-            break;
-            
-            case '7':
-            extrusionAmount += 10;
-            break;
-            
-            case '8':
-            extrusionAmount -= 10;
             break;
             
             case 'w':
@@ -315,6 +326,7 @@ void lanscapes::keyPressed(int key){
             cout << "( rotX, rotY, rotZ ): ( " << rotX << ", " << rotY << ", " << rotZ << " )" << endl;
             cout << "( yOffset, zOffset ): ( " << mainMesh.yOffset << ", " << mainMesh.zOffset << ", "<<mainMesh.xOffset<<" )" << endl;
 			break;
+            
             case 's':
             //save the mesh and color data
             mainMesh.save();

@@ -26,7 +26,7 @@ void meshGenerator::setup( int w, int h, float extrusion, bool wireframe, bool f
 			mainMesh.addVertex( ofPoint( x, y, 0 ));	// mesh index = x + y * width
             // this replicates the pixel array within the camera bitmap...
             
-            colorGrid[ x + y * width ] = ofColor( 70, 216, 98 );
+            colorGrid[ x + y * width ] = ofColor( 237, 237, 237 );
             
             mainMesh.addColor( colorGrid[ x + y * width] );  // placeholder for colour data, we'll get this from the camera
 		}
@@ -72,12 +72,12 @@ ofVboMesh meshGenerator::update( ofxCvGrayscaleImage img, float extrusion, bool 
     for ( int y = 0; y < height; y ++ ) {
         for ( int x = 0; x < width; x ++ ) {
             
-            float a = x * .1;
-            float b = y * .1;
-            float c = ofGetFrameNum() / 20.0;
+            float a = x * .5;
+            float b = y * .5;
+            float c = ofGetFrameNum() / 120.0;
             
             float noise = ofNoise( a, b, c ) * 255;
-            float color = noise < 150  ? ofMap( noise, 0, 150, 150, 200 ) : 200;
+            float color = noise < 220  ? ofMap( noise, 0, 220, 220, 255 ) : 220;
             
             noiseImage.getPixels()[ y * width + x ] = color;
         }
@@ -108,7 +108,7 @@ ofVboMesh meshGenerator::update( ofxCvGrayscaleImage img, float extrusion, bool 
         
         //set the wireframe color
         if ( bColorWireframe ) {
-            c.setBrightness(wireframeBrightness);
+            c.setBrightness( noisePixels[ i ] ); //wireframeBrightness);
             c.setSaturation(wireframeSaturation);
             wireframeMesh.setColor(i, c);
         }
