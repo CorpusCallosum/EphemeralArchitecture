@@ -13,5 +13,8 @@
 	<movementThreshold>18</movementThreshold>
 	<flickerThreshold>10</flickerThreshold>
 	<xOffset>0</xOffset>
-<colored_wireframe>0</colored_wireframe>
+	<colored_wireframe>0</colored_wireframe>
+	<mirror_horizontally>0</mirror_horizontally>
+	<mirror_vertically>1</mirror_vertically>
+<group/>
 </group>

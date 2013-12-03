@@ -3,6 +3,9 @@
 
 //--------------------------------------------------------------
 void lanscapes::setup(){
+    //Set this to FALSE to use webcam
+    useKinect = false;
+    
     //load settings xml data file
     //-----------
 	//the string is printed at the top of the app
@@ -29,10 +32,12 @@ void lanscapes::setup(){
  	gui.setMovementThreshold(XML.getValue("group:movementThreshold", 10));
     gui.setFlickerThreshold(XML.getValue("group:flickerThreshold", 10));
     gui.setRotX(XML.getValue("group:rot_x", 20));
-    gui.setzOffset(XML.getValue("group:zOffset", 20));
     gui.setxOffset(XML.getValue("group:xOffset", 20));
     gui.setyOffset(XML.getValue("group:yOffset", 20));
-    
+    gui.setzOffset(XML.getValue("group:zOffset", 20));
+    gui.mirrorV = XML.getValue("group:mirror_vertically", false);
+    gui.mirrorH = XML.getValue("group:mirror_horizontally", false);
+
     
     //setup vars default values
     //PRESS B TO CAPTURE BACKGROUND//
@@ -41,9 +46,6 @@ void lanscapes::setup(){
     bWireframe = gui.isWireOn();  // w draw wireframe mesh, should be true
     bFaces = gui.drawFaces();// true;      // e draw faces of main mesh
     bColorWireframe = gui.colorWireframe();
-    //Set this to FALSE to use webcam
-    useKinect = true;
-    
     
     rotX = gui.getX();//set RotX value from the gui
     
@@ -56,7 +58,6 @@ void lanscapes::setup(){
     width =  600;
     height = 480;
     extrusionAmount = gui.getExtrusion();
-    
     previousHour = ofGetHours();
 
     
@@ -151,7 +152,7 @@ void lanscapes::update(){
             
             croppedImg.scaleIntoMe(kinectImage);
             //mirror the image  - causese black line :(
-            //kinectImage.mirror(false, true);
+            croppedImg.mirror(gui.mirrorV, gui.mirrorH);
             modifiedImage = processImage.getProcessedImage( croppedImg, background );
             mainMesh.update( modifiedImage , extrusionAmount, bColorWireframe );
 
@@ -164,6 +165,7 @@ void lanscapes::update(){
         
         if (bNewFrame){
             colorImg.setFromPixels( vidGrabber.getPixels(), width, height );
+            colorImg.mirror(gui.mirrorV, gui.mirrorH);
             grayImage = colorImg;
             modifiedImage = processImage.getProcessedImage( grayImage, background );
             mainMesh.update( modifiedImage , extrusionAmount, bColorWireframe);
@@ -205,10 +207,18 @@ void lanscapes::update(){
 //--------------------------------------------------------------
 void lanscapes::draw(){
     
+    ////DRAW THE MESH
+	//but we want to enable it to show the mesh
+	ofEnableDepthTest();
+	cam.begin();
+    //rotate the camera
+    ofRotateX(rotX);
+    mainMesh.draw( bWireframe, bFaces );
+	cam.end();
     
+    ////DRAW DEPTH IMAGES
     //we have to disable depth testing to draw the video frame
     ofDisableDepthTest();
-    
     if ( bDrawVideo ) {
         
         if ( useKinect ) {
@@ -232,24 +242,11 @@ void lanscapes::draw(){
         
     }
     
+    ////DRAW THE GUI
     gui.draw();
     
-	//but we want to enable it to show the mesh
-	ofEnableDepthTest();
     
-	cam.begin();
-    //rotate the camera
-    ofRotateX(rotX);
-    mainMesh.draw( bWireframe, bFaces );
-	cam.end();
     
-	
-    if ( !fullscreen ) {
-        //draw framerate for fun
-        ofSetColor(255);
-        string msg = "fps: " + ofToString(ofGetFrameRate(), 2);
-        ofDrawBitmapString(msg, 10, 20);
-    }
 }
 
 //--------------------------------------------------------------
