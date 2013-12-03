@@ -22,26 +22,56 @@ class gui :  public ofBaseApp{
 public:
     void setup();
     void draw();    
-	bool bHide;
+	bool hidden; //hide or show gui
+    //set the initial gui parameters
+    void setBrightness(float);
+    void setContrast(float);
+    void setExtrusion(float);
+    void setAlphaValue(float);
+    void setMovementThreshold(int);
+    void setFlickerThreshold(int);
+    void setRotX(int);
+    void setxOffset(int);
+    void setzOffset(int);
+    void setyOffset(int);
+    void hide();
+    void show();
+
+    ofxPanel gui_panel;//initialize the gui panel
     
-    ofxPanel gui_panel;
+    //return parameters
     float getBrightness();
     float getContrast();
     float getExtrusion();
     float getAlpha();
+    int getMovementThreshold();
+    int getFlickerThreshold();
     int getX();
+    int getyOffset();
+    int getxOffset();
+    int getzOffset();
     bool isWireOn();
+    bool drawVideo();
+    bool drawFaces();
+    bool colorWireframe();
+    
+    //functions
     ofParameter<float> brightness;
     ofParameter<float> contrast;
     ofParameter<float> alphaValue;
 	ofParameter<float> extrusion;
+    ofParameter<int> movementThreshold;
+    ofParameter<int> flickerThreshold;
     ofParameter<int> rot_x;
+    ofParameter<int> zOffset;
+    ofParameter<int> xOffset;
+    ofParameter<int> yOffset;
+
     
 	ofxToggle wireframe;
-
-
-    float b,c,e,g;
-    int x;
+    ofxToggle video;
+    ofxToggle faces;
+    ofxToggle bColorWireframe;
 
     
     

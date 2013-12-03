@@ -18,7 +18,7 @@ public:
     void update();
     void draw();
     void keyPressed( int );
-    void updateZOffset();
+    void saveXML();
     
     
     ofVideoGrabber          vidGrabber;
@@ -27,13 +27,13 @@ public:
     ofxCvColorImage			colorImg;
     ofxCvGrayscaleImage 	grayImage;
     ofxCvGrayscaleImage     modifiedImage;
-    ofxCvGrayscaleImage     kinectImage;
+    ofxCvGrayscaleImage     kinectImage, croppedImg;
     
     ofImage                 snapShot;
     ofxCvGrayscaleImage     background;
     unsigned char *         snapShotPix;
     
-    bool                    fullscreen, bDrawVideo, bWireframe, bFaces;
+    bool                    fullscreen, bDrawVideo, bWireframe, bFaces, bColorWireframe;
     bool                    useKinect;
     
     float b,c,e,a;

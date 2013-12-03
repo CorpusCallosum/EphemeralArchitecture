@@ -19,7 +19,7 @@ public:
     
     //methods
 	void setup( int, int, float, bool, bool );
-    ofVboMesh update( ofxCvGrayscaleImage , float);
+    ofVboMesh update( ofxCvGrayscaleImage , float, bool);
 	void draw( bool, bool );
     void save();
 
@@ -29,12 +29,14 @@ public:
     
 	float extrusionAmount;
 	ofVboMesh mainMesh, wireframeMesh;
-    bool    bDrawWireframe, bDrawFaces;
-    int width, height, zOffset, yOffset, wireframeBrightness, wireframeSaturation;
+    bool    bDrawWireframe, bDrawFaces, bColorWireframe;
+    int width, height, xOffset, zOffset, yOffset, wireframeBrightness, wireframeSaturation;
     
     vector<ofColor> colorGrid;
     
     currentColor    currentColor;
+    
+    ofImage noiseImage;
     
 	
 };
