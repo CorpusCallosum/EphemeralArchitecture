@@ -72,12 +72,12 @@ ofVboMesh meshGenerator::update( ofxCvGrayscaleImage img, float extrusion, bool 
     for ( int y = 0; y < height; y ++ ) {
         for ( int x = 0; x < width; x ++ ) {
             
-            float a = x * .5;
-            float b = y * .5;
+            float a = x * .7;
+            float b = y * .7;
             float c = ofGetFrameNum() / 120.0;
             
             float noise = ofNoise( a, b, c ) * 255;
-            float color = noise < 220  ? ofMap( noise, 0, 220, 220, 255 ) : 220;
+            float color = noise < 210  ? ofMap( noise, 0, 210, 210, 255 ) : 210;
             
             noiseImage.getPixels()[ y * width + x ] = color;
         }

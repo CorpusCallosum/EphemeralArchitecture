@@ -29,7 +29,7 @@ void gui::setup(){
     gui_panel.add(wireframe.setup("wireframe", true));
     gui_panel.add(faces.setup("faces", true));
     gui_panel.add(video.setup("video", false));
-    gui_panel.add(bColorWireframe.setup("colored wireframe", true));
+    gui_panel.add(bColorWireframe.setup("colored wireframe", false));
     gui_panel.add(mirrorH.setup("mirror horizontally", false));
     gui_panel.add(mirrorV.setup("mirror vertically", false));
     
@@ -69,6 +69,7 @@ void gui::setxOffset(int x){
 void gui::setyOffset(int y){
     yOffset.set(y);
 }
+
 
 //
 void gui::draw(){

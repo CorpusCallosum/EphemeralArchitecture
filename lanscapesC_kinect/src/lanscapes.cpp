@@ -4,7 +4,7 @@
 //--------------------------------------------------------------
 void lanscapes::setup(){
     //Set this to FALSE to use webcam
-    useKinect = false;
+    useKinect = true;
     
     //load settings xml data file
     //-----------
@@ -134,12 +134,6 @@ void lanscapes::update(){
         if(kinect.isFrameNew()) {
             // load grayscale depth image from the kinect source
             kinectImage.setFromPixels( kinect.getDepthPixels(),kinect.width, kinect.height);
-            
-            /*kinectThreshNear = kinectImage;
-			kinectThreshFar = kinectImage;
-			kinectThreshNear.threshold(nearThreshold, true);
-			kinectThreshFar.threshold(farThreshold);
-			cvAnd(kinectThreshNear.getCvImage(), kinectThreshFar.getCvImage(), kinectImage.getCvImage(), NULL);*/
             
             unsigned char * pix = kinectImage.getPixels();
 			
