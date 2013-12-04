@@ -25,7 +25,7 @@ void lanscapes::setup(){
     gui.setBrightness(XML.getValue("group:brightness", .2));
     gui.setContrast(XML.getValue("group:contrast", .2));
     gui.setExtrusion(XML.getValue("group:extrusion", .2));
-    gui.setAlphaValue(XML.getValue("group:AlphaValue", .2));
+    gui.setAlphaValue(XML.getValue("group:alphaValue", .2));
     gui.setRotX(XML.getValue("group:rot_x", 20));
     gui.setzOffset(XML.getValue("group:zOffset", 20));
     gui.setxOffset(XML.getValue("group:xOffset", 20));
@@ -39,7 +39,7 @@ void lanscapes::setup(){
     bWireframe = gui.isWireOn();  // w draw wireframe mesh, should be true
     bFaces = gui.drawFaces();// true;      // e draw faces of main mesh
     //Set this to FALSE to use webcam
-    useKinect = true;
+    useKinect = false;
     
     
     rotX = gui.getX();//set RotX value from the gui
