@@ -26,7 +26,7 @@ void meshGenerator::setup( int w, int h, float extrusion, bool wireframe, bool f
 			mainMesh.addVertex( ofPoint( x, y, 0 ));	// mesh index = x + y * width
             // this replicates the pixel array within the camera bitmap...
             
-            colorGrid[ x + y * width ] = ofColor( 70, 216, 98 );
+            colorGrid[ x + y * width ] = ofColor( 237, 237, 237 );
             
             mainMesh.addColor( colorGrid[ x + y * width] );  // placeholder for colour data, we'll get this from the camera
 		}
@@ -55,15 +55,37 @@ void meshGenerator::setup( int w, int h, float extrusion, bool wireframe, bool f
     
     //make a copy of this mesh
     wireframeMesh = mainMesh;
+    
+    noiseImage.allocate( width, height, OF_IMAGE_GRAYSCALE );
+    
 }
 
 //--------------------------------------------------------------
-ofVboMesh meshGenerator::update( ofxCvGrayscaleImage img, float extrusion ){
+ofVboMesh meshGenerator::update( ofxCvGrayscaleImage img, float extrusion, bool colorWireframe ){
     img.resize(width, height);
     meshImage = img;
+    bColorWireframe = colorWireframe;
     
     colorGrid = currentColor.getCurrentColor( meshImage );
-
+    
+    //perlin noise image update
+    for ( int y = 0; y < height; y ++ ) {
+        for ( int x = 0; x < width; x ++ ) {
+            
+            float a = x * .7;
+            float b = y * .7;
+            float c = ofGetFrameNum() / 120.0;
+            
+            float noise = ofNoise( a, b, c ) * 255;
+            float color = noise < 210  ? ofMap( noise, 0, 210, 210, 255 ) : 210;
+            
+            noiseImage.getPixels()[ y * width + x ] = color;
+        }
+    }
+    noiseImage.reloadTexture();
+    unsigned char * noisePixels = noiseImage.getPixels();
+    
+    
     //this determines how far we extrude the mesh
     for ( int i = 0; i < width * height; i ++ ) {
         
@@ -85,12 +107,20 @@ ofVboMesh meshGenerator::update( ofxCvGrayscaleImage img, float extrusion ){
         mainMesh.setColor( i, c );
         
         //set the wireframe color
-        c.setBrightness(wireframeBrightness);
-        c.setSaturation(wireframeSaturation);
-        wireframeMesh.setColor(i, c);
+        if ( bColorWireframe ) {
+            c.setBrightness( noisePixels[ i ] ); //wireframeBrightness);
+            c.setSaturation(wireframeSaturation);
+            wireframeMesh.setColor(i, c);
+        }
+        else {
+            ofColor whiteNoise = noisePixels[ i ];
+            wireframeMesh.setColor( i, whiteNoise );
+        }
         
     
     }
+    
+    
     
     return mainMesh;
 }

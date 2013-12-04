@@ -1,35 +1,24 @@
 <group>
-<<<<<<< HEAD
-	<brightness>0.2</brightness>
-	<contrast>0.2</contrast>
-	<extrusion>25</extrusion>
-	<alphaValue>0.2</alphaValue>
-	<rot_x>0</rot_x>
-	<zOffset>30</zOffset>
-	<yOffset>-12</yOffset>
+	<brightness>0.175</brightness>
+	<contrast>0.44</contrast>
+	<extrusion>42.5</extrusion>
+	<alphaValue>0.082</alphaValue>
+	<rot_x>172</rot_x>
+	<zOffset>-12</zOffset>
+	<yOffset>28</yOffset>
 	<wireframe>1</wireframe>
 	<faces>1</faces>
-	<video>0</video>
-<group/>
-<xOffset>-4</xOffset>
+	<video>1</video>
+	<movementThreshold>18</movementThreshold>
+	<flickerThreshold>10</flickerThreshold>
+<<<<<<< HEAD
+	<xOffset>0</xOffset>
+<colored_wireframe>0</colored_wireframe>
 =======
-    <brightness>0.2</brightness>
-    <contrast>0.2</contrast>
-    <extrusion>40</extrusion>
-    <alphaValue>0.1</alphaValue>
-    <rot_x>172</rot_x>
-    <zOffset>-10</zOffset>
-    <yOffset>32</yOffset>
-    <wireframe>1</wireframe>
-    <faces>1</faces>
-    <video>0</video>
-    <group />
->>>>>>> d564f1bddaf31a84c8655f878ab1458254298d9a
+	<xOffset>-4</xOffset>
+	<colored_wireframe>1</colored_wireframe>
+	<mirror_horizontally>0</mirror_horizontally>
+	<mirror_vertically>1</mirror_vertically>
+<group/>
+>>>>>>> 0c151cfb448886935dbcaeb9079f4fc04fc51c40
 </group>
-<brightness>0.200000003</brightness>
-<contrast>0.200000003</contrast>
-<extrusion>40.000000000</extrusion>
-<AlphaValue>0.200000003</AlphaValue>
-<rot_x>172</rot_x>
-<zOffset>-10</zOffset>
-<yOffset>32</yOffset>

@@ -18,7 +18,7 @@ public:
     
     //methods
     void                setup( int, int, int, int, ofxCvGrayscaleImage );
-    void update(float, float, float);
+    void update(float, float, float, int, int);
 
     ofxCvGrayscaleImage getProcessedImage( ofxCvGrayscaleImage, ofxCvGrayscaleImage );
 

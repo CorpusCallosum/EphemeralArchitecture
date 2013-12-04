@@ -3,9 +3,6 @@
 
 //--------------------------------------------------------------
 void lanscapes::setup(){
-    //Set this to FALSE to use webcam
-    useKinect = true;
-    
     //load settings xml data file
     //-----------
 	//the string is printed at the top of the app
@@ -28,19 +25,12 @@ void lanscapes::setup(){
     gui.setBrightness(XML.getValue("group:brightness", .2));
     gui.setContrast(XML.getValue("group:contrast", .2));
     gui.setExtrusion(XML.getValue("group:extrusion", .2));
-    gui.setAlphaValue(XML.getValue("group:alphaValue", .2));
-<<<<<<< HEAD
-=======
- 	gui.setMovementThreshold(XML.getValue("group:movementThreshold", 10));
-    gui.setFlickerThreshold(XML.getValue("group:flickerThreshold", 10));
->>>>>>> c5eb571dab9e142c16a3bf63682bc617b6fe0ab2
+    gui.setAlphaValue(XML.getValue("group:AlphaValue", .2));
     gui.setRotX(XML.getValue("group:rot_x", 20));
+    gui.setzOffset(XML.getValue("group:zOffset", 20));
     gui.setxOffset(XML.getValue("group:xOffset", 20));
     gui.setyOffset(XML.getValue("group:yOffset", 20));
-    gui.setzOffset(XML.getValue("group:zOffset", 20));
-    gui.mirrorV = XML.getValue("group:mirror_vertically", false);
-    gui.mirrorH = XML.getValue("group:mirror_horizontally", false);
-
+    
     
     //setup vars default values
     //PRESS B TO CAPTURE BACKGROUND//
@@ -48,13 +38,9 @@ void lanscapes::setup(){
     bDrawVideo = gui.drawVideo();  // v , should be false
     bWireframe = gui.isWireOn();  // w draw wireframe mesh, should be true
     bFaces = gui.drawFaces();// true;      // e draw faces of main mesh
-<<<<<<< HEAD
     //Set this to FALSE to use webcam
-    useKinect = false;
+    useKinect = true;
     
-=======
-    bColorWireframe = gui.colorWireframe();
->>>>>>> c5eb571dab9e142c16a3bf63682bc617b6fe0ab2
     
     rotX = gui.getX();//set RotX value from the gui
     
@@ -67,6 +53,7 @@ void lanscapes::setup(){
     width =  600;
     height = 480;
     extrusionAmount = gui.getExtrusion();
+    
     previousHour = ofGetHours();
 
     
@@ -80,23 +67,15 @@ void lanscapes::setup(){
         vidGrabber.initGrabber( width, height );
     }
 	
-    //webcam images
     colorImg.allocate( width, height );
     grayImage.allocate( width, height );
-    
-    //image used to draw mesh
     modifiedImage.allocate( width, height );
+    cout<<"kinect.width: "<<kinect.width<<endl;
+    cout<<"kinect.height: "<<kinect.height<<endl;
     kinectImage.allocate( kinect.width, kinect.height );
-    
-    //thresholding
-    nearThreshold = 255;
-    farThreshold = 60;
-    
-    //croping
     kinectImage.setROI(0, 0, width, height);
     croppedImg.allocate(width, height);
     
-    //reference image
     snapShot.allocate( width, height, OF_IMAGE_GRAYSCALE );
     background.allocate( width, height );
     snapShot.loadImage( "background.jpg" );
@@ -132,7 +111,6 @@ void lanscapes::setup(){
     cam.disableMouseInput();
 }
 
-
 //----------------------------------------------------------
 void lanscapes::update(){
 
@@ -143,21 +121,11 @@ void lanscapes::update(){
         if(kinect.isFrameNew()) {
             // load grayscale depth image from the kinect source
             kinectImage.setFromPixels( kinect.getDepthPixels(),kinect.width, kinect.height);
-            
-            unsigned char * pix = kinectImage.getPixels();
-			
-			int numPixels = kinectImage.getWidth() * kinectImage.getHeight();
-			for(int i = 0; i < numPixels; i++) {
-				if(pix[i] > nearThreshold || pix[i] < farThreshold) {
-					pix[i] = 0;
-				}
-			}
-            
             croppedImg.scaleIntoMe(kinectImage);
             //mirror the image  - causese black line :(
-            croppedImg.mirror(gui.mirrorV, gui.mirrorH);
+            //kinectImage.mirror(false, true);
             modifiedImage = processImage.getProcessedImage( croppedImg, background );
-            mainMesh.update( modifiedImage , extrusionAmount, bColorWireframe );
+            mainMesh.update( modifiedImage , extrusionAmount);
 
         }
     }
@@ -168,10 +136,9 @@ void lanscapes::update(){
         
         if (bNewFrame){
             colorImg.setFromPixels( vidGrabber.getPixels(), width, height );
-            colorImg.mirror(gui.mirrorV, gui.mirrorH);
             grayImage = colorImg;
             modifiedImage = processImage.getProcessedImage( grayImage, background );
-            mainMesh.update( modifiedImage , extrusionAmount, bColorWireframe);
+            mainMesh.update( modifiedImage , extrusionAmount);
         }
         
     }
@@ -189,18 +156,17 @@ void lanscapes::update(){
     extrusionAmount  = gui.getExtrusion();
     float a = gui.getAlpha();
     rotX = gui.getX();
-    int m = gui.getMovementThreshold();
-    int t = gui.getFlickerThreshold();
-    processImage.update( b, c, a, m, t);
+    
+    processImage.update(b,c,a);
     
     //wireframe
     bWireframe = gui.isWireOn();
     bDrawVideo = gui.drawVideo();
-    bColorWireframe = gui.colorWireframe();
     bFaces = gui.drawFaces();//   e draw faces of main mesh
     mainMesh.yOffset = gui.getyOffset();
     mainMesh.zOffset = gui.getzOffset();
     mainMesh.xOffset = gui.getxOffset();
+
 
 
 
@@ -210,18 +176,10 @@ void lanscapes::update(){
 //--------------------------------------------------------------
 void lanscapes::draw(){
     
-    ////DRAW THE MESH
-	//but we want to enable it to show the mesh
-	ofEnableDepthTest();
-	cam.begin();
-    //rotate the camera
-    ofRotateX(rotX);
-    mainMesh.draw( bWireframe, bFaces );
-	cam.end();
     
-    ////DRAW DEPTH IMAGES
     //we have to disable depth testing to draw the video frame
     ofDisableDepthTest();
+    
     if ( bDrawVideo ) {
         
         if ( useKinect ) {
@@ -245,11 +203,24 @@ void lanscapes::draw(){
         
     }
     
-    ////DRAW THE GUI
     gui.draw();
     
+	//but we want to enable it to show the mesh
+	ofEnableDepthTest();
     
+	cam.begin();
+    //rotate the camera
+    ofRotateX(rotX);
+    mainMesh.draw( bWireframe, bFaces );
+	cam.end();
     
+	
+    if ( !fullscreen ) {
+        //draw framerate for fun
+        ofSetColor(255);
+        string msg = "fps: " + ofToString(ofGetFrameRate(), 2);
+        ofDrawBitmapString(msg, 10, 20);
+    }
 }
 
 //--------------------------------------------------------------
@@ -261,32 +232,13 @@ void lanscapes::keyPressed(int key){
             ofSetFullscreen( fullscreen );
 			break;
             
-        case '>':
-		case '.':
-			farThreshold ++;
-			if (farThreshold > 255) farThreshold = 255;
-            cout<< farThreshold<< endl;
-			break;
-			
-		case '<':
-		case ',':
-			farThreshold --;
-			if (farThreshold < 0) farThreshold = 0;
-            cout<< farThreshold<< endl;
-			break;
-			
-		case '+':
-		case '=':
-			nearThreshold ++;
-			if (nearThreshold > 255) nearThreshold = 255;
-            cout<< nearThreshold<< endl;
-			break;
-			
-		case '-':
-			nearThreshold --;
-			if (nearThreshold < 0) nearThreshold = 0;
-            cout<< nearThreshold<< endl;
-			break;
+            case '=':
+            rotX += 10;
+            break;
+            
+            case '-':
+            rotX -= 10;
+            break;
             
             case ']':
             rotY += 10;
@@ -294,6 +246,38 @@ void lanscapes::keyPressed(int key){
             
             case '[':
             rotY -= 10;
+            break;
+            
+            case '.':
+            rotZ += 10;
+            break;
+            
+            case ',':
+            rotZ -= 10;
+            break;
+            
+            case '1':
+            transX += 10;
+            break;
+            
+            case '2':
+            transX -= 10;
+            break;
+            
+            case '3':
+            transY += 10;
+            break;
+            
+            case '4':
+            transY -= 10;
+            break;
+            
+            case '7':
+            extrusionAmount += 10;
+            break;
+            
+            case '8':
+            extrusionAmount -= 10;
             break;
             
             case 'w':
@@ -326,7 +310,6 @@ void lanscapes::keyPressed(int key){
             cout << "( rotX, rotY, rotZ ): ( " << rotX << ", " << rotY << ", " << rotZ << " )" << endl;
             cout << "( yOffset, zOffset ): ( " << mainMesh.yOffset << ", " << mainMesh.zOffset << ", "<<mainMesh.xOffset<<" )" << endl;
 			break;
-            
             case 's':
             //save the mesh and color data
             mainMesh.save();

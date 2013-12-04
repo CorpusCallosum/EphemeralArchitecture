@@ -28,12 +28,14 @@ public:
     ofxCvGrayscaleImage 	grayImage;
     ofxCvGrayscaleImage     modifiedImage;
     ofxCvGrayscaleImage     kinectImage, croppedImg;
+    int nearThreshold;
+	int farThreshold;
     
     ofImage                 snapShot;
     ofxCvGrayscaleImage     background;
     unsigned char *         snapShotPix;
     
-    bool                    fullscreen, bDrawVideo, bWireframe, bFaces;
+    bool                    fullscreen, bDrawVideo, bWireframe, bFaces, bColorWireframe;
     bool                    useKinect;
     
     float b,c,e,a;
