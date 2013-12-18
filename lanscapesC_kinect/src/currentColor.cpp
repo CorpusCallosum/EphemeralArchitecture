@@ -23,13 +23,21 @@ void currentColor::setup( int w, int h ) {
     
     colorPalette.resize( 6 );
     
-    colorPalette[ 0 ] = ofColor(  237, 237, 237 ); //79, 211, 73 ); // 101, 252, 99 ); //green
+    //AWESOME/BORING
+    colorPalette[ 0 ] = ofColor( 237, 237, 237 ); //79, 211, 73 ); // 101, 252, 99 ); //wite
+    colorPalette[ 1 ] = ofColor( 186, 255, 74 );   // 200, 23, 178 );   //
+    colorPalette[ 2 ] = ofColor( 28, 255, 238 ); //14, 229, 184 ); //21, 70, 228 );   //ice blue green
+    colorPalette[ 3 ] = ofColor( 40, 45, 250 ); //64, 52, 95 );    //blue
+    colorPalette[ 4 ] = ofColor( 255, 74, 213 ); // 203, 103, 10 );  //magenta
+    colorPalette[ 5 ] = ofColor( 0, 0, 0 );//52, 11, 64 );   // 200, 23, 178 );   //
 
-    colorPalette[ 1 ] = ofColor( 28, 255, 238 ); //14, 229, 184 ); //21, 70, 228 );   //ice blue green
-    colorPalette[ 2 ] = ofColor( 40, 45, 250 ); //64, 52, 95 );    //blue
-    colorPalette[ 3 ] = ofColor( 232, 0, 219 ); // 203, 103, 10 );  //magenta
-    colorPalette[ 4 ] = ofColor( 0, 0, 0 );   // 200, 23, 178 );   //
-
+    //RAINBOW
+    /*colorPalette[ 0 ] = ofColor( 101, 252, 99 ); //green
+    colorPalette[ 1 ] = ofColor( 21, 70, 228 );   //ice blue green
+    colorPalette[ 2 ] = ofColor( 64, 52, 95 );    //blue
+    colorPalette[ 3 ] = ofColor( 203, 103, 10 );  //magenta
+    colorPalette[ 4 ] = ofColor( 200, 23, 178 );   //
+     */
 
 
     
