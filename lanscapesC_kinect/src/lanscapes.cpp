@@ -3,9 +3,6 @@
 
 //--------------------------------------------------------------
 void lanscapes::setup(){
-    //Set this to FALSE to use webcam
-    //TODO: add this to the XML file
-    useKinect = false;
     
     //load settings xml data file
     //-----------
@@ -39,7 +36,11 @@ void lanscapes::setup(){
     gui.mirrorV = XML.getValue("group:mirror_vertically", false);
     gui.mirrorH = XML.getValue("group:mirror_horizontally", false);
     saveHour = ofToInt(XML.getValue("group:save_hour", "18"));
-    cout << "save hour loaded from XML is: " << saveHour << endl;
+    
+    //Set this to FALSE to use webcam
+    //TODO: add this to the XML file
+    useKinect = ofToBool(XML.getValue("group:use_kinect", "1"));
+
     
     //setup vars default values
     //PRESS B TO CAPTURE BACKGROUND//
