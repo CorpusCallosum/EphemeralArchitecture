@@ -35,7 +35,6 @@ void gui::setup(){
     
     hidden = true;
     ofHideCursor();
-    
 }
 
 //set the parameters
