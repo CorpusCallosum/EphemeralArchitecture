@@ -4,7 +4,8 @@
 //--------------------------------------------------------------
 void lanscapes::setup(){
     //Set this to FALSE to use webcam
-    useKinect = true;
+    //TODO: add this to the XML file
+    useKinect = false;
     
     //load settings xml data file
     //-----------
@@ -37,7 +38,8 @@ void lanscapes::setup(){
     gui.setzOffset(XML.getValue("group:zOffset", 20));
     gui.mirrorV = XML.getValue("group:mirror_vertically", false);
     gui.mirrorH = XML.getValue("group:mirror_horizontally", false);
-
+    saveHour = ofToInt(XML.getValue("group:save_hour", "18"));
+    cout << "save hour loaded from XML is: " << saveHour << endl;
     
     //setup vars default values
     //PRESS B TO CAPTURE BACKGROUND//
@@ -169,7 +171,8 @@ void lanscapes::update(){
     
     //SAVE the mesh every hour
     int hour = ofGetHours();
-    if( hour != previousHour && hour == 17 ) { //save at 5pm every day
+    if( hour != previousHour && hour == saveHour )
+    { //save at 5pm every day
         mainMesh.save();
         previousHour = hour;
     }
