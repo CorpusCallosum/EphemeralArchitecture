@@ -1,16 +1,20 @@
 <group>
-	<brightness>0.2</brightness>
-	<contrast>0.2</contrast>
-	<extrusion>25</extrusion>
-	<alphaValue>0.2</alphaValue>
-	<rot_x>0</rot_x>
-	<zOffset>30</zOffset>
-	<yOffset>-12</yOffset>
+	<brightness>0.175</brightness>
+	<contrast>0.44</contrast>
+	<extrusion>42.5</extrusion>
+	<alphaValue>0.02485</alphaValue>
+	<rot_x>172</rot_x>
+	<zOffset>-12</zOffset>
+	<yOffset>33</yOffset>
 	<wireframe>1</wireframe>
 	<faces>1</faces>
 	<video>0</video>
 <group/>
 	<movementThreshold>18</movementThreshold>
 	<flickerThreshold>10</flickerThreshold>
-	<xOffset>-4</xOffset>
+	<xOffset>0</xOffset>
+	<colored_wireframe>0</colored_wireframe>
+	<mirror_horizontally>0</mirror_horizontally>
+	<mirror_vertically>0</mirror_vertically>
+<group/>
 </group>

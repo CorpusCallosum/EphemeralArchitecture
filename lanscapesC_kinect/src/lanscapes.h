@@ -28,6 +28,8 @@ public:
     ofxCvGrayscaleImage 	grayImage;
     ofxCvGrayscaleImage     modifiedImage;
     ofxCvGrayscaleImage     kinectImage, croppedImg;
+    int nearThreshold;
+	int farThreshold;
     
     ofImage                 snapShot;
     ofxCvGrayscaleImage     background;

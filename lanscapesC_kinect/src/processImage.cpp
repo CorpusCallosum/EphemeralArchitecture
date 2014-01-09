@@ -49,7 +49,7 @@ ofxCvGrayscaleImage processImage::getProcessedImage( ofxCvGrayscaleImage img, of
     
     
     kinectSource = img;
-    //kinectSource.mirror( true, true ); // mirror( bool bFlipVertically, bool bFlipHorizontally )
+    kinectSource.mirror( true, false ); // mirror( bool bFlipVertically, bool bFlipHorizontally )
     kinectSource.brightnessContrast( _brightness, _contrast );
     kinectSource.blurGaussian( 3 );
 	kinectSource.dilate();
@@ -57,7 +57,7 @@ ofxCvGrayscaleImage processImage::getProcessedImage( ofxCvGrayscaleImage img, of
     
     modifiedPixels = modifiedImage.getPixels();
     
-    //background.mirror( true, true ); // mirror( bool bFlipVertically, bool bFlipHorizontally )
+    background.mirror( true, false ); // mirror( bool bFlipVertically, bool bFlipHorizontally )
     background.brightnessContrast( _brightness, _contrast );
     background.blurGaussian( 3 );
     background.dilate();
