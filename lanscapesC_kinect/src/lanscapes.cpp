@@ -151,6 +151,7 @@ void lanscapes::update(){
 				if(pix[i] > nearThreshold || pix[i] < farThreshold) {
 					pix[i] = 0;
 				}
+                else{ pix[i] = ofMap( pix[i], farThreshold, 255, 0, 255 );}
 			}
             
             croppedImg.scaleIntoMe(kinectImage);
