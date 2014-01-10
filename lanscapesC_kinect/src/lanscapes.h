@@ -52,7 +52,7 @@ public:
     int                     rotX, rotY, rotZ, transX, transY, transZ, width, height;
     float                   extrusionAmount;
     
-    int                     previousHour;
+    int                     previousHour, saveHour;
     
     ofxXmlSettings          XML;
     

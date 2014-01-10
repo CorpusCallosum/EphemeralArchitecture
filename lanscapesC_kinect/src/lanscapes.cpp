@@ -3,8 +3,6 @@
 
 //--------------------------------------------------------------
 void lanscapes::setup(){
-    //Set this to FALSE to use webcam
-    useKinect = true;
     
     //load settings xml data file
     //-----------
@@ -37,6 +35,11 @@ void lanscapes::setup(){
     gui.setzOffset(XML.getValue("group:zOffset", 20));
     gui.mirrorV = XML.getValue("group:mirror_vertically", false);
     gui.mirrorH = XML.getValue("group:mirror_horizontally", false);
+    saveHour = ofToInt(XML.getValue("group:save_hour", "18"));
+    
+    //Set this to FALSE to use webcam
+    //TODO: add this to the XML file
+    useKinect = ofToBool(XML.getValue("group:use_kinect", "1"));
 
     
     //setup vars default values
@@ -169,7 +172,8 @@ void lanscapes::update(){
     
     //SAVE the mesh every hour
     int hour = ofGetHours();
-    if(hour != previousHour){
+    if( hour != previousHour && hour == saveHour )
+    { //save at 5pm every day
         mainMesh.save();
         previousHour = hour;
     }
