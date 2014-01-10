@@ -16,16 +16,16 @@ void gui::setup(){
     
     gui_panel.setup();
     
-    gui_panel.add(brightness.set("brightness", 0.3, 0.0, 1));
-    gui_panel.add(contrast.set("contrast", 0.2 , 0.0, 1));
+    gui_panel.add(brightness.set("brightness", 0.3, -1, 1));
+    gui_panel.add(contrast.set("contrast", 0.2 , -1, 1));
     gui_panel.add(extrusion.set("extrusion", 65, 0, 500));
     gui_panel.add(alphaValue.set("alphaValue", 0.05, 0.01, 0.1));
     gui_panel.add(movementThreshold.set("movementThreshold", 10, 0, 100 ));
     gui_panel.add(flickerThreshold.set("flickerThreshold", 10, 0, 100 ));
     gui_panel.add(rot_x.set("rot_x", -20,-360,360));
-    gui_panel.add(xOffset.set("xOffset", -20, -200,200));
-    gui_panel.add(yOffset.set("yOffset", -20, -200,200));
-    gui_panel.add(zOffset.set("zOffset", -20, -200,200));
+    gui_panel.add(xOffset.set("xOffset", -20, -100,100));
+    gui_panel.add(yOffset.set("yOffset", -20, -100,100));
+    gui_panel.add(zOffset.set("zOffset", -20, -100,100));
     gui_panel.add(wireframe.setup("wireframe", true));
     gui_panel.add(faces.setup("faces", true));
     gui_panel.add(video.setup("video", false));
