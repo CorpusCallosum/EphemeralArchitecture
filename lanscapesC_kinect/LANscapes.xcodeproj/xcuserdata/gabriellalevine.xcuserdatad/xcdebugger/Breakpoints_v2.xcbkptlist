@@ -63,7 +63,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "51"
             endingLineNumber = "51"
-            landmarkName = "gui::setAlphaValue(float a)"
+            landmarkName = "gui::setExtrusion(float e)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

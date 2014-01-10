@@ -87,7 +87,11 @@ void lanscapes::setup(){
     
     //thresholding
     nearThreshold = 255;
+<<<<<<< HEAD
+    farThreshold = 108;
+=======
     //farThreshold = 55;
+>>>>>>> 074be816043d8bdf2fb7c566184f1fd9386034e9
     
     //croping
     kinectImage.setROI(0, 0, width, height);
