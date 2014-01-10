@@ -1,5 +1,5 @@
 <group>
-	<use_kinect>1</use_kinect>
+	<use_kinect>0</use_kinect>
 	<brightness>0.175</brightness>
 	<contrast>0.44</contrast>
 	<extrusion>42.5</extrusion>
@@ -12,6 +12,7 @@
 	<video>0</video>
 	<movementThreshold>18</movementThreshold>
 	<flickerThreshold>10</flickerThreshold>
+	<far_threshold>108</far_threshold>
 	<xOffset>0</xOffset>
 	<colored_wireframe>0</colored_wireframe>
 	<mirror_horizontally>0</mirror_horizontally>

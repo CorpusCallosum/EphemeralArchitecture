@@ -34,6 +34,7 @@ public:
     void setxOffset(int);
     void setzOffset(int);
     void setyOffset(int);
+    void setFarThreshold(int);
     void hide();
     void show();
 
@@ -66,6 +67,7 @@ public:
     ofParameter<int> zOffset;
     ofParameter<int> xOffset;
     ofParameter<int> yOffset;
+    ofParameter<int> farThreshold;
     
 	ofxToggle wireframe;
     ofxToggle video;

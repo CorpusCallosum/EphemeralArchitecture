@@ -29,10 +29,13 @@ void lanscapes::setup(){
     gui.setAlphaValue(XML.getValue("group:alphaValue", .2));
  	gui.setMovementThreshold(XML.getValue("group:movementThreshold", 10));
     gui.setFlickerThreshold(XML.getValue("group:flickerThreshold", 10));
+    gui.setFarThreshold(XML.getValue("group:far_threshold", 108));
+    
     gui.setRotX(XML.getValue("group:rot_x", 20));
     gui.setxOffset(XML.getValue("group:xOffset", 20));
     gui.setyOffset(XML.getValue("group:yOffset", 20));
     gui.setzOffset(XML.getValue("group:zOffset", 20));
+    
     gui.mirrorV = XML.getValue("group:mirror_vertically", false);
     gui.mirrorH = XML.getValue("group:mirror_horizontally", false);
     saveHour = ofToInt(XML.getValue("group:save_hour", "18"));
@@ -84,7 +87,7 @@ void lanscapes::setup(){
     
     //thresholding
     nearThreshold = 255;
-    farThreshold = 55;
+    //farThreshold = 55;
     
     //croping
     kinectImage.setROI(0, 0, width, height);
@@ -131,6 +134,9 @@ void lanscapes::setup(){
 void lanscapes::update(){
 
 	ofBackground( 0 );
+    
+    farThreshold = gui.farThreshold;
+    //cout << "farThreshold: " << farThreshold << endl;
     
     if ( useKinect ) {
         kinect.update();

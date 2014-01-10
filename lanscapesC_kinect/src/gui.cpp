@@ -22,6 +22,8 @@ void gui::setup(){
     gui_panel.add(alphaValue.set("alphaValue", 0.05, 0.01, 0.1));
     gui_panel.add(movementThreshold.set("movementThreshold", 10, 0, 100 ));
     gui_panel.add(flickerThreshold.set("flickerThreshold", 10, 0, 100 ));
+    gui_panel.add(farThreshold.set("farThreshold", 108, 0, 255 ));
+    
     gui_panel.add(rot_x.set("rot_x", -20,-360,360));
     gui_panel.add(xOffset.set("xOffset", -20, -200,200));
     gui_panel.add(yOffset.set("yOffset", -20, -200,200));
@@ -55,6 +57,9 @@ void gui::setMovementThreshold(int m){
 }
 void gui::setFlickerThreshold(int f){
     flickerThreshold.set(f);
+}
+void gui::setFarThreshold(int f){
+    farThreshold.set(f);
 }
 void gui::setRotX(int r){
     rot_x.set(r);
