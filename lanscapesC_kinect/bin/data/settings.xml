@@ -1,12 +1,12 @@
 <group>
 	<use_kinect>1</use_kinect>
-	<brightness>0.175</brightness>
-	<contrast>0.44</contrast>
-	<extrusion>42.5</extrusion>
+	<brightness>-0.25</brightness>
+	<contrast>-0.11</contrast>
+	<extrusion>62.5</extrusion>
 	<alphaValue>0.02485</alphaValue>
-	<rot_x>176</rot_x>
-	<zOffset>-12</zOffset>
-	<yOffset>35</yOffset>
+	<rot_x>190</rot_x>
+	<zOffset>-15</zOffset>
+	<yOffset>25</yOffset>
 	<wireframe>1</wireframe>
 	<faces>1</faces>
 	<video>0</video>
@@ -19,4 +19,5 @@
 	<mirror_vertically>0</mirror_vertically>
 	<save_hour>18</save_hour>
 <group/>
+<farThreshold>108</farThreshold>
 </group>
