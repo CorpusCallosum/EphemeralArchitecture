@@ -133,6 +133,7 @@ void meshGenerator::draw( bool wireframe, bool faces ) {
     bDrawWireframe = wireframe;
     bDrawFaces = faces;
     
+    
     if ( bDrawWireframe ) {
         //draw the wireframe mesh
         wireframeMesh.drawWireframe();

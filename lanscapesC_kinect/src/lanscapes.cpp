@@ -4,6 +4,8 @@
 //--------------------------------------------------------------
 void lanscapes::setup(){
     
+    shader.load("shaders/shader");
+    
     //load settings xml data file
     //-----------
 	//the string is printed at the top of the app
@@ -215,10 +217,16 @@ void lanscapes::draw(){
     ////DRAW THE MESH
 	//but we want to enable it to show the mesh
 	ofEnableDepthTest();
+    ofEnableSmoothing();
+
 	cam.begin();
     //rotate the camera
     ofRotateX(rotX);
+    
+    //DRAW THE MESH!
+    shader.begin();
     mainMesh.draw( bWireframe, bFaces );
+    shader.end();
 	cam.end();
     
     ////DRAW DEPTH IMAGES

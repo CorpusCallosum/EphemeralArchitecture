@@ -58,4 +58,6 @@ public:
     
     string                  message;
     
+    ofShader                shader;
+    
 };

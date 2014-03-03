@@ -38,7 +38,7 @@ DATE (M/D/Y @ h:m:s): 05 / 14 / 12 @ 1:53:39am UTC
 
 _-----Most recent list of prices for florida exhibition (this was from the email to andrea)
 
-B. the prices of 6 sculptures, 4 of which will be on display, two won't but if they could be in the catalog that'd be awesome, whatever you think - see below:
+B. the prices of 6 sculptures, 4 of which will be on display:
 
 1. The largest white 3d printed sculpture on the largest shelf pedestal
 
