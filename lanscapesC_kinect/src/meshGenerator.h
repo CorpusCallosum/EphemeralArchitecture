@@ -25,7 +25,7 @@ public:
 
     
 	//variables
-    ofxCvGrayscaleImage meshImage;
+    ofxCvGrayscaleImage meshImage, lastMeshImage;
     
 	float extrusionAmount;
 	ofVboMesh mainMesh, wireframeMesh;
@@ -37,6 +37,8 @@ public:
     currentColor    currentColor;
     
     ofImage noiseImage;
+    
+    ofEvent<float> onMeshChange;
     
 	
 };

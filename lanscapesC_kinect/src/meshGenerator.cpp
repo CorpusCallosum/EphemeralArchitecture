@@ -57,6 +57,7 @@ void meshGenerator::setup( int w, int h, float extrusion, bool wireframe, bool f
     wireframeMesh = mainMesh;
     
     noiseImage.allocate( width, height, OF_IMAGE_GRAYSCALE );
+    lastMeshImage.allocate( width, height);
     
 }
 
@@ -66,6 +67,7 @@ ofVboMesh meshGenerator::update( ofxCvGrayscaleImage img, float extrusion, bool 
     meshImage = img;
     bColorWireframe = colorWireframe;
     
+    //return a vector of color values for the mesh
     colorGrid = currentColor.getCurrentColor( meshImage );
     
     //perlin noise image update
@@ -97,6 +99,7 @@ ofVboMesh meshGenerator::update( ofxCvGrayscaleImage img, float extrusion, bool 
         //we extrude the mesh based on it's brightness
         ofVec3f tmpVec = mainMesh.getVertex( i );
         extrusionAmount = extrusion;
+        
         //extrude using negative value to pull the mesh UP
         tmpVec.z = -b * extrusionAmount;
         mainMesh.setVertex( i, tmpVec );
@@ -116,10 +119,23 @@ ofVboMesh meshGenerator::update( ofxCvGrayscaleImage img, float extrusion, bool 
             ofColor whiteNoise = noisePixels[ i ];
             wireframeMesh.setColor( i, whiteNoise );
         }
-        
-    
     }
     
+    
+    //throw an event if the mesh changes from frame to frame
+    unsigned char * meshPix = meshImage.getPixels();
+    unsigned char * lastPix = lastMeshImage.getPixels();
+    
+    //if the difference exceeds the threshold, change the color
+    int thresh = 1;
+    for ( int i = 0; i < width * height; i ++ ) {
+        if ( abs( meshPix[ i ] - lastPix[ i ] ) > thresh ) {
+            //throw an event if the mesh changes from frame to frame
+          //  ofNotifyEvent(meshGenerator::onMeshChange, meshPix[ i ], i);
+        }
+    }
+    
+    lastMeshImage = meshImage;
     
     
     return mainMesh;

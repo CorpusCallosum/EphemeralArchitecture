@@ -1,5 +1,5 @@
 <group>
-	<use_kinect>1</use_kinect>
+	<use_kinect>0</use_kinect>
 	<brightness>-0.25</brightness>
 	<contrast>-0.11</contrast>
 	<extrusion>62.5</extrusion>

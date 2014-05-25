@@ -69,7 +69,7 @@ vector<ofColor> currentColor::getCurrentColor( ofxCvGrayscaleImage img) {
     transSpeed = (float) colorTime / colorDuration;
     currentColor = fromColor.getLerped( toColor, transSpeed );
     
-    currentTime = ofGetSystemTime() - startTime;//how long the sketch has been running in m
+    currentTime = ofGetSystemTime() - startTime;//how long the app has been running in m
     
     if ( colorTime >= colorDuration ) {
         cycles ++;
@@ -90,8 +90,11 @@ vector<ofColor> currentColor::getCurrentColor( ofxCvGrayscaleImage img) {
     
     unsigned char * meshPix = meshImage.getPixels();
     unsigned char * lastPix = lastMeshImage.getPixels();
+    
+    //if the difference exceeds the threshold, change the color
+    int thresh = 1;
     for ( int i = 0; i < width * height; i ++ ) {
-        if ( abs( meshPix[ i ] - lastPix[ i ] ) > 0 ) {
+        if ( abs( meshPix[ i ] - lastPix[ i ] ) > thresh ) {
             colorGrid [ i ] = currentColor;
         }
     }

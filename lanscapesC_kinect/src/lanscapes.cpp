@@ -176,8 +176,15 @@ void lanscapes::update(){
             modifiedImage = processImage.getProcessedImage( grayImage, background );
             mainMesh.update( modifiedImage , extrusionAmount, bColorWireframe);
         }
-        
     }
+    
+    //**********
+    //need to add an event listener here to the mainMesh object
+    //should return an event each time the change threshold on the mesh is triggerred
+    //should return information about the extrusion depth and x,y location (x,y,z of modified point)
+    //use this info to trigger audio
+    //**********
+    
     
     //SAVE the mesh every hour
     int hour = ofGetHours();
@@ -298,27 +305,23 @@ void lanscapes::keyPressed(int key){
             cout<< nearThreshold<< endl;
 			break;
             
-            case ']':
+        case ']':
             rotY += 10;
             break;
             
-            case '[':
+        case '[':
             rotY -= 10;
             break;
             
-            case 'w':
+        case 'w':
             bWireframe = !bWireframe;
             break;
             
-            case 'e':
+        case 'e':
             bFaces = !bFaces;
             break;
             
-            case 'v':
-            bDrawVideo = !bDrawVideo;
-            break;
-            
-            case 'k':
+        case 'k':
             useKinect = !useKinect;
             break;
             
@@ -341,7 +344,8 @@ void lanscapes::keyPressed(int key){
             //save the mesh and color data
             mainMesh.save();
 			break;
-            case 'b':
+        
+        case 'b':
                 if ( useKinect ) {
                     snapShotPix = croppedImg.getPixels();
                 }
@@ -352,24 +356,23 @@ void lanscapes::keyPressed(int key){
                 snapShot.saveImage( "background.jpg" );
                 background.setFromPixels( snapShotPix, width, height );
             break;
-            case OF_KEY_UP:
+            
+        case OF_KEY_UP:
             mainMesh.zOffset -= 1;
             break;
-            case OF_KEY_DOWN:
+            
+        case OF_KEY_DOWN:
             mainMesh.zOffset += 1;
             break;
-            case OF_KEY_LEFT:
+            
+        case OF_KEY_LEFT:
             mainMesh.yOffset += 1;
             break;
-            case OF_KEY_RIGHT:
+            
+        case OF_KEY_RIGHT:
             mainMesh.yOffset -= 1;
             break;
             
 	}
     
 }
-
-
-
-
-
