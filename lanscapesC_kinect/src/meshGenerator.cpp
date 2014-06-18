@@ -26,6 +26,8 @@ void meshGenerator::setup( int w, int h, float extrusion, bool wireframe, bool f
 			mainMesh.addVertex( ofPoint( x, y, 0 ));	// mesh index = x + y * width
             // this replicates the pixel array within the camera bitmap...
             
+            mainMesh.addNormal(ofVec3f(ofRandom(1), ofRandom(1),ofRandom(1)));
+            
             colorGrid[ x + y * width ] = ofColor( 237, 237, 237 );
             
             mainMesh.addColor( colorGrid[ x + y * width] );  // placeholder for colour data, we'll get this from the camera
@@ -37,11 +39,12 @@ void meshGenerator::setup( int w, int h, float extrusion, bool wireframe, bool f
 			mainMesh.addIndex( x + y * width );                 // 0
 			mainMesh.addIndex(( x + 1 ) + y * width );			// 1
 			mainMesh.addIndex( x + ( y + 1 ) * width );			// 10
-			
+
+            
 			mainMesh.addIndex(( x + 1 ) + y * width );			// 1
 			mainMesh.addIndex(( x + 1 ) + ( y + 1 ) * width );	// 11
 			mainMesh.addIndex( x + ( y + 1 ) * width );			// 10
-            
+
 		}
 	}
     
@@ -104,6 +107,10 @@ ofVboMesh meshGenerator::update( ofxCvGrayscaleImage img, float extrusion, bool 
         tmpVec.z = -b * extrusionAmount;
         mainMesh.setVertex( i, tmpVec );
         wireframeMesh.setVertex( i, tmpVec );
+        
+        //here we need to set the normals also
+        //***HOW TO CALCULATE THIS?
+         mainMesh.setNormal( i, ofVec3f(ofRandom(1),ofRandom(1),ofRandom(1)) );
         
         //set the mesh color
         ofColor c = colorGrid[ i ];

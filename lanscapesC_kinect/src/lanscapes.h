@@ -59,5 +59,10 @@ public:
     string                  message;
     
     ofShader                shader;
+
+    ofLight                 pointLight;
+    ofMaterial              material;
+
+
     
 };
