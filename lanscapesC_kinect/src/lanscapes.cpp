@@ -44,7 +44,7 @@ void lanscapes::setup(){
     
     //Set this to FALSE to use webcam
     //TODO: add this to the XML file
-    useKinect = ofToBool(XML.getValue("group:use_kinect", "1"));
+    useKinect = true;//ofToBool(XML.getValue("group:use_kinect", "1"));
 
     
     //setup vars default values
@@ -89,7 +89,7 @@ void lanscapes::setup(){
     
     //thresholding
     nearThreshold = 255;
-    //farThreshold = 55;
+    farThreshold = 155;
     
     //croping
     kinectImage.setROI(0, 0, width, height);
