@@ -1,8 +1,15 @@
 #include "lanscapes.h"
+GLfloat lightOnePosition[] = {40.0, 40, 100.0, 0.0};
+GLfloat lightOneColor[] = {0.99, 0.99, 0.99, 1.0};
+
+GLfloat lightTwoPosition[] = {-40.0, 40, 100.0, 0.0};
+GLfloat lightTwoColor[] = {0.99, 0.99, 0.99, 1.0};
 
 
 //--------------------------------------------------------------
 void lanscapes::setup(){
+    ofSetVerticalSync(true);
+    ofEnableSmoothing();
     
     shader.load("shaders/shader");
     
@@ -20,7 +27,6 @@ void lanscapes::setup(){
 	}else{
 		message = "unable to load settings.xml check data/ folder";
 	}
-    
     ofSetFullscreen( true );
     
     //setup gui and initial values from xml
@@ -129,6 +135,37 @@ void lanscapes::setup(){
     // this sets the camera's distance from the object
     cam.setDistance(100);
     cam.disableMouseInput();
+    
+    //setup lighting
+    
+    glShadeModel (GL_SMOOTH);
+    
+    /* initialize lighting */
+   /* glLightfv (GL_LIGHT0, GL_POSITION, lightOnePosition);
+    glLightfv (GL_LIGHT0, GL_DIFFUSE, lightOneColor);
+    glEnable (GL_LIGHT0);
+    glLightfv (GL_LIGHT1, GL_POSITION, lightTwoPosition);
+    glLightfv (GL_LIGHT1, GL_DIFFUSE, lightTwoColor);
+    glEnable (GL_LIGHT1);
+    glEnable (GL_LIGHTING);
+    glColorMaterial (GL_FRONT_AND_BACK, GL_DIFFUSE);
+    glEnable (GL_COLOR_MATERIAL);*/
+   
+    ofSetSmoothLighting(true);
+    // Point lights emit light in all directions //
+    // set the diffuse color, color reflected from the light source //
+    pointLight.setDiffuseColor( ofColor(255.f, 255.f, 255.f));
+    
+    // specular color, the highlight/shininess color //
+	pointLight.setSpecularColor( ofColor(255.f, 0.f, 0.f));
+	pointLight.setPointLight();
+    
+    
+    //setup materials
+    // shininess is a value between 0 - 128, 128 being the most shiny //
+	material.setShininess( 60 );
+    // the light highlight of the material //
+	material.setSpecularColor(ofColor(255, 255, 255, 255));
 }
 
 
@@ -214,29 +251,42 @@ void lanscapes::update(){
     mainMesh.xOffset = gui.getxOffset();
 
 
-
-    
+    pointLight.setPosition( mouseX, mouseY, 200);
 }
 
 //--------------------------------------------------------------
 void lanscapes::draw(){
+    // enable lighting //
+    ofEnableLighting();
+    ofEnableDepthTest();
+    
+    //DRAW THE MESH!
+   
     
     ////DRAW THE MESH
-	//but we want to enable it to show the mesh
-	ofEnableDepthTest();
-    ofEnableSmoothing();
-
 	cam.begin();
+    pointLight.enable();
+    material.begin();
     //rotate the camera
     ofRotateX(rotX);
     
-    //DRAW THE MESH!
-    shader.begin();
+    //shader.begin();
     mainMesh.draw( bWireframe, bFaces );
-    shader.end();
-	cam.end();
+    //shader.end();
+    material.end();
+    pointLight.disable();
+    cam.end();
     
-    ////DRAW DEPTH IMAGES
+	
+
+    
+    // turn off lighting //
+    ofDisableLighting();
+    
+	ofSetColor( pointLight.getDiffuseColor() );
+	pointLight.draw();
+    
+    ////DRAW DEPTH IMAGES [DEBUG]
     //we have to disable depth testing to draw the video frame
     ofDisableDepthTest();
     if ( bDrawVideo ) {
@@ -251,12 +301,10 @@ void lanscapes::draw(){
         }
         
         else {
-            
             colorImg.draw( 20, 20, 320, 240 );
             grayImage.draw( 20 + 320, 20, 320, 240 );
             modifiedImage.draw( 20 + 2 * 320, 20, 320, 240 );
             background.draw( 20 + 3 * 320, 20, 320, 240 );
-            
         }
         
         
@@ -264,8 +312,6 @@ void lanscapes::draw(){
     
     ////DRAW THE GUI
     gui.draw();
-    
-    
     
 }
 

@@ -1,6 +1,6 @@
 dependencies: \
-  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/apps/EphemeralArchitecture/lanscapes_sound/ofxXmlSettings/src/ofxXmlSettings.cpp \
-  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/apps/EphemeralArchitecture/lanscapes_sound/ofxXmlSettings/src/ofxXmlSettings.h \
+  /Volumes/HDD/OpenFrameworks/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapes_sound/ofxXmlSettings/src/ofxXmlSettings.cpp \
+  /Volumes/HDD/OpenFrameworks/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapes_sound/ofxXmlSettings/src/ofxXmlSettings.h \
   ../../../libs/openFrameworks/ofMain.h \
   ../../../libs/openFrameworks/utils/ofConstants.h \
   ../../../libs/glew/include/GL/glew.h \
@@ -170,4 +170,4 @@ dependencies: \
   ../../../libs/openFrameworks/video/ofQTKitPlayer.h \
   ../../../libs/openFrameworks/3d/ofCamera.h \
   ../../../libs/openFrameworks/3d/ofEasyCam.h \
-  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/apps/EphemeralArchitecture/lanscapes_sound/ofxXmlSettings/libs/tinyxml.h
+  /Volumes/HDD/OpenFrameworks/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapes_sound/ofxXmlSettings/libs/tinyxml.h

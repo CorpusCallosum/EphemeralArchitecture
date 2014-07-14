@@ -1,5 +1,6 @@
 *.app
 lanscapesC_kinect/build/
+lanscapes_sound/build/
 
 *.jpg
 *xcuserstate

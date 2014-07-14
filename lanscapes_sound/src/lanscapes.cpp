@@ -42,7 +42,7 @@ void lanscapes::setup(){
     
     //Set this to FALSE to use webcam
     //TODO: add this to the XML file
-    useKinect = false;//ofToBool(XML.getValue("group:use_kinect", "1"));
+    useKinect = ofToBool(XML.getValue("group:use_kinect", "1"));
 
     
     //setup vars default values
@@ -368,17 +368,17 @@ void lanscapes::keyPressed(int key){
             }
             break;
             
-            case 'p':
+        case 'p':
             cout << "( transX, transY, transZ ): ( " << transX << ", " << transY << ", " << transZ << " )" << endl;
             cout << "( rotX, rotY, rotZ ): ( " << rotX << ", " << rotY << ", " << rotZ << " )" << endl;
             cout << "( yOffset, zOffset ): ( " << mainMesh.yOffset << ", " << mainMesh.zOffset << ", "<<mainMesh.xOffset<<" )" << endl;
 			break;
             
-            case 's':
+        case 's':
             //save the mesh and color data
             mainMesh.save();
 			break;
-            case 'b':
+        case 'b':
                 if ( useKinect ) {
                     snapShotPix = croppedImg.getPixels();
                 }
