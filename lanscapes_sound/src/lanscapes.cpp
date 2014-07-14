@@ -136,15 +136,15 @@ void lanscapes::setup(){
     pan.resize( numSounds );
     
     sound[ 0 ] = new ofSoundPlayer;
-    sound[ 0 ]->loadSound( "sounds/bio1.aif" );
+    sound[ 0 ]->loadSound( "sounds/bio_6_30.aiff" );
     sound[ 1 ] = new ofSoundPlayer;
-    sound[ 1 ]->loadSound( "sounds/popaea.aif" );
+    sound[ 1 ]->loadSound( "sounds/popaea_7_00.aiff" );
     sound[ 2 ] = new ofSoundPlayer;
-    sound[ 2 ]->loadSound( "sounds/bio2.aif" );
+    sound[ 2 ]->loadSound( "sounds/iceburg_6_14.aiff" );
     sound[ 3 ] = new ofSoundPlayer;
-    sound[ 3 ]->loadSound( "sounds/arianna.aif" );
+    sound[ 3 ]->loadSound( "sounds/harp_6_00.aiff" );
     sound[ 4 ] = new ofSoundPlayer;
-    sound[ 4 ]->loadSound( "sounds/harp.aif" );
+    sound[ 4 ]->loadSound( "sounds/creep_6_21.wav" );
 
     for ( int i = 0; i < numSounds; i ++ ) {
         sound[ i ]->setLoop( true );
