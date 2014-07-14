@@ -1,5 +1,5 @@
 dependencies: \
-  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/apps/EphemeralArchitecture/lanscapes_sound/src/soundCalculations.cpp \
+  /Volumes/HDD/OpenFrameworks/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapes_sound/src/soundCalculations.cpp \
   src/soundCalculations.h ../../../libs/openFrameworks/ofMain.h \
   ../../../libs/openFrameworks/utils/ofConstants.h \
   ../../../libs/glew/include/GL/glew.h \
