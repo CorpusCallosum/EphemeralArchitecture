@@ -4,6 +4,8 @@
 //--------------------------------------------------------------
 void lanscapes::setup(){
     
+    display.allocate(1280, 800);
+    
     //load settings xml data file
     //-----------
 	//the string is printed at the top of the app
@@ -257,12 +259,19 @@ void lanscapes::update(){
 //--------------------------------------------------------------
 void lanscapes::draw(){
     
+    //draw everything to an FBO
+  // display.begin();
+    
+   // ofPushMatrix();
+   // ofRotateZ(90);
+    
     ////DRAW THE MESH
 	//but we want to enable it to show the mesh
 	ofEnableDepthTest();
 	cam.begin();
     //rotate the camera
     ofRotateX(rotX);
+    
     mainMesh.draw( bWireframe, bFaces );
 	cam.end();
     
@@ -295,7 +304,9 @@ void lanscapes::draw(){
     ////DRAW THE GUI
     gui.draw();
     
-    
+    //display.end();
+    //display.draw(0, 0);
+    //ofPopMatrix();
     
 }
 

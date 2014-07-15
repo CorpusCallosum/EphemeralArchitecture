@@ -65,4 +65,6 @@ public:
     vector <float>          pan;
     float                   soundUpSpeed, soundDownSpeed;
     
+    ofFbo                  display;
+    
 };
