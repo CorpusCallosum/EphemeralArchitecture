@@ -1,3 +1,4 @@
+*.DS_store
 *.app
 lanscapesC_kinect/build/
 lanscapes_sound/build/
