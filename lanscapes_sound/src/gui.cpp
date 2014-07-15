@@ -34,6 +34,8 @@ void gui::setup(){
     gui_panel.add(bColorWireframe.setup("colored wireframe", false));
     gui_panel.add(mirrorH.setup("mirror horizontally", false));
     gui_panel.add(mirrorV.setup("mirror vertically", false));
+    gui_panel.add(soundUpSpeed.set("soundUpSpeed", .000000001, .00000000001, .0000001));
+    gui_panel.add(soundDownSpeed.set("soundDownSpeed", .001, .0001, .01));
     
     hidden = true;
     ofHideCursor();
@@ -72,6 +74,12 @@ void gui::setxOffset(int x){
 }
 void gui::setyOffset(int y){
     yOffset.set(y);
+}
+void gui::setUpSpeed( float u ) {
+    soundUpSpeed.set( u );
+}
+void gui::setDownSpeed( float d ) {
+    soundUpSpeed.set( d );
 }
 
 
@@ -150,4 +158,12 @@ bool gui::drawFaces(){
 }
 bool gui::colorWireframe() {
     return bColorWireframe;
+}
+
+float gui::getUpSpeed() {
+    return soundUpSpeed;
+}
+
+float gui::getDownSpeed() {
+    return soundDownSpeed;
 }

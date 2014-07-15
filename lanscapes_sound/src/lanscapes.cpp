@@ -38,11 +38,14 @@ void lanscapes::setup(){
     
     gui.mirrorV = XML.getValue("group:mirror_vertically", false);
     gui.mirrorH = XML.getValue("group:mirror_horizontally", false);
+    
+    gui.setUpSpeed(XML.getValue("group:soundUpSpeed", .00000001));
+    gui.setDownSpeed(XML.getValue("group:soundDownSpeed", .001));
     saveHour = ofToInt(XML.getValue("group:save_hour", "18"));
     
     //Set this to FALSE to use webcam
     //TODO: add this to the XML file
-    useKinect = ofToBool(XML.getValue("group:use_kinect", "1"));
+    useKinect = false;//ofToBool(XML.getValue("group:use_kinect", "1"));
 
     
     //setup vars default values
@@ -130,33 +133,48 @@ void lanscapes::setup(){
     
     //sound setup
     //soundCalculations.setup( width, height );
-
-    numSounds = 5;
+    
+    whichOne = 1;
+    numSounds = 3;
     volume.resize( numSounds );
     pan.resize( numSounds );
     
-    sound[ 0 ] = new ofSoundPlayer;
-    sound[ 0 ]->loadSound( "sounds/bio_6_30.aiff" );
-    sound[ 1 ] = new ofSoundPlayer;
-    sound[ 1 ]->loadSound( "sounds/popaea_7_00.aiff" );
-    sound[ 2 ] = new ofSoundPlayer;
-    sound[ 2 ]->loadSound( "sounds/iceburg_6_14.aiff" );
-    sound[ 3 ] = new ofSoundPlayer;
-    sound[ 3 ]->loadSound( "sounds/harp_6_00.aiff" );
-    sound[ 4 ] = new ofSoundPlayer;
-    sound[ 4 ]->loadSound( "sounds/creep_6_21.wav" );
+    if ( whichOne == 1 ) {
+        
+        sound[ 0 ] = new ofSoundPlayer;
+        sound[ 0 ]->loadSound( "sounds/bio_6_30.aiff" );
+        sound[ 1 ] = new ofSoundPlayer;
+        sound[ 1 ]->loadSound( "sounds/popaea_7_00.aiff" );
+        sound[ 2 ] = new ofSoundPlayer;
+        sound[ 2 ]->loadSound( "sounds/iceburg_6_14.aiff" );
+        
+    }
+    
+    if ( whichOne == 2 ) {
+    
+        sound[ 0 ] = new ofSoundPlayer;
+        sound[ 0 ]->loadSound( "sounds/harp_6_00.aiff" );
+        sound[ 1 ] = new ofSoundPlayer;
+        sound[ 1 ]->loadSound( "sounds/creep_6_21.wav" );
+        sound[ 2 ] = new ofSoundPlayer;
+        sound[ 2 ]->loadSound( "sounds/bio_6_30.aiff" );
+    }
+
 
     for ( int i = 0; i < numSounds; i ++ ) {
         sound[ i ]->setLoop( true );
         sound[ i ]->setVolume( 0.0 );
         sound[ i ]->play();
     }
+    sound[ 0 ]->setPan( -1.0 );
+    sound[ 1 ]->setPan( 0.0 );
+    sound[ 2 ]->setPan( 1.0 );
     
-    soundUpSpeed = .0000001;
-    soundDownSpeed = .001;
+    soundUpSpeed = gui.getUpSpeed();
+    soundDownSpeed = gui.getDownSpeed();
 
     
-    processImage.setup( width, height, 10, 10, modifiedImage, soundUpSpeed, soundDownSpeed ); // (width, height, low threshold for movement, flicker);
+    processImage.setup( width, height, 10, 10, modifiedImage, whichOne, numSounds,soundUpSpeed, soundDownSpeed ); // (width, height, low threshold for movement, flicker);
  
     
 }
@@ -225,7 +243,9 @@ void lanscapes::update(){
     rotX = gui.getX();
     int m = gui.getMovementThreshold();
     int t = gui.getFlickerThreshold();
-    processImage.update( b, c, a, m, t);
+    soundUpSpeed = gui.getUpSpeed();
+    soundDownSpeed = gui.getDownSpeed();
+    processImage.update( b, c, a, m, t, soundUpSpeed, soundDownSpeed);
     
     //wireframe
     bWireframe = gui.isWireOn();
@@ -241,16 +261,15 @@ void lanscapes::update(){
     pan = processImage.getPan();
     
     
+    
     for ( int i = 0; i < numSounds; i ++ ) {
         sound[ i ]->setVolume( volume[ i ] );
         sound[ i ]->setPan( pan[ i ] );
         cout << "volume[ " << i << " ]: " << volume[ i ]  << endl;
-
+        cout << "pan[ " << i << " ]: " << pan[ i ]  << endl;
+        //sound[ i ]->setSpeed( speed[ i ] );
     }
     
-    cout << "volume[ 0 ]: " << volume[ 0 ]  << endl;
-
-
     
 }
 
@@ -276,15 +295,22 @@ void lanscapes::draw(){
             int w = 320;
             int h = 230;
             kinectImage.draw( margin, 20, w, h );
+            ofEnableAlphaBlending();
             modifiedImage.draw( 20 + w+margin, margin, w, h );
+            soundCalculations.draw( 20 + w + margin, margin, w, h );
+            ofDisableAlphaBlending();
             background.draw( 20 + (w+margin)*2, margin, w, h );
+            
         }
         
         else {
             
             colorImg.draw( 20, 20, 320, 240 );
             grayImage.draw( 20 + 320, 20, 320, 240 );
+            ofEnableAlphaBlending();
             modifiedImage.draw( 20 + 2 * 320, 20, 320, 240 );
+            soundCalculations.draw( 20 + 2 * 320, 20, 320, 240 );
+            ofDisableAlphaBlending();
             background.draw( 20 + 3 * 320, 20, 320, 240 );
             
         }

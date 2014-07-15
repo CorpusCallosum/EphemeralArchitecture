@@ -35,6 +35,8 @@ public:
     void setzOffset(int);
     void setyOffset(int);
     void setFarThreshold(int);
+    void setUpSpeed( float );
+    void setDownSpeed( float );
     void hide();
     void show();
 
@@ -51,6 +53,8 @@ public:
     int getyOffset();
     int getxOffset();
     int getzOffset();
+    float getUpSpeed();
+    float getDownSpeed();
     bool isWireOn();
     bool drawVideo();
     bool drawFaces();
@@ -68,6 +72,8 @@ public:
     ofParameter<int> xOffset;
     ofParameter<int> yOffset;
     ofParameter<int> farThreshold;
+    ofParameter<float> soundUpSpeed;
+    ofParameter<float> soundDownSpeed;
     
 	ofxToggle wireframe;
     ofxToggle video;

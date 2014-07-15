@@ -1,5 +1,5 @@
 dependencies: \
-  /Volumes/HDD/OpenFrameworks/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapes_sound/src/lanscapes.cpp \
+  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/apps/EphemeralArchitecture/lanscapes_sound/src/lanscapes.cpp \
   src/lanscapes.h ../../../libs/openFrameworks/ofMain.h \
   ../../../libs/openFrameworks/utils/ofConstants.h \
   ../../../libs/glew/include/GL/glew.h \
@@ -169,9 +169,9 @@ dependencies: \
   ../../../libs/openFrameworks/video/ofQTKitPlayer.h \
   ../../../libs/openFrameworks/3d/ofCamera.h \
   ../../../libs/openFrameworks/3d/ofEasyCam.h \
-  /Volumes/HDD/OpenFrameworks/of_v0.8.0_osx_release/addons/ofxOpenCv/src/ofxOpenCv.h \
+  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/addons/ofxOpenCv/src/ofxOpenCv.h \
   ../../../addons/ofxOpenCv/src/ofxCvConstants.h \
-  /Volumes/HDD/OpenFrameworks/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapes_sound/../../../addons/ofxOpenCv/libs/opencv/include/opencv/cv.h \
+  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/apps/EphemeralArchitecture/lanscapes_sound/../../../addons/ofxOpenCv/libs/opencv/include/opencv/cv.h \
   ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/core/core_c.h \
   ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/core/types_c.h \
   ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/core/core.hpp \
@@ -227,20 +227,20 @@ dependencies: \
   ../../../addons/ofxOpenCv/src/ofxCvShortImage.h \
   ../../../addons/ofxOpenCv/src/ofxCvContourFinder.h \
   ../../../addons/ofxOpenCv/src/ofxCvHaarFinder.h \
-  /Volumes/HDD/OpenFrameworks/of_v0.8.0_osx_release/addons/ofxKinect/src/ofxKinect.h \
-  /Volumes/HDD/OpenFrameworks/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapes_sound/../../../addons/ofxKinect/libs/libfreenect/include/libfreenect.h \
+  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/addons/ofxKinect/src/ofxKinect.h \
+  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/apps/EphemeralArchitecture/lanscapes_sound/../../../addons/ofxKinect/libs/libfreenect/include/libfreenect.h \
   ../../../addons/ofxKinect/src/ofxBase3DVideo.h \
-  /Volumes/HDD/OpenFrameworks/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapes_sound/../../../addons/ofxKinect/libs/libusb-1.0/include/libusb-1.0/libusb.h \
-  /Volumes/HDD/OpenFrameworks/of_v0.8.0_osx_release/addons/ofxGui/src/ofxGui.h \
-  /Volumes/HDD/OpenFrameworks/of_v0.8.0_osx_release/addons/ofxGui/src/ofxToggle.h \
-  /Volumes/HDD/OpenFrameworks/of_v0.8.0_osx_release/addons/ofxGui/src/ofxBaseGui.h \
-  /Volumes/HDD/OpenFrameworks/of_v0.8.0_osx_release/addons/ofxGui/src/ofxSlider.h \
-  /Volumes/HDD/OpenFrameworks/of_v0.8.0_osx_release/addons/ofxGui/src/ofxSliderGroup.h \
-  /Volumes/HDD/OpenFrameworks/of_v0.8.0_osx_release/addons/ofxGui/src/ofxGuiGroup.h \
-  /Volumes/HDD/OpenFrameworks/of_v0.8.0_osx_release/addons/ofxGui/src/ofxButton.h \
-  /Volumes/HDD/OpenFrameworks/of_v0.8.0_osx_release/addons/ofxGui/src/ofxPanel.h \
-  /Volumes/HDD/OpenFrameworks/of_v0.8.0_osx_release/addons/ofxGui/src/ofxLabel.h \
+  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/apps/EphemeralArchitecture/lanscapes_sound/../../../addons/ofxKinect/libs/libusb-1.0/include/libusb-1.0/libusb.h \
+  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/addons/ofxGui/src/ofxGui.h \
+  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/addons/ofxGui/src/ofxToggle.h \
+  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/addons/ofxGui/src/ofxBaseGui.h \
+  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/addons/ofxGui/src/ofxSlider.h \
+  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/addons/ofxGui/src/ofxSliderGroup.h \
+  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/addons/ofxGui/src/ofxGuiGroup.h \
+  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/addons/ofxGui/src/ofxButton.h \
+  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/addons/ofxGui/src/ofxPanel.h \
+  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/addons/ofxGui/src/ofxLabel.h \
   src/meshGenerator.h src/currentColor.h src/processImage.h \
   src/soundCalculations.h src/gui.h \
-  /Volumes/HDD/OpenFrameworks/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapes_sound/ofxXmlSettings/src/ofxXmlSettings.h \
-  /Volumes/HDD/OpenFrameworks/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapes_sound/ofxXmlSettings/libs/tinyxml.h
+  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/apps/EphemeralArchitecture/lanscapes_sound/ofxXmlSettings/src/ofxXmlSettings.h \
+  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/apps/EphemeralArchitecture/lanscapes_sound/ofxXmlSettings/libs/tinyxml.h

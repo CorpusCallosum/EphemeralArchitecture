@@ -18,8 +18,8 @@ class processImage : public ofBaseApp {
 public:
     
     //methods
-    void                setup( int, int, int, int, ofxCvGrayscaleImage, float, float );
-    void update(float, float, float, int, int);
+    void                setup( int, int, int, int, ofxCvGrayscaleImage, int, int, float, float );
+    void                update(float, float, float, int, int, float, float);
 
     ofxCvGrayscaleImage getProcessedImage( ofxCvGrayscaleImage, ofxCvGrayscaleImage );
 

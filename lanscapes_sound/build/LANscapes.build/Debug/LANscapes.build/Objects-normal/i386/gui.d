@@ -1,5 +1,5 @@
 dependencies: \
-  /Volumes/HDD/OpenFrameworks/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapes_sound/src/gui.cpp \
+  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/apps/EphemeralArchitecture/lanscapes_sound/src/gui.cpp \
   src/gui.h ../../../libs/openFrameworks/ofMain.h \
   ../../../libs/openFrameworks/utils/ofConstants.h \
   ../../../libs/glew/include/GL/glew.h \
@@ -169,12 +169,12 @@ dependencies: \
   ../../../libs/openFrameworks/video/ofQTKitPlayer.h \
   ../../../libs/openFrameworks/3d/ofCamera.h \
   ../../../libs/openFrameworks/3d/ofEasyCam.h \
-  /Volumes/HDD/OpenFrameworks/of_v0.8.0_osx_release/addons/ofxGui/src/ofxGui.h \
-  /Volumes/HDD/OpenFrameworks/of_v0.8.0_osx_release/addons/ofxGui/src/ofxToggle.h \
-  /Volumes/HDD/OpenFrameworks/of_v0.8.0_osx_release/addons/ofxGui/src/ofxBaseGui.h \
-  /Volumes/HDD/OpenFrameworks/of_v0.8.0_osx_release/addons/ofxGui/src/ofxSlider.h \
-  /Volumes/HDD/OpenFrameworks/of_v0.8.0_osx_release/addons/ofxGui/src/ofxSliderGroup.h \
-  /Volumes/HDD/OpenFrameworks/of_v0.8.0_osx_release/addons/ofxGui/src/ofxGuiGroup.h \
-  /Volumes/HDD/OpenFrameworks/of_v0.8.0_osx_release/addons/ofxGui/src/ofxButton.h \
-  /Volumes/HDD/OpenFrameworks/of_v0.8.0_osx_release/addons/ofxGui/src/ofxPanel.h \
-  /Volumes/HDD/OpenFrameworks/of_v0.8.0_osx_release/addons/ofxGui/src/ofxLabel.h
+  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/addons/ofxGui/src/ofxGui.h \
+  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/addons/ofxGui/src/ofxToggle.h \
+  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/addons/ofxGui/src/ofxBaseGui.h \
+  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/addons/ofxGui/src/ofxSlider.h \
+  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/addons/ofxGui/src/ofxSliderGroup.h \
+  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/addons/ofxGui/src/ofxGuiGroup.h \
+  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/addons/ofxGui/src/ofxButton.h \
+  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/addons/ofxGui/src/ofxPanel.h \
+  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/addons/ofxGui/src/ofxLabel.h

@@ -1,5 +1,5 @@
 dependencies: \
-  /Volumes/HDD/OpenFrameworks/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapes_sound/src/processImage.cpp \
+  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/apps/EphemeralArchitecture/lanscapes_sound/src/processImage.cpp \
   src/processImage.h ../../../libs/openFrameworks/ofMain.h \
   ../../../libs/openFrameworks/utils/ofConstants.h \
   ../../../libs/glew/include/GL/glew.h \
@@ -169,9 +169,9 @@ dependencies: \
   ../../../libs/openFrameworks/video/ofQTKitPlayer.h \
   ../../../libs/openFrameworks/3d/ofCamera.h \
   ../../../libs/openFrameworks/3d/ofEasyCam.h \
-  /Volumes/HDD/OpenFrameworks/of_v0.8.0_osx_release/addons/ofxOpenCv/src/ofxOpenCv.h \
+  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/addons/ofxOpenCv/src/ofxOpenCv.h \
   ../../../addons/ofxOpenCv/src/ofxCvConstants.h \
-  /Volumes/HDD/OpenFrameworks/of_v0.8.0_osx_release/apps/EphemeralArchitecture/lanscapes_sound/../../../addons/ofxOpenCv/libs/opencv/include/opencv/cv.h \
+  /Users/curry/Documents/openframeworks_releases/of_v0.8.0/apps/EphemeralArchitecture/lanscapes_sound/../../../addons/ofxOpenCv/libs/opencv/include/opencv/cv.h \
   ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/core/core_c.h \
   ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/core/types_c.h \
   ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/core/core.hpp \
