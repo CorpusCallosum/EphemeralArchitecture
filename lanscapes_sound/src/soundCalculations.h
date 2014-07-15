@@ -16,8 +16,9 @@ class soundCalculations : public ofBaseApp {
     
 public:
     
-    void setup( int, int, float, float );
-    void update();
+    void setup( int, int, int, int, float, float );
+    void update( float, float );
+    void draw( int, int, int, int );
     void calculateSound( int ); //for calculating volume using moving points from processImage
     vector <float> getVolume(); //for recall from main app
     vector <float> getPan();
@@ -28,10 +29,12 @@ public:
     vector <float>      soundVolume;
     vector <ofVec2f>    soundCenter;
     vector <float>      distance;
+    vector <float>      panDistance;
     
     int                 frameWidth, frameHeight;
     int                 loc;
-    float               upSpeed, downSpeed;
+    float               soundUpSpeed, soundDownSpeed;
+    int                 whichOne;
     
     
 };

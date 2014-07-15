@@ -60,10 +60,12 @@ public:
     
     string                  message;
     int                     numSounds;
-    ofSoundPlayer           *sound[ 5 ];
+    ofSoundPlayer           *sound[ 6 ];
     vector <float>          volume;
     vector <float>          pan;
+    vector <float>          speed;
     float                   soundUpSpeed, soundDownSpeed;
+    int                     whichOne;
     
     ofFbo                  display;
     

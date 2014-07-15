@@ -14,7 +14,7 @@ processImage::processImage()
     
 }
 
-void processImage::setup( int w, int h, int low, int flicker, ofxCvGrayscaleImage background, float u, float d ) {
+void processImage::setup( int w, int h, int low, int flicker, ofxCvGrayscaleImage background, int which , int n, float u, float d) {
     
     imgWidth = w;
     imgHeight = h;
@@ -29,18 +29,18 @@ void processImage::setup( int w, int h, int low, int flicker, ofxCvGrayscaleImag
     difference.resize( imgWidth * imgHeight );
     
     
-    soundCalculations.setup( w, h, u, d );
+    soundCalculations.setup( w, h, which, n, u, d );
     
 }
 
-void processImage::update(float _b, float _c, float _a, int m, int t){
+void processImage::update(float _b, float _c, float _a, int m, int t, float up, float down){
     _brightness = _b;
     _contrast = _c;
     alphaAmount = _a;
     moveThreshLow = m;
     flickerThreshold = t;
     
-    soundCalculations.update();
+    soundCalculations.update( up, down );
    
     
 }
