@@ -47,7 +47,7 @@ void lanscapes::setup(){
     
     //Set this to FALSE to use webcam
     //TODO: add this to the XML file
-    useKinect = false;//ofToBool(XML.getValue("group:use_kinect", "1"));
+    useKinect = ofToBool(XML.getValue("group:use_kinect", "1"));
 
     
     //setup vars default values
@@ -267,8 +267,8 @@ void lanscapes::update(){
     for ( int i = 0; i < numSounds; i ++ ) {
         sound[ i ]->setVolume( volume[ i ] );
         sound[ i ]->setPan( pan[ i ] );
-        cout << "volume[ " << i << " ]: " << volume[ i ]  << endl;
-        cout << "pan[ " << i << " ]: " << pan[ i ]  << endl;
+        //cout << "volume[ " << i << " ]: " << volume[ i ]  << endl;
+        //cout << "pan[ " << i << " ]: " << pan[ i ]  << endl;
         //sound[ i ]->setSpeed( speed[ i ] );
     }
     

@@ -12,7 +12,7 @@
 	<video>0</video>
 	<movementThreshold>18</movementThreshold>
 	<flickerThreshold>10</flickerThreshold>
-	<far_threshold>150</far_threshold>
+	<far_threshold>118</far_threshold>
 	<xOffset>0</xOffset>
 	<colored_wireframe>0</colored_wireframe>
 	<mirror_horizontally>0</mirror_horizontally>

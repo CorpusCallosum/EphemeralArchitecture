@@ -79,7 +79,7 @@ void gui::setUpSpeed( float u ) {
     soundUpSpeed.set( u );
 }
 void gui::setDownSpeed( float d ) {
-    soundUpSpeed.set( d );
+    soundDownSpeed.set( d );
 }
 
 
