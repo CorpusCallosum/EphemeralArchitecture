@@ -5,14 +5,14 @@
 	<extrusion>42.5</extrusion>
 	<alphaValue>0.02485</alphaValue>
 	<rot_x>176</rot_x>
-	<zOffset>3</zOffset>
+	<zOffset>-6</zOffset>
 	<yOffset>23</yOffset>
 	<wireframe>1</wireframe>
 	<faces>1</faces>
-	<video>0</video>
+	<video>1</video>
 	<movementThreshold>18</movementThreshold>
 	<flickerThreshold>10</flickerThreshold>
-	<far_threshold>174</far_threshold>
+	<far_threshold>95</far_threshold>
 	<xOffset>3</xOffset>
 	<colored_wireframe>0</colored_wireframe>
 	<mirror_horizontally>1</mirror_horizontally>
@@ -21,5 +21,5 @@
 	<soundDownSpeed>0.001</soundDownSpeed>
 	<save_hour>18</save_hour>
 <group/>
-<farThreshold>174</farThreshold>
+<farThreshold>79</farThreshold>
 </group>

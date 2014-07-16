@@ -93,7 +93,7 @@ void lanscapes::setup(){
     //thresholding
     nearThreshold = 255;
     //farThreshold = 55;
-    kinect.setDepthClipping( 2000, 6000 );
+    kinect.setDepthClipping( 800, 5000 );
     
     //croping
     kinectImage.setROI(0, 0, width, height);
@@ -142,7 +142,10 @@ void lanscapes::setup(){
     volume.resize( numSounds );
     pan.resize( numSounds );
     
-    if ( whichOne == 1 ) {
+    //masking rectangles
+    rectangle.resize( 4 );
+    
+    if ( whichOne == 1 ) { //north
         
         sound[ 0 ] = new ofSoundPlayer;
         sound[ 0 ]->loadSound( "sounds/bio_6_30.aiff" );
@@ -151,9 +154,32 @@ void lanscapes::setup(){
         sound[ 2 ] = new ofSoundPlayer;
         sound[ 2 ]->loadSound( "sounds/iceburg_6_14.aiff" );
         
+        //top
+        rectangle[ 0 ].x = 0;
+        rectangle[ 0 ].y = 0;
+        rectangle[ 0 ].width = 800;
+        rectangle[ 0 ].height = 210;
+        
+        //right
+        rectangle[ 1 ].x = 751;
+        rectangle[ 1 ].y = 0;
+        rectangle[ 1 ].width = 140;
+        rectangle[ 1 ].height = 1280;
+        
+        //bottom
+        rectangle[ 2 ].x = 0;
+        rectangle[ 2 ].y = 1059;
+        rectangle[ 2 ].width = 800;
+        rectangle[ 2 ].height = 200;
+        
+        rectangle[ 3 ].x = 0;
+        rectangle[ 3 ].y = 0;
+        rectangle[ 3 ].width = 147;
+        rectangle[ 3 ].height = 1280;
+        
     }
     
-    if ( whichOne == 2 ) {
+    if ( whichOne == 2 ) { //south
     
         sound[ 0 ] = new ofSoundPlayer;
         sound[ 0 ]->loadSound( "sounds/harp_6_00.aiff" );
@@ -161,6 +187,29 @@ void lanscapes::setup(){
         sound[ 1 ]->loadSound( "sounds/creep_6_21.wav" );
         sound[ 2 ] = new ofSoundPlayer;
         sound[ 2 ]->loadSound( "sounds/bio_6_30.aiff" );
+        
+        //top
+        rectangle[ 0 ].x = 0;
+        rectangle[ 0 ].y = 0;
+        rectangle[ 0 ].width = 800;
+        rectangle[ 0 ].height = 210;
+        
+        //right
+        rectangle[ 1 ].x = 751;
+        rectangle[ 1 ].y = 0;
+        rectangle[ 1 ].width = 140;
+        rectangle[ 1 ].height = 1280;
+        
+        //bottom
+        rectangle[ 2 ].x = 0;
+        rectangle[ 2 ].y = 1059;
+        rectangle[ 2 ].width = 800;
+        rectangle[ 2 ].height = 200;
+        
+        rectangle[ 3 ].x = 0;
+        rectangle[ 3 ].y = 0;
+        rectangle[ 3 ].width = 147;
+        rectangle[ 3 ].height = 1280;
     }
 
 
@@ -179,32 +228,6 @@ void lanscapes::setup(){
     
     processImage.setup( width, height, 10, 10, modifiedImage, whichOne, numSounds,soundUpSpeed, soundDownSpeed ); // (width, height, low threshold for movement, flicker);
  
-    //masking rectangles
-    rectangle.resize( 4 );
-    //top
-    rectangle[ 0 ].x = 0;
-    rectangle[ 0 ].y = 0;
-    rectangle[ 0 ].width = 800;
-    rectangle[ 0 ].height = 210;
-    
-    //right
-    rectangle[ 1 ].x = 751;
-    rectangle[ 1 ].y = 0;
-    rectangle[ 1 ].width = 140;
-    rectangle[ 1 ].height = 1280;
-    
-    //bottom
-    rectangle[ 2 ].x = 0;
-    rectangle[ 2 ].y = 1059;
-    rectangle[ 2 ].width = 800;
-    rectangle[ 2 ].height = 200;
-    
-    rectangle[ 3 ].x = 0;
-    rectangle[ 3 ].y = 0;
-    rectangle[ 3 ].width = 152;
-    rectangle[ 3 ].height = 1280;
-    
-    
     
 }
 
@@ -478,16 +501,16 @@ void lanscapes::keyPressed(int key){
             mainMesh.yOffset -= 1;
             break;
             
-        /*case 'l':
+        case 'l':
             //save the mesh and color data
-            rectangle[ 2 ].y ++;
-            cout << rectangle[ 2 ].y << endl;
+            rectangle[ 1 ].x ++;
+            cout << rectangle[ 1 ].x << endl;
 			break;
             
         case 'j':
             //save the mesh and color data
-            rectangle[ 2 ].y --;
-            cout << rectangle[ 2 ].y << endl;
+            rectangle[ 1 ].x --;
+            cout << rectangle[ 1 ].x << endl;
 			break;
             
         case 'i':
@@ -500,7 +523,7 @@ void lanscapes::keyPressed(int key){
             //save the mesh and color data
             rectangle[ 3 ].width --;
             cout << rectangle[ 3 ].width << endl;
-			break;*/
+			break;
             
 	}
     
