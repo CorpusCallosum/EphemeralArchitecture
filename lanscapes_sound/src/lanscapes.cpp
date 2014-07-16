@@ -93,6 +93,7 @@ void lanscapes::setup(){
     //thresholding
     nearThreshold = 255;
     //farThreshold = 55;
+    kinect.setDepthClipping( 2000, 6000 );
     
     //croping
     kinectImage.setROI(0, 0, width, height);
@@ -178,6 +179,32 @@ void lanscapes::setup(){
     
     processImage.setup( width, height, 10, 10, modifiedImage, whichOne, numSounds,soundUpSpeed, soundDownSpeed ); // (width, height, low threshold for movement, flicker);
  
+    //masking rectangles
+    rectangle.resize( 4 );
+    //top
+    rectangle[ 0 ].x = 0;
+    rectangle[ 0 ].y = 0;
+    rectangle[ 0 ].width = 800;
+    rectangle[ 0 ].height = 210;
+    
+    //right
+    rectangle[ 1 ].x = 751;
+    rectangle[ 1 ].y = 0;
+    rectangle[ 1 ].width = 140;
+    rectangle[ 1 ].height = 1280;
+    
+    //bottom
+    rectangle[ 2 ].x = 0;
+    rectangle[ 2 ].y = 1059;
+    rectangle[ 2 ].width = 800;
+    rectangle[ 2 ].height = 200;
+    
+    rectangle[ 3 ].x = 0;
+    rectangle[ 3 ].y = 0;
+    rectangle[ 3 ].width = 152;
+    rectangle[ 3 ].height = 1280;
+    
+    
     
 }
 
@@ -294,6 +321,8 @@ void lanscapes::draw(){
     mainMesh.draw( bWireframe, bFaces );
 	cam.end();
     
+   
+    
     ////DRAW DEPTH IMAGES
     //we have to disable depth testing to draw the video frame
     ofDisableDepthTest();
@@ -326,6 +355,16 @@ void lanscapes::draw(){
         
         
     }
+    
+    else {
+        //draw the masks
+        for ( int i = 0; i < 4; i ++ ) {
+            ofSetColor( 0, 0, 0 );
+            ofRect( rectangle[ i ] );
+        }
+    }
+    
+    
     
     ////DRAW THE GUI
     gui.draw();
@@ -438,6 +477,30 @@ void lanscapes::keyPressed(int key){
             case OF_KEY_RIGHT:
             mainMesh.yOffset -= 1;
             break;
+            
+        /*case 'l':
+            //save the mesh and color data
+            rectangle[ 2 ].y ++;
+            cout << rectangle[ 2 ].y << endl;
+			break;
+            
+        case 'j':
+            //save the mesh and color data
+            rectangle[ 2 ].y --;
+            cout << rectangle[ 2 ].y << endl;
+			break;
+            
+        case 'i':
+            //save the mesh and color data
+            rectangle[ 3 ].width ++;
+            cout << rectangle[ 3 ].width << endl;
+			break;
+            
+        case 'm':
+            //save the mesh and color data
+            rectangle[ 3 ].width --;
+            cout << rectangle[ 3 ].width << endl;
+			break;*/
             
 	}
     

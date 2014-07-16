@@ -69,4 +69,5 @@ public:
     
     ofFbo                  display;
     
+    vector <ofRectangle>    rectangle;
 };
