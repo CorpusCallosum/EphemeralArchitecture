@@ -2,6 +2,7 @@
 *.app
 lanscapesC_kinect/build/
 lanscapes_sound/build/
+lanscapes_sound-8.3/build/
 
 *.jpg
 *xcuserstate
