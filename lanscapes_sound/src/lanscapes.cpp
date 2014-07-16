@@ -158,23 +158,23 @@ void lanscapes::setup(){
         rectangle[ 0 ].x = 0;
         rectangle[ 0 ].y = 0;
         rectangle[ 0 ].width = 800;
-        rectangle[ 0 ].height = 210;
+        rectangle[ 0 ].height = 189;
         
         //right
-        rectangle[ 1 ].x = 751;
+        rectangle[ 1 ].x = 722;
         rectangle[ 1 ].y = 0;
         rectangle[ 1 ].width = 140;
         rectangle[ 1 ].height = 1280;
         
         //bottom
         rectangle[ 2 ].x = 0;
-        rectangle[ 2 ].y = 1059;
+        rectangle[ 2 ].y = 1079;
         rectangle[ 2 ].width = 800;
         rectangle[ 2 ].height = 200;
         
         rectangle[ 3 ].x = 0;
         rectangle[ 3 ].y = 0;
-        rectangle[ 3 ].width = 147;
+        rectangle[ 3 ].width = 108;
         rectangle[ 3 ].height = 1280;
         
     }
@@ -503,14 +503,14 @@ void lanscapes::keyPressed(int key){
             
         case 'l':
             //save the mesh and color data
-            rectangle[ 1 ].x ++;
-            cout << rectangle[ 1 ].x << endl;
+            rectangle[ 2 ].y ++;
+            cout << rectangle[ 2 ].y << endl;
 			break;
             
         case 'j':
             //save the mesh and color data
-            rectangle[ 1 ].x --;
-            cout << rectangle[ 1 ].x << endl;
+            rectangle[ 2 ].y --;
+            cout << rectangle[ 2 ].y << endl;
 			break;
             
         case 'i':
